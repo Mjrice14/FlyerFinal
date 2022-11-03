@@ -68,10 +68,10 @@ struct LoginView: View {
                 Button {
                     login()
                 } label: {
-                    Text("Login").font(.title).padding(.horizontal).padding(.vertical,7)
+                    Text("Login").font(.title).padding(.horizontal).frame(width: 150,height: 40)
                         .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
                             .fill(Color(red: 0.22, green: 0.22, blue: 0.22))).foregroundColor(.white)
-                }.padding(.top,30)
+                }.padding(.top,30).padding(.bottom)
                 
                 Button {
                     signUp = true

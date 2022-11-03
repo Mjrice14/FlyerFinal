@@ -12,6 +12,8 @@ import FirebaseAuth
 
 struct FlyerBubble: View {
     var flyer: Flyer
+    var display: Bool
+    
     @State private var show = false
     @State private var newUserID = Auth.auth().currentUser?.uid
     
@@ -37,7 +39,9 @@ struct FlyerBubble: View {
                     
                     HStack(spacing: 20) {
                         Button {
-                            addLike()
+                            if !display {
+                                addLike()
+                            }
                         } label: {
                             if flyer.likes.contains(newUserID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62") {
                                 (Text(Image(systemName: "heart.fill"))+Text(" ")+Text(String(flyer.likes.count)))
@@ -72,7 +76,7 @@ struct FlyerBubble: View {
 
 struct FlyerBubble_Previews: PreviewProvider {
     static var previews: some View {
-        FlyerBubble(flyer: Flyer(id: "1", title: "Testing", description: "This is a test to see if this will be a practical method to create flyer posts.", date: Date(), imageName: "image.yuj", likes: ["AeVZPBqiPmPCXYxW4hlyDwnViWY2"], name: "Matthew Rice", userID: "AeVZPBqiPmPCXYxW4hlyDwnViWY2", color: 2, tags: ["Student"]))
+        FlyerBubble(flyer: Flyer(id: "1", title: "Testing", description: "This is a test to see if this will be a practical method to create flyer posts.", date: Date(), imageName: "image.yuj", likes: ["AeVZPBqiPmPCXYxW4hlyDwnViWY2"], name: "Matthew Rice", userID: "AeVZPBqiPmPCXYxW4hlyDwnViWY2", color: 2, tags: ["Student"]), display: true)
     }
 }
 

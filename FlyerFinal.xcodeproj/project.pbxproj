@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		220D049829131E4000B3878E /* NewFlyerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220D049729131E4000B3878E /* NewFlyerView.swift */; };
 		220E38D929110816008EEC7D /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220E38D829110816008EEC7D /* SignUpView.swift */; };
 		22160A702910790000CF5C7D /* FlyerFinalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22160A6F2910790000CF5C7D /* FlyerFinalApp.swift */; };
 		22160A722910790000CF5C7D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22160A712910790000CF5C7D /* ContentView.swift */; };
@@ -31,6 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		220D049729131E4000B3878E /* NewFlyerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFlyerView.swift; sourceTree = "<group>"; };
 		220E38D829110816008EEC7D /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		22160A6C2910790000CF5C7D /* FlyerFinal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlyerFinal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22160A6F2910790000CF5C7D /* FlyerFinalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlyerFinalApp.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				222453F82912140C001CE96E /* MainView.swift */,
 				22245404291219AF001CE96E /* FlyerFeed.swift */,
 				22245406291222F6001CE96E /* UserFeed.swift */,
+				220D049729131E4000B3878E /* NewFlyerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -236,6 +239,7 @@
 				22160A722910790000CF5C7D /* ContentView.swift in Sources */,
 				222453FC29121601001CE96E /* Flyer.swift in Sources */,
 				223A2F8B291204F6009C75AE /* ImagePicker.swift in Sources */,
+				220D049829131E4000B3878E /* NewFlyerView.swift in Sources */,
 				22245400291216B2001CE96E /* FlyerBubble.swift in Sources */,
 				222453F729121229001CE96E /* StartPageView.swift in Sources */,
 				22160A702910790000CF5C7D /* FlyerFinalApp.swift in Sources */,

@@ -65,7 +65,7 @@ struct FlyerFeed: View {
                 ScrollView {
                     ForEach(flyerManager.flyers,id: \.id) {flyer in
                         if flyer.tags.contains(filter) {
-                            FlyerBubble(flyer: flyer)
+                            FlyerBubble(flyer: flyer, display: false)
                         }
                     }
                 }
