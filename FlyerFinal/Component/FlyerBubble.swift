@@ -44,7 +44,7 @@ struct FlyerBubble: View {
                             }
                         } label: {
                             if flyer.likes.contains(newUserID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62") {
-                                (Text(Image(systemName: "heart.fill"))+Text(" ")+Text(String(flyer.likes.count)))
+                                (Text(Image(systemName: "heart.fill")).foregroundColor(.red)+Text(" ")+Text(String(flyer.likes.count)))
                                     .font(.system(size: 20))
                             }
                             else {
