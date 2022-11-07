@@ -76,7 +76,7 @@ struct FlyerBubble: View {
 
 struct FlyerBubble_Previews: PreviewProvider {
     static var previews: some View {
-        FlyerBubble(flyer: Flyer(id: "1", title: "Testing", description: "This is a test to see if this will be a practical method to create flyer posts.", date: Date(), imageName: "image.yuj", likes: ["AeVZPBqiPmPCXYxW4hlyDwnViWY2"], name: "Matthew Rice", userID: "AeVZPBqiPmPCXYxW4hlyDwnViWY2", color: 2, tags: ["Student"]), display: true)
+        FlyerBubble(flyer: Flyer(id: "1", title: "Testing", description: "This is a test to see if this will be a practical method to create flyer posts.", date: Date(), imageName: "image.yuj", likes: ["AeVZPBqiPmPCXYxW4hlyDwnViWY2"], name: "Matthew Rice", userID: "AeVZPBqiPmPCXYxW4hlyDwnViWY2", color: 4, tags: ["Student"]), display: true)
     }
 }
 
@@ -91,7 +91,7 @@ func getGradient(a:Int) -> LinearGradient {
         return .linearGradient(colors: [.red, .orange], startPoint: .leading, endPoint: .trailing)
     }
     else {
-        return .linearGradient(colors: [getHexColor(hex: "#CC2B5E"), getHexColor(hex: "#753a88")], startPoint: .leading, endPoint: .trailing)
+        return .linearGradient(colors: [getHexColor(hex: "#753a88"), getHexColor(hex: "#CC2B5E")], startPoint: .leading, endPoint: .trailing)
     }
 }
 

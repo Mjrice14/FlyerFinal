@@ -34,11 +34,31 @@ struct AuthenticationView: View {
                             authentic = true
                         }
                     }
+                    authentic = true
+                    
                 } label: {
                     Text("Email Verified").font(.title).padding(.horizontal).frame(width: 300).padding(.vertical,5)
                         .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
                             .fill(Color(red: 0.22, green: 0.22, blue: 0.22))).foregroundColor(.white)
                 }.padding(.top, 70)
+                
+                Button {
+                    if Auth.auth().currentUser != nil {
+                        if Auth.auth().currentUser!.isEmailVerified {
+                            Auth.auth().currentUser?.sendEmailVerification { error in
+                                if error != nil {
+                                    print("Email failed to send.")
+                                }
+                            }
+                        }
+                    }
+                    
+                } label: {
+                    Text("Resend Email").font(.title).padding(.horizontal).frame(width: 300).padding(.vertical,5)
+                        .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
+                            .fill(Color(red: 0.22, green: 0.22, blue: 0.22))).foregroundColor(.white)
+                }.padding()
+                
             }
             //}
         }
