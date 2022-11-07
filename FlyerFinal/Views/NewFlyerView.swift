@@ -27,7 +27,7 @@ struct NewFlyerView: View {
         ZStack {
             let userNow = getUser(login: newUserID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62")
             
-            Color(red: 0.32, green: 0.32, blue: 0.32).ignoresSafeArea()
+            Color("main").ignoresSafeArea()
             
             Button {
                 withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {

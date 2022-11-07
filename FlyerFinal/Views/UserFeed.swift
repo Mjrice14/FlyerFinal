@@ -10,7 +10,8 @@ import SwiftUI
 struct UserFeed: View {
     var body: some View {
         ZStack {
-            LinearGradient(colors: [Color(uiColor: .systemRed),Color(uiColor: .systemOrange)], startPoint: .top, endPoint: .bottom).ignoresSafeArea()
+            //Color.primary.ignoresSafeArea()
+            Color("main").ignoresSafeArea()
             
             VStack {
                 HStack {

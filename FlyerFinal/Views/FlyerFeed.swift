@@ -18,7 +18,7 @@ struct FlyerFeed: View {
     
     var body: some View {
         ZStack {
-            LinearGradient(colors: [Color(uiColor: .systemRed),Color(uiColor: .systemOrange)], startPoint: .top, endPoint: .bottom).ignoresSafeArea()
+            Color("main").ignoresSafeArea()
             
             let userNow = getUser(login: newUserID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62")
             
