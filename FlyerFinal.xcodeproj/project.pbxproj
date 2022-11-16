@@ -14,7 +14,6 @@
 		22160A742910790100CF5C7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22160A732910790100CF5C7D /* Assets.xcassets */; };
 		22160A782910790100CF5C7D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22160A772910790100CF5C7D /* Preview Assets.xcassets */; };
 		22160A7F2910793000CF5C7D /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22160A7E2910793000CF5C7D /* LoginView.swift */; };
-		22160A8229107A4C00CF5C7D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 22160A8129107A4C00CF5C7D /* GoogleService-Info.plist */; };
 		22160A8529107AF900CF5C7D /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 22160A8429107AF900CF5C7D /* FirebaseAuth */; };
 		22160A8729107AF900CF5C7D /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 22160A8629107AF900CF5C7D /* FirebaseFirestore */; };
 		22160A8929107AF900CF5C7D /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 22160A8829107AF900CF5C7D /* FirebaseFirestoreSwift */; };
@@ -29,6 +28,7 @@
 		22245407291222F6001CE96E /* UserFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22245406291222F6001CE96E /* UserFeed.swift */; };
 		223A2F8B291204F6009C75AE /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223A2F8A291204F6009C75AE /* ImagePicker.swift */; };
 		2249F4982911B77700B5C506 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2249F4972911B77700B5C506 /* AuthenticationView.swift */; };
+		E4E2131429248EED00DD36EA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E4E2131329248EED00DD36EA /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,7 +41,6 @@
 		22160A752910790100CF5C7D /* FlyerFinal.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FlyerFinal.entitlements; sourceTree = "<group>"; };
 		22160A772910790100CF5C7D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		22160A7E2910793000CF5C7D /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
-		22160A8129107A4C00CF5C7D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		222453F629121229001CE96E /* StartPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartPageView.swift; sourceTree = "<group>"; };
 		222453F82912140C001CE96E /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		222453FB29121601001CE96E /* Flyer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flyer.swift; sourceTree = "<group>"; };
@@ -52,6 +51,7 @@
 		22245406291222F6001CE96E /* UserFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFeed.swift; sourceTree = "<group>"; };
 		223A2F8A291204F6009C75AE /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		2249F4972911B77700B5C506 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
+		E4E2131329248EED00DD36EA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,7 +93,7 @@
 				22160A6F2910790000CF5C7D /* FlyerFinalApp.swift */,
 				22160A802910793900CF5C7D /* Views */,
 				22160A732910790100CF5C7D /* Assets.xcassets */,
-				22160A8129107A4C00CF5C7D /* GoogleService-Info.plist */,
+				E4E2131329248EED00DD36EA /* GoogleService-Info.plist */,
 				22160A752910790100CF5C7D /* FlyerFinal.entitlements */,
 				22160A762910790100CF5C7D /* Preview Content */,
 			);
@@ -185,7 +185,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1400;
-				LastUpgradeCheck = 1400;
+				LastUpgradeCheck = 1410;
 				TargetAttributes = {
 					22160A6B2910790000CF5C7D = {
 						CreatedOnToolsVersion = 14.0.1;
@@ -220,7 +220,7 @@
 			files = (
 				22160A782910790100CF5C7D /* Preview Assets.xcassets in Resources */,
 				22160A742910790100CF5C7D /* Assets.xcassets in Resources */,
-				22160A8229107A4C00CF5C7D /* GoogleService-Info.plist in Resources */,
+				E4E2131429248EED00DD36EA /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,6 +285,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -343,6 +344,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -367,8 +369,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = FlyerFinal/FlyerFinal.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"FlyerFinal/Preview Content\"";
 				DEVELOPMENT_TEAM = V4A4BSG7BL;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -405,8 +409,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = FlyerFinal/FlyerFinal.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"FlyerFinal/Preview Content\"";
 				DEVELOPMENT_TEAM = V4A4BSG7BL;
 				ENABLE_HARDENED_RUNTIME = YES;
