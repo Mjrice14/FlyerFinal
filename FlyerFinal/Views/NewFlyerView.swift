@@ -29,21 +29,21 @@ struct NewFlyerView: View {
             
             Color("main").ignoresSafeArea()
             
-            Button {
-                withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
-                    newFlyer = false
-                }
-            } label: {
-                Image(systemName: "xmark")
-                    .font(.body.weight(.bold))
-                    .foregroundColor(.secondary)
-                    .padding(8)
-                    .background(.ultraThinMaterial, in: Circle())
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-            .padding(20)
-            .padding(.top, 25)
-            .ignoresSafeArea()
+//            Button {
+//                withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+//                    newFlyer = false
+//                }
+//            } label: {
+//                Image(systemName: "xmark")
+//                    .font(.body.weight(.bold))
+//                    .foregroundColor(.secondary)
+//                    .padding(8)
+//                    .background(.ultraThinMaterial, in: Circle())
+//            }
+//            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+//            .padding(20)
+//            .padding(.top, 25)
+//            .ignoresSafeArea()
             
             VStack {
                 HStack {

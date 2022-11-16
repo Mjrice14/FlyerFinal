@@ -19,47 +19,70 @@ struct MainView: View {
                     UserFeed()
                         .transition(.move(edge: .trailing))
                 }
+            }
+            VStack {
                 if newFlyer {
                     NewFlyerView(newFlyer: $newFlyer)
+                        .transition(.move(edge: .bottom))
                 }
             }
         }.safeAreaInset(edge: .bottom) {
-            if !newFlyer {
-                HStack(spacing: 25) {
-                    if !userHub {
+            HStack(spacing: 25) {
+                if newFlyer {
+                    Button {
+                        newFlyer = false
+                        userHub = false
+                    } label: {
                         Image(systemName: "newspaper.circle")
-                        
-                        Button {
-                            userHub = true
-                        } label: {
-                            Image(systemName: "magnifyingglass.circle")
-                                .foregroundColor(.secondary)
-                            
-                        }
+                            .foregroundColor(.secondary)
                     }
-                    else {
-                        Button {
-                            userHub = false
-                        } label: {
-                            Image(systemName: "newspaper.circle")
-                                .foregroundColor(.secondary)
-                            
-                        }
+                    Image(systemName: "plus.circle")
+                        .foregroundColor(.primary)
+                    Button {
+                        newFlyer = false
+                        userHub = true
+                    } label: {
                         Image(systemName: "magnifyingglass.circle")
+                            .foregroundColor(.secondary)
                     }
-                }.font(.system(size: 40))
-                    .padding(.horizontal,8)
-                    .padding(.vertical,5)
-                    .background(.ultraThinMaterial)
-                    .cornerRadius(20)
-                if !userHub {
+                }
+                else if userHub {
+                    Button {
+                        userHub = false
+                    } label: {
+                        Image(systemName: "newspaper.circle")
+                            .foregroundColor(.secondary)
+                    }
                     Button {
                         newFlyer = true
                     } label: {
-                        Image(systemName: "plus").padding(8).font(.system(size: 36)).foregroundColor(.primary).background(.ultraThinMaterial, in: Circle())
-                    }.offset(x: 150)
+                        Image(systemName: "plus.circle")
+                            .foregroundColor(.secondary)
+                    }
+                    Image(systemName: "magnifyingglass.circle")
+                        .foregroundColor(.primary)
                 }
-            }
+                else {
+                    Image(systemName: "newspaper.circle")
+                        .foregroundColor(.primary)
+                    Button {
+                        newFlyer = true
+                    } label: {
+                        Image(systemName: "plus.circle")
+                            .foregroundColor(.secondary)
+                    }
+                    Button {
+                        userHub = true
+                    } label: {
+                        Image(systemName: "magnifyingglass.circle")
+                            .foregroundColor(.secondary)
+                    }
+                }
+            }.font(.system(size: 40))
+                .padding(.horizontal,8)
+                .padding(.vertical,5)
+                .background(.ultraThinMaterial)
+                .cornerRadius(20)
         }.animation(.spring(), value: userHub)
             .animation(.easeIn, value: newFlyer)
     }
