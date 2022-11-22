@@ -28,15 +28,15 @@ struct LoginView: View {
                 
                 HStack {
                     Image(systemName: "envelope.fill")
-                        .foregroundColor(.white)
+                        .foregroundColor(.primary)
                         .frame(width: 38)
                     TextField("Email", text: $email)
                         .focused($emailFocus)
-                        .foregroundColor(.white)
+                        .foregroundColor(.primary)
                         .textFieldStyle(.plain)
                         .placeholder(when: email.isEmpty) {
                             Text("Email")
-                                .foregroundColor(.white)
+                                .foregroundColor(.primary)
                         }
                         .autocorrectionDisabled(true)
                         .textInputAutocapitalization(.never)
@@ -44,19 +44,19 @@ struct LoginView: View {
                     .font(.system(size:28, weight: .medium, design: .rounded))
                     .padding(5.0)
                     .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .fill(Color(red: 0.22, green: 0.22, blue: 0.22)))
+                        .fill(Color("main")))
                 
                 HStack {
                     Image(systemName: "lock.fill")
-                        .foregroundColor(.white)
+                        .foregroundColor(.primary)
                         .frame(width: 38)
                     SecureField("Password", text: $password)
                         .focused($passwordFocus)
-                        .foregroundColor(.white)
+                        .foregroundColor(.primary)
                         .textFieldStyle(.plain)
                         .placeholder(when: password.isEmpty) {
                             Text("Password")
-                                .foregroundColor(.white)
+                                .foregroundColor(.primary)
                         }
                         .autocorrectionDisabled(true)
                         .textInputAutocapitalization(.never)
@@ -64,19 +64,19 @@ struct LoginView: View {
                     .font(.system(size:28, weight: .medium, design: .rounded))
                     .padding(5.0)
                     .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .fill(Color(red: 0.22, green: 0.22, blue: 0.22)))
+                        .fill(Color("main")))
                 Button {
                     login()
                 } label: {
-                    Text("Login").font(.title).padding(.horizontal).frame(width: 150,height: 40)
+                    Text("Login").font(.title).foregroundColor(.primary).padding(.horizontal).frame(width: 150,height: 40)
                         .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
-                            .fill(Color(red: 0.22, green: 0.22, blue: 0.22))).foregroundColor(.white)
+                            .fill(Color("main"))).foregroundColor(.white)
                 }.padding(.top,30).padding(.bottom)
                 
                 Button {
                     signUp = true
                 } label: {
-                    Text("Need an account? Sign Up").foregroundColor(.white)
+                    Text("Need an account? Sign Up").foregroundColor(.primary)
                 }            
             }
         }.toolbar {

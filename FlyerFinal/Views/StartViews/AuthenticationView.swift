@@ -27,7 +27,7 @@ struct AuthenticationView: View {
                     Text("")
                     Text("(The email may show")
                     Text("up in your spam folder.)")
-                }
+                }.foregroundColor(.white)
                 Button {
                     if Auth.auth().currentUser != nil {
                         if Auth.auth().currentUser!.isEmailVerified {
@@ -37,9 +37,9 @@ struct AuthenticationView: View {
                     authentic = true
                     
                 } label: {
-                    Text("Email Verified").font(.title).padding(.horizontal).frame(width: 300).padding(.vertical,5)
+                    Text("Email Verified").font(.title).foregroundColor(.primary).padding(.horizontal).frame(width: 300).padding(.vertical,5)
                         .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
-                            .fill(Color(red: 0.22, green: 0.22, blue: 0.22))).foregroundColor(.white)
+                            .fill(Color("main")))
                 }.padding(.top, 70)
                 
                 Button {
@@ -54,11 +54,10 @@ struct AuthenticationView: View {
                     }
                     
                 } label: {
-                    Text("Resend Email").font(.title).padding(.horizontal).frame(width: 300).padding(.vertical,5)
+                    Text("Resend Email").font(.title).foregroundColor(.primary).padding(.horizontal).frame(width: 300).padding(.vertical,5)
                         .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
-                            .fill(Color(red: 0.22, green: 0.22, blue: 0.22))).foregroundColor(.white)
+                            .fill(Color("main")))
                 }.padding()
-                
             }
             //}
         }

@@ -38,7 +38,7 @@ struct SignUpView: View {
                         signUp = false
                     } label: {
                         Image(systemName: "chevron.left")
-                            .padding().font(.system(.title)).foregroundColor(.white)
+                            .padding().font(.system(.title)).foregroundColor(.black)
                     }
                     Spacer()
                 }
@@ -48,33 +48,33 @@ struct SignUpView: View {
                 
                 HStack {
                     Image(systemName: "person.fill")
-                        .foregroundColor(.white)
+                        .foregroundColor(.primary)
                         .frame(width: 38)
                     TextField("Full Name", text: $fullname)
                         .focused($fullnameFocus)
-                        .foregroundColor(.white)
+                        .foregroundColor(.primary)
                         .textFieldStyle(.plain)
                         .placeholder(when: fullname.isEmpty) {
                             Text("Full Name")
-                                .foregroundColor(.white)
+                                .foregroundColor(.primary)
                         }
                 }.frame(width: 350)
                     .font(.system(size:28, weight: .medium, design: .rounded))
                     .padding(5.0)
                     .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .fill(Color(red: 0.22, green: 0.22, blue: 0.22)))
+                        .fill(Color("main")))
                 
                 HStack {
                     Image(systemName: "person.circle.fill")
-                        .foregroundColor(.white)
+                        .foregroundColor(.primary)
                         .frame(width: 38)
                     TextField("Username", text: $username)
                         .focused($usernameFocus)
-                        .foregroundColor(.white)
+                        .foregroundColor(.primary)
                         .textFieldStyle(.plain)
                         .placeholder(when: username.isEmpty) {
                             Text("Username")
-                                .foregroundColor(.white)
+                                .foregroundColor(.primary)
                         }
                         .autocorrectionDisabled(true)
                         .textInputAutocapitalization(.never)
@@ -82,7 +82,7 @@ struct SignUpView: View {
                     .font(.system(size:28, weight: .medium, design: .rounded))
                     .padding(5.0)
                     .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .fill(Color(red: 0.22, green: 0.22, blue: 0.22)))
+                        .fill(Color("main")))
                 
                 VStack {
                     /*TextField("Major", text: $major)
@@ -94,10 +94,10 @@ struct SignUpView: View {
                                 .foregroundColor(.white)
                         }*/
                     Text("Select your Major")
-                        .foregroundColor(.white)
+                        .foregroundColor(.primary)
                     Picker("Please choose a major", selection: $major) {
                         ForEach(majors, id: \.self) {
-                            Text($0).font(.title).foregroundColor(.white)
+                            Text($0).font(.title).foregroundColor(.primary)
                         }
                     }.pickerStyle(.wheel).navigationTitle("Select your Major")
                     
@@ -105,19 +105,19 @@ struct SignUpView: View {
                     .font(.system(size:28, weight: .medium, design: .rounded))
                     .padding(5.0)
                     .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .fill(Color(red: 0.22, green: 0.22, blue: 0.22)))
+                        .fill(Color("main")))
                 
                 HStack {
                     Image(systemName: "envelope.fill")
-                        .foregroundColor(.white)
+                        .foregroundColor(.primary)
                         .frame(width: 38)
                     TextField("Email", text: $email)
                         .focused($emailFocus)
-                        .foregroundColor(.white)
+                        .foregroundColor(.primary)
                         .textFieldStyle(.plain)
                         .placeholder(when: email.isEmpty) {
                             Text("Email")
-                                .foregroundColor(.white)
+                                .foregroundColor(.primary)
                         }
                         .autocorrectionDisabled(true)
                         .textInputAutocapitalization(.never)
@@ -125,19 +125,19 @@ struct SignUpView: View {
                     .font(.system(size:28, weight: .medium, design: .rounded))
                     .padding(5.0)
                     .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .fill(Color(red: 0.22, green: 0.22, blue: 0.22)))
+                        .fill(Color("main")))
                 
                 HStack {
                     Image(systemName: "lock.fill")
-                        .foregroundColor(.white)
+                        .foregroundColor(.primary)
                         .frame(width: 38)
                     TextField("Password", text: $password)
                         .focused($passwordFocus)
-                        .foregroundColor(.white)
+                        .foregroundColor(.primary)
                         .textFieldStyle(.plain)
                         .placeholder(when: password.isEmpty) {
                             Text("Password")
-                                .foregroundColor(.white)
+                                .foregroundColor(.primary)
                         }
                         .autocorrectionDisabled(true)
                         .textInputAutocapitalization(.never)
@@ -145,16 +145,16 @@ struct SignUpView: View {
                     .font(.system(size:28, weight: .medium, design: .rounded))
                     .padding(5.0)
                     .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .fill(Color(red: 0.22, green: 0.22, blue: 0.22)))
+                        .fill(Color("main")))
                 
                 Button {
                     if validateFields() {
                         signUpAuth()
                     }
                 } label: {
-                    Text("Sign Up").font(.title).padding(.horizontal).padding(.vertical,7)
+                    Text("Sign Up").font(.title).foregroundColor(.primary).padding(.horizontal).padding(.vertical,7)
                         .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
-                            .fill(Color(red: 0.22, green: 0.22, blue: 0.22))).foregroundColor(.white)
+                            .fill(Color("main"))).foregroundColor(.white)
                 }.padding(.top,30)
                 
                 Spacer()
