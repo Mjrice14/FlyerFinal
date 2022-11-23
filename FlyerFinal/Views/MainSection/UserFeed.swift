@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct UserFeed: View {
+    @StateObject var flyerManager = FlyerManager()
+    @StateObject var usersManager = UsersManager()
+    
+    @State var search = ""
     var body: some View {
         ZStack {
             //Color.primary.ignoresSafeArea()
@@ -20,6 +24,11 @@ struct UserFeed: View {
                     Spacer()
                 }
                 Spacer()
+                ScrollView {
+                    ForEach(usersManager.users,id: \.id) {user in
+                        UserBubble(user: user)
+                    }
+                }
             }
         }
     }

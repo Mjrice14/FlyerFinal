@@ -47,7 +47,7 @@ struct NewFlyerView: View {
             
             VStack {
                 HStack {
-                    Text("New Flyer").font(.title2).padding([.leading,.bottom]).padding(.top, 4)
+                    Text("New Flyer").foregroundColor(.primary).font(.title2).padding([.leading,.bottom]).padding(.top, 4)
                     Spacer()
                 }
                 ScrollView {
@@ -91,7 +91,7 @@ struct NewFlyerView: View {
                             Text("Color Picker")
                         }.pickerStyle(MenuPickerStyle())
                             .padding([.leading,.trailing,])
-                            .preferredColorScheme(.dark).tint(.white)
+                            .tint(.white)
                             .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
                                 .fill(Color(red: 0.22, green: 0.22, blue: 0.22)))
                         
@@ -150,9 +150,9 @@ struct NewFlyerView: View {
                     newFlyerCreate()
                     newFlyer = false
                 } label: {
-                    Text("Submit").font(.title).padding(.horizontal).frame(width: 150,height: 40)
+                    Text("Submit").font(.title).foregroundColor(.primary).padding(.horizontal).frame(width: 150,height: 40)
                         .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
-                            .fill(Color(red: 0.22, green: 0.22, blue: 0.22))).foregroundColor(.white)
+                            .fill(Color("main")))
                 }
             }
         }.toolbar {

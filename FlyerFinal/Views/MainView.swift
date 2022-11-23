@@ -81,7 +81,7 @@ struct MainView: View {
             }.font(.system(size: 40))
                 .padding(.horizontal,8)
                 .padding(.vertical,5)
-                .background(.ultraThinMaterial)
+                .background(.ultraThickMaterial)
                 .cornerRadius(20)
         }.animation(.spring(), value: userHub)
             .animation(.easeIn, value: newFlyer)
