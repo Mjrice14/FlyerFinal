@@ -44,8 +44,9 @@ struct FlyerFeed: View {
                             .autocorrectionDisabled(true)
                             .textInputAutocapitalization(.never)
                     }.frame(maxWidth: 120)
-                        .padding(.trailing).padding(.vertical,8).background(.secondary)
+                        .padding(.trailing).padding(.vertical,6).background(.secondary)
                         .cornerRadius(20)
+                        .font(.title3)
                     
                     Menu {
                         Button {
@@ -79,7 +80,7 @@ struct FlyerFeed: View {
                     } label: {
                         Image(systemName: "line.3.horizontal.decrease.circle")
                     }.font(.title2.weight(.medium)).padding(.trailing).foregroundColor(.primary)
-                }
+                }.padding(.top)
                 
                 ScrollView {
                     ForEach(flyerManager.flyers,id: \.id) {flyer in

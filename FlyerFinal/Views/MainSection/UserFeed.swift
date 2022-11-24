@@ -45,8 +45,9 @@ struct UserFeed: View {
                             .autocorrectionDisabled(true)
                             .textInputAutocapitalization(.never)
                     }.frame(maxWidth: 120)
-                        .padding(.trailing).padding(.vertical,8).background(.secondary)
+                        .padding(.trailing).padding(.vertical,6).background(.secondary)
                         .cornerRadius(20)
+                        .font(.title3)
                 }.padding([.top,.trailing])
                 ScrollView {
                     ForEach(usersManager.users,id: \.id) {user in
