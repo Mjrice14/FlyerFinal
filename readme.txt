@@ -1,0 +1,1 @@
+Flyer is a social media app that is meant to be used for all of Texas Tech students for a better experience in college. This project is for our Computer Science captsone class. Example code and preview pictures will be posted soon.
