@@ -10,6 +10,7 @@ import SwiftUI
 struct MainView: View {
     @State private var userHub = false
     @State private var newFlyer = false
+    @State private var eventHub = false
     
     var body: some View {
         ZStack {
@@ -17,6 +18,11 @@ struct MainView: View {
             VStack {
                 if userHub {
                     UserFeed()
+                }
+            }
+            VStack {
+                if eventHub {
+                    EventFeed()
                 }
             }
             VStack {
@@ -31,8 +37,17 @@ struct MainView: View {
                     Button {
                         newFlyer = false
                         userHub = false
+                        eventHub = false
                     } label: {
                         Image(systemName: "newspaper.circle")
+                            .foregroundColor(.primary)
+                    }
+                    Button {
+                        userHub = false
+                        eventHub = true
+                        newFlyer = false
+                    } label: {
+                        Image(systemName: "calendar.circle")
                             .foregroundColor(.primary)
                     }
                     Image(systemName: "plus.square.fill")
@@ -40,6 +55,7 @@ struct MainView: View {
                     Button {
                         newFlyer = false
                         userHub = true
+                        eventHub = false
                     } label: {
                         Image(systemName: "magnifyingglass.circle")
                             .foregroundColor(.primary)
@@ -48,8 +64,18 @@ struct MainView: View {
                 else if userHub {
                     Button {
                         userHub = false
+                        eventHub = false
+                        newFlyer = false
                     } label: {
                         Image(systemName: "newspaper.circle")
+                            .foregroundColor(.primary)
+                    }
+                    Button {
+                        userHub = false
+                        eventHub = true
+                        newFlyer = false
+                    } label: {
+                        Image(systemName: "calendar.circle")
                             .foregroundColor(.primary)
                     }
                     Button {
@@ -61,8 +87,16 @@ struct MainView: View {
                     Image(systemName: "magnifyingglass.circle.fill")
                         .foregroundColor(.primary)
                 }
-                else {
-                    Image(systemName: "newspaper.circle.fill")
+                else if eventHub {
+                    Button {
+                        userHub = false
+                        eventHub = false
+                        newFlyer = false
+                    } label: {
+                        Image(systemName: "newspaper.circle")
+                            .foregroundColor(.primary)
+                    }
+                    Image(systemName: "calendar.circle.fill")
                         .foregroundColor(.primary)
                     Button {
                         newFlyer = true
@@ -72,6 +106,34 @@ struct MainView: View {
                     }
                     Button {
                         userHub = true
+                        eventHub = false
+                        newFlyer = false
+                    } label: {
+                        Image(systemName: "magnifyingglass.circle")
+                            .foregroundColor(.primary)
+                    }
+                }
+                else {
+                    Image(systemName: "newspaper.circle.fill")
+                        .foregroundColor(.primary)
+                    Button {
+                        newFlyer = false
+                        userHub = false
+                        eventHub = true
+                    } label: {
+                        Image(systemName: "calendar.circle")
+                            .foregroundColor(.primary)
+                    }
+                    Button {
+                        newFlyer = true
+                    } label: {
+                        Image(systemName: "plus.square")
+                            .foregroundColor(.primary)
+                    }
+                    Button {
+                        userHub = true
+                        newFlyer = false
+                        eventHub = false
                     } label: {
                         Image(systemName: "magnifyingglass.circle")
                             .foregroundColor(.primary)

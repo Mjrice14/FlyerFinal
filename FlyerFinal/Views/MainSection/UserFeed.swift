@@ -49,6 +49,9 @@ struct UserFeed: View {
                         .cornerRadius(20)
                         .font(.title3)
                 }.padding([.top,.trailing])
+                
+                Divider()
+                
                 ScrollView {
                     ForEach(usersManager.users,id: \.id) {user in
                         if search.isEmpty {

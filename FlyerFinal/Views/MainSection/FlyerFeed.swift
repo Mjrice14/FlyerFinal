@@ -82,6 +82,8 @@ struct FlyerFeed: View {
                     }.font(.title2.weight(.medium)).padding(.trailing).foregroundColor(.primary)
                 }.padding(.top)
                 
+                Divider()
+                
                 ScrollView {
                     ForEach(flyerManager.flyers,id: \.id) {flyer in
                         if flyer.tags.contains(filter) {

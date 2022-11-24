@@ -28,6 +28,9 @@
 		22245407291222F6001CE96E /* UserFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22245406291222F6001CE96E /* UserFeed.swift */; };
 		223A2F8B291204F6009C75AE /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223A2F8A291204F6009C75AE /* ImagePicker.swift */; };
 		2249F4982911B77700B5C506 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2249F4972911B77700B5C506 /* AuthenticationView.swift */; };
+		E432468A292F2EF300C25F23 /* EventFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4324689292F2EF300C25F23 /* EventFeed.swift */; };
+		E432468C292F406700C25F23 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = E432468B292F406700C25F23 /* Event.swift */; };
+		E432468E292F45F300C25F23 /* EventBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = E432468D292F45F300C25F23 /* EventBubble.swift */; };
 		E463DCE3292EC56D0074B584 /* UserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = E463DCE2292EC56D0074B584 /* UserAccount.swift */; };
 		E4657A0E292D9D8800DD8885 /* UserBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4657A0D292D9D8800DD8885 /* UserBubble.swift */; };
 		E4E2131429248EED00DD36EA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E4E2131329248EED00DD36EA /* GoogleService-Info.plist */; };
@@ -53,6 +56,9 @@
 		22245406291222F6001CE96E /* UserFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFeed.swift; sourceTree = "<group>"; };
 		223A2F8A291204F6009C75AE /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		2249F4972911B77700B5C506 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
+		E4324689292F2EF300C25F23 /* EventFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventFeed.swift; sourceTree = "<group>"; };
+		E432468B292F406700C25F23 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		E432468D292F45F300C25F23 /* EventBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventBubble.swift; sourceTree = "<group>"; };
 		E463DCE2292EC56D0074B584 /* UserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccount.swift; sourceTree = "<group>"; };
 		E4657A0D292D9D8800DD8885 /* UserBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBubble.swift; sourceTree = "<group>"; };
 		E4E2131329248EED00DD36EA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -129,6 +135,7 @@
 			children = (
 				222453FB29121601001CE96E /* Flyer.swift */,
 				222453FD29121613001CE96E /* User.swift */,
+				E432468B292F406700C25F23 /* Event.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -150,6 +157,7 @@
 				222453FF291216B2001CE96E /* FlyerBubble.swift */,
 				22245401291216F7001CE96E /* DataManager.swift */,
 				E4657A0D292D9D8800DD8885 /* UserBubble.swift */,
+				E432468D292F45F300C25F23 /* EventBubble.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -161,6 +169,7 @@
 				22245406291222F6001CE96E /* UserFeed.swift */,
 				220D049729131E4000B3878E /* NewFlyerView.swift */,
 				E463DCE2292EC56D0074B584 /* UserAccount.swift */,
+				E4324689292F2EF300C25F23 /* EventFeed.swift */,
 			);
 			path = MainSection;
 			sourceTree = "<group>";
@@ -249,7 +258,10 @@
 				22245402291216F7001CE96E /* DataManager.swift in Sources */,
 				22245407291222F6001CE96E /* UserFeed.swift in Sources */,
 				222453F92912140C001CE96E /* MainView.swift in Sources */,
+				E432468A292F2EF300C25F23 /* EventFeed.swift in Sources */,
 				22160A7F2910793000CF5C7D /* LoginView.swift in Sources */,
+				E432468E292F45F300C25F23 /* EventBubble.swift in Sources */,
+				E432468C292F406700C25F23 /* Event.swift in Sources */,
 				22160A722910790000CF5C7D /* ContentView.swift in Sources */,
 				E4657A0E292D9D8800DD8885 /* UserBubble.swift in Sources */,
 				222453FC29121601001CE96E /* Flyer.swift in Sources */,
@@ -395,6 +407,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "We'd like to access your calendar to add upcoming events.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -436,6 +449,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "We'd like to access your calendar to add upcoming events.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;

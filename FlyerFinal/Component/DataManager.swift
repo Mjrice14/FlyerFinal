@@ -66,3 +66,31 @@ class UsersManager: ObservableObject {
         }
     }
 }
+
+class EventsManager: ObservableObject {
+    @Published private(set) var events: [Event] = []
+    let db = Firestore.firestore()
+    
+    init() {
+        getEvents()
+    }
+    
+    func getEvents() {
+        db.collection("events").addSnapshotListener { querySnapshot, error in
+            guard let documents = querySnapshot?.documents else {
+                print("Error fetching documets: \(String(describing: error))")
+                return
+            }
+            
+            self.events = documents.compactMap { document -> Event? in
+                do {
+                    return try document.data(as: Event.self)
+                } catch {
+                    print("Error decoding document into Flyer: \(error)")
+                    return nil
+                }
+                
+            }
+        }
+    }
+}
