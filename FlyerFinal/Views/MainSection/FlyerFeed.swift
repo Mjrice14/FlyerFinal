@@ -16,6 +16,10 @@ struct FlyerFeed: View {
     @State private var newUserID = Auth.auth().currentUser?.uid
     @State private var filter = "Public"
     
+    @State var search = ""
+    
+    @FocusState private var searchFocus: Bool
+    
     var body: some View {
         ZStack {
             Color("main").ignoresSafeArea()
@@ -25,8 +29,23 @@ struct FlyerFeed: View {
             VStack {
                 HStack {
                     Text("Recent Flyer Feed").font(.title2.weight(.medium))
-                        .padding([.leading,.top])
+                        .padding(.leading)
                     Spacer()
+                    HStack {
+                        Image(systemName: "magnifyingglass").padding(.leading,7)
+                        TextField("Serach", text: $search)
+                            .focused($searchFocus)
+                            .foregroundColor(.primary)
+                            .textFieldStyle(.plain)
+                            .placeholder(when: search.isEmpty) {
+                                Text("Search")
+                                    .foregroundColor(.primary)
+                            }
+                            .autocorrectionDisabled(true)
+                            .textInputAutocapitalization(.never)
+                    }.frame(maxWidth: 120)
+                        .padding(.trailing).padding(.vertical,8).background(.secondary)
+                        .cornerRadius(20)
                     
                     Menu {
                         Button {
@@ -65,10 +84,25 @@ struct FlyerFeed: View {
                 ScrollView {
                     ForEach(flyerManager.flyers,id: \.id) {flyer in
                         if flyer.tags.contains(filter) {
-                            FlyerBubble(flyer: flyer, display: false)
+                            if search.isEmpty {
+                                FlyerBubble(flyer: flyer, display: false)
+                            }
+                            else if flyer.title.lowercased().contains(search.lowercased()) {
+                                FlyerBubble(flyer: flyer, display: false)
+                            }
+                            else if flyer.name.lowercased().contains(search.lowercased()) {
+                                FlyerBubble(flyer: flyer, display: false)
+                            }
                         }
                     }
                 }
+            }
+        }.toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("Done") {
+                    searchFocus = false
+                }.tint(.blue)
             }
         }
     }
