@@ -10,13 +10,22 @@ import SwiftUI
 struct UserFeed: View {
     @StateObject var flyerManager = FlyerManager()
     @StateObject var usersManager = UsersManager()
+    @State private var clicked = ""
     
     @State var search = ""
     
     @FocusState private var searchFocus: Bool
     var body: some View {
+        if clicked.isEmpty {
+            content
+        }
+        else {
+            UserAccount(user: getUser(login: clicked), clicked: $clicked)
+        }
+    }
+    
+    var content: some View {
         ZStack {
-            //Color.primary.ignoresSafeArea()
             Color("main").ignoresSafeArea()
             
             VStack {
@@ -37,16 +46,22 @@ struct UserFeed: View {
                             .textInputAutocapitalization(.never)
                     }.frame(maxWidth: 120)
                         .padding(.trailing).padding(.vertical,8).background(.secondary)
-                        .cornerRadius(10)
+                        .cornerRadius(20)
                 }.padding([.top,.trailing])
                 ScrollView {
                     ForEach(usersManager.users,id: \.id) {user in
                         if search.isEmpty {
-                            UserBubble(user: user)
+                            UserBubble(user: user, clicked: $clicked).tint(.primary).onTapGesture {
+                                clicked = user.id
+                            }
                         }
                         else {
-                            if user.fullname.lowercased().contains(search.lowercased()) {
-                                UserBubble(user: user)
+                            if user.fullname.lowercased().contains(search.lowercased()) || user.username.lowercased().contains(search.lowercased()) {
+                                Button {
+                                    clicked = user.id
+                                } label: {
+                                    UserBubble(user: user, clicked: $clicked).tint(.primary)
+                                }
                             }
                         }
                     }
@@ -60,6 +75,15 @@ struct UserFeed: View {
                 }.tint(.blue)
             }
         }
+        
+    }
+    func getUser(login:String) -> User {
+        for user in usersManager.users {
+            if user.id == login {
+                return user
+            }
+        }
+        return User(id: "fRIWBPjsqlbFxVjb5ylH5PMVun62", fullname: "Elon Musk", username: "misterkiller", major: "Rich", tags: ["Millionare"], type: "admin")
     }
 }
 

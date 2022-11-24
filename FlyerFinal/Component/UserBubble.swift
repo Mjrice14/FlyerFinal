@@ -10,6 +10,7 @@ import FirebaseAuth
 
 struct UserBubble: View {
     var user: User
+    @Binding var clicked: String
     
     @State private var show = false
     @State private var newUserID = Auth.auth().currentUser?.uid
@@ -17,20 +18,20 @@ struct UserBubble: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Image("placeholder").resizable().aspectRatio(contentMode: .fit).cornerRadius(50).frame(width: 65, height: 65).padding(.trailing,7)
+                Image("placeholder").resizable().aspectRatio(contentMode: .fit).cornerRadius(50).frame(width: 55, height: 55).padding(.trailing,7)
                 VStack(alignment: .leading) {
                     Text(user.fullname).font(.title.weight(.medium))
-                    Text(user.major)
+                    Text(user.username)
                 }
                 Spacer()
             }.padding().frame(maxWidth: 400).background(.secondary)
                 .cornerRadius(30)
-        }
+        }.padding(.bottom,5)
     }
 }
 
 struct UserBubble_Previews: PreviewProvider {
     static var previews: some View {
-        UserBubble(user: User(id: "", fullname: "Matthew Rice", major: "Computer Science", tags: ["Student","Computer Science"]))
+        UserBubble(user: User(id: "fRIWBPjsqlbFxVjb5ylH5PMVun62", fullname: "Matthew Rice", username: "misterkiller", major: "Computer Science", tags: ["Student","Computer Science"], type: "admin"), clicked: .constant(""))
     }
 }

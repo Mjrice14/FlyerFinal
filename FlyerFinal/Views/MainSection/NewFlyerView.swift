@@ -173,7 +173,7 @@ struct NewFlyerView: View {
                 return user
             }
         }
-        return User(id: "fRIWBPjsqlbFxVjb5ylH5PMVun62", fullname: "Elon Musk", major: "Rich", tags: ["Millionare"])
+        return User(id: "fRIWBPjsqlbFxVjb5ylH5PMVun62", fullname: "Elon Musk", username: "misterkiller", major: "Rich", tags: ["Millionare"], type: "admin")
     }
     
     func validateFields() -> Bool {
