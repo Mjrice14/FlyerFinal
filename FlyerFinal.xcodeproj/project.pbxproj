@@ -33,6 +33,7 @@
 		E432468E292F45F300C25F23 /* EventBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = E432468D292F45F300C25F23 /* EventBubble.swift */; };
 		E463DCE3292EC56D0074B584 /* UserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = E463DCE2292EC56D0074B584 /* UserAccount.swift */; };
 		E4657A0E292D9D8800DD8885 /* UserBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4657A0D292D9D8800DD8885 /* UserBubble.swift */; };
+		E46764CE2930ADA8007F08E0 /* NewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46764CD2930ADA8007F08E0 /* NewView.swift */; };
 		E4E2131429248EED00DD36EA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E4E2131329248EED00DD36EA /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +62,7 @@
 		E432468D292F45F300C25F23 /* EventBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventBubble.swift; sourceTree = "<group>"; };
 		E463DCE2292EC56D0074B584 /* UserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccount.swift; sourceTree = "<group>"; };
 		E4657A0D292D9D8800DD8885 /* UserBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBubble.swift; sourceTree = "<group>"; };
+		E46764CD2930ADA8007F08E0 /* NewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewView.swift; sourceTree = "<group>"; };
 		E4E2131329248EED00DD36EA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -170,6 +172,7 @@
 				220D049729131E4000B3878E /* NewFlyerView.swift */,
 				E463DCE2292EC56D0074B584 /* UserAccount.swift */,
 				E4324689292F2EF300C25F23 /* EventFeed.swift */,
+				E46764CD2930ADA8007F08E0 /* NewView.swift */,
 			);
 			path = MainSection;
 			sourceTree = "<group>";
@@ -272,6 +275,7 @@
 				222453F729121229001CE96E /* StartPageView.swift in Sources */,
 				22160A702910790000CF5C7D /* FlyerFinalApp.swift in Sources */,
 				22245405291219AF001CE96E /* FlyerFeed.swift in Sources */,
+				E46764CE2930ADA8007F08E0 /* NewView.swift in Sources */,
 				222453FE29121613001CE96E /* User.swift in Sources */,
 				2249F4982911B77700B5C506 /* AuthenticationView.swift in Sources */,
 			);

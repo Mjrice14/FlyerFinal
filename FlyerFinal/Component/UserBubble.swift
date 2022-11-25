@@ -20,11 +20,11 @@ struct UserBubble: View {
             HStack {
                 Image("placeholder").resizable().aspectRatio(contentMode: .fit).cornerRadius(50).frame(width: 55, height: 55).padding(.trailing,7)
                 VStack(alignment: .leading) {
-                    Text(user.fullname).font(.title.weight(.medium))
-                    Text(user.username)
+                    Text(user.fullname).font(.title2.weight(.bold))
+                    Text(user.username).font(.title3.weight(.medium))
                 }
                 Spacer()
-            }.padding().frame(maxWidth: 400).background(.secondary)
+            }.padding(6).frame(maxWidth: 400).background(.secondary)
                 .cornerRadius(30)
         }.padding(.bottom,5)
     }

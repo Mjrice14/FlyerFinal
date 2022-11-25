@@ -11,9 +11,17 @@ import FirebaseAuth
 struct EventBubble: View {
     var event:Event
     
-    let myFormat = Date.FormatStyle()
-        .day()
+    let myMonth = Date.FormatStyle()
         .month()
+//        .hour(.defaultDigits(amPM: .abbreviated))
+//        .minute(.twoDigits)
+        .locale(Locale(identifier: "en_US"))
+    
+    let myDay = Date.FormatStyle()
+        .day()
+        .locale(Locale(identifier: "en_US"))
+    
+    let myTime = Date.FormatStyle()
         .hour(.defaultDigits(amPM: .abbreviated))
         .minute(.twoDigits)
         .locale(Locale(identifier: "en_US"))
@@ -21,9 +29,23 @@ struct EventBubble: View {
     
     var body: some View {
         VStack {
+//            HStack {
+//                Text(event.title+" \(event.date.formatted(myFormat))")
+//            }.font(.title3.weight(.medium))
             HStack {
-                Text(event.title+" \(event.date.formatted(myFormat))")
-            }.font(.title3.weight(.medium))
+                VStack(spacing: -6) {
+                    Text(event.date.formatted(myDay))
+                        .font(.title.weight(.black))
+                    Text(event.date.formatted(myMonth))
+                        .font(.title2.weight(.medium))
+                }
+                VStack(alignment: .leading) {
+                    Text(event.title)
+                        .font(.title2.weight(.bold))
+                    Text(event.date.formatted(myTime)+", "+event.location)
+                        .font(.title3)
+                }.padding(.leading,8)
+            }
         }
     }
 }

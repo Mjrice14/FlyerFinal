@@ -11,6 +11,7 @@ import FirebaseFirestore
 
 struct NewFlyerView: View {
     @Binding var newFlyer: Bool
+    @Binding var viewType: String
     
     @StateObject var usersManager = UsersManager()
     
@@ -46,10 +47,21 @@ struct NewFlyerView: View {
 //            .ignoresSafeArea()
             
             VStack {
+                
                 HStack {
-                    Text("New Flyer").foregroundColor(.primary).font(.title2).padding([.leading,.bottom]).padding(.top, 4)
+                    Text("New Flyer")
+                        .foregroundColor(.primary).font(.title2).padding([.leading,.top])
                     Spacer()
                 }
+                //if userNow.tags.contains("Staff") {
+                    Picker(selection: $viewType, label: Text("New Type")) {
+                        Text("Flyer").tag("flyer")
+                        Text("Event").tag("event")
+                    }.pickerStyle(SegmentedPickerStyle()).frame(maxWidth: 400).padding(.bottom,5)
+                //}
+                
+                Divider()
+                
                 ScrollView {
                     VStack(spacing: 15) {
                         FlyerBubble(flyer: Flyer(id: "", title: "Example Post", description: "This is an example of how your post would look.", date: Date(), imageName: "", likes: [], name: userNow.fullname, userID: userNow.id, color: Int(color)!, tags: ["Public"]),display: true)
@@ -187,7 +199,7 @@ struct NewFlyerView: View {
         let db = Firestore.firestore()
         let userNow = getUser(login: newUserID ?? "j4vd5j1O3tcCaH7oDifrb7GMHe62")
         let docID = randomString(length: 20)
-        
+
         let docref = db.collection("flyers").document(docID)
             docref.setData(["color":Int(color) ?? 1, "date":Date(), "description":description, "imageName":"none","likes":[] ,"name":userNow.fullname, "title":title, "id":(docID) ,"userID":newUserID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62","tags":tags]) { error in
                 if error != nil {
@@ -204,6 +216,6 @@ struct NewFlyerView: View {
 
 struct NewFlyerView_Previews: PreviewProvider {
     static var previews: some View {
-        NewFlyerView(newFlyer: .constant(true))
+        NewFlyerView(newFlyer: .constant(true), viewType: .constant("flyer"))
     }
 }

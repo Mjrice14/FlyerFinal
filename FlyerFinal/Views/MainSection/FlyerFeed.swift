@@ -10,13 +10,16 @@ import FirebaseAuth
 import FirebaseFirestore
 
 struct FlyerFeed: View {    
+    @Binding var flyerHub: Bool
+    
     @StateObject var flyerManager = FlyerManager()
     @StateObject var usersManager = UsersManager()
     
     @State private var newUserID = Auth.auth().currentUser?.uid
     @State private var filter = "Public"
     
-    @State var search = ""
+    @State private var search = ""
+    @State private var bar = false
     
     @FocusState private var searchFocus: Bool
     
@@ -31,22 +34,19 @@ struct FlyerFeed: View {
                     Text("Recent Flyer Feed").font(.title2.weight(.medium))
                         .padding(.leading)
                     Spacer()
-                    HStack {
-                        Image(systemName: "magnifyingglass").padding(.leading,7)
-                        TextField("Serach", text: $search)
-                            .focused($searchFocus)
-                            .foregroundColor(.primary)
-                            .textFieldStyle(.plain)
-                            .placeholder(when: search.isEmpty) {
-                                Text("Search")
-                                    .foregroundColor(.primary)
-                            }
-                            .autocorrectionDisabled(true)
-                            .textInputAutocapitalization(.never)
-                    }.frame(maxWidth: 120)
-                        .padding(.trailing).padding(.vertical,6).background(.secondary)
-                        .cornerRadius(20)
-                        .font(.title3)
+                    
+                    Button {
+                        bar.toggle()
+                    } label: {
+                        if !bar {
+                            Image(systemName: "magnifyingglass")
+                                .font(.title3)
+                        }
+                        else {
+                            Text("Close")
+                                .font(.title3)
+                        }
+                    }.tint(.primary)
                     
                     Menu {
                         Button {
@@ -79,8 +79,27 @@ struct FlyerFeed: View {
                         }
                     } label: {
                         Image(systemName: "line.3.horizontal.decrease.circle")
-                    }.font(.title2.weight(.medium)).padding(.trailing).foregroundColor(.primary)
-                }.padding(.top)
+                    }.font(.title2.weight(.medium)).foregroundColor(.primary)
+                }.padding([.top,.trailing])
+                
+                if bar {
+                    HStack {
+                        Image(systemName: "magnifyingglass").padding(.trailing,4)
+                        TextField("Serach", text: $search)
+                            .focused($searchFocus)
+                            .foregroundColor(.primary)
+                            .textFieldStyle(.plain)
+                            .placeholder(when: search.isEmpty) {
+                                Text("Search")
+                                    .foregroundColor(.primary)
+                            }
+                            .autocorrectionDisabled(true)
+                            .textInputAutocapitalization(.never)
+                    }.padding(5).background(.secondary)
+                        .cornerRadius(20)
+                        .font(.title3)
+                        .frame(maxWidth: 400)
+                }
                 
                 Divider()
                 
@@ -100,13 +119,15 @@ struct FlyerFeed: View {
                     }
                 }
             }
-        }.toolbar {
-            ToolbarItemGroup(placement: .keyboard) {
-                Spacer()
-                Button("Done") {
-                    searchFocus = false
-                }.tint(.blue)
-            }
+       }.toolbar {
+           if flyerHub {
+               ToolbarItemGroup(placement: .keyboard) {
+                   Spacer()
+                   Button("Done") {
+                       searchFocus = false
+                   }.tint(.blue)
+               }
+           }
         }
     }
     
@@ -122,6 +143,6 @@ struct FlyerFeed: View {
 
 struct FlyerFeed_Previews: PreviewProvider {
     static var previews: some View {
-        FlyerFeed()
+        FlyerFeed(flyerHub: .constant(true))
     }
 }

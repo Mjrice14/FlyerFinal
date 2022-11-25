@@ -14,8 +14,16 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            if !authentic {
-                StartPageView(authentic: $authentic,loggedIn: $loggedIn)
+            if Auth.auth().currentUser != nil {
+                if Auth.auth().currentUser!.isEmailVerified {
+                    MainView()
+                }
+                else {
+                    StartPageView(authentic: $authentic, loggedIn: .constant(true))
+                }
+            }
+            else if !authentic {
+                StartPageView(authentic: $authentic, loggedIn: $loggedIn)
             }
             else {
                 MainView()

@@ -11,6 +11,8 @@ import EventKit
 struct EventFeed: View {
     @State private var search = ""
     @State private var bar = false
+    @State private var addMe = false
+    @State private var addEvent = ""
     
     @FocusState private var searchFocus: Bool
     
@@ -22,24 +24,18 @@ struct EventFeed: View {
                 HStack {
                     Text("Upcoming Events").font(.title2.weight(.medium)).padding(.leading)
                     Spacer()
-                    HStack {
-                        Button {
-                            bar.toggle()
-                        } label: {
-                            if !bar {
-                                Image(systemName: "magnifyingglass").padding(8)
-                                    .background(.secondary)
-                                    .cornerRadius(20)
-                                    .font(.title3)
-                            }
-                            else {
-                                Text("Close").padding(8)
-                                    .background(.secondary)
-                                    .cornerRadius(20)
-                                    .font(.title3)
-                            }
-                        }.tint(.primary)
-                    }
+                    Button {
+                        bar.toggle()
+                    } label: {
+                        if !bar {
+                            Image(systemName: "magnifyingglass")
+                                .font(.title3)
+                        }
+                        else {
+                            Text("Close")
+                                .font(.title3)
+                        }
+                    }.tint(.primary)
                 }.padding([.top,.trailing])
                 if bar {
                     HStack {
@@ -54,7 +50,7 @@ struct EventFeed: View {
                             }
                             .autocorrectionDisabled(true)
                             .textInputAutocapitalization(.never)
-                    }.padding(8).background(.secondary)
+                    }.padding(5).background(.secondary)
                         .cornerRadius(20)
                         .font(.title3)
                         .frame(maxWidth: 400)
@@ -62,17 +58,32 @@ struct EventFeed: View {
                 Divider()
                 ScrollView {
                     ForEach(eventManager.events,id: \.id) {event in
-                        HStack {
-                            EventBubble(event: event)
-                            Spacer()
-                            Button {
-                                addCalendar(eventCal: event)
-                            } label: {
-                                Image(systemName: "plus")
-                            }.tint(.primary).fontWeight(.bold)
-                        }.frame(maxWidth: 360).padding(.top)
+                        if event.date > Date() {
+                            HStack {
+                                EventBubble(event: event)
+                                Spacer()
+                                Button {
+                                    addEvent = event.id
+                                    addMe = true
+                                } label: {
+                                    Image(systemName: "plus")
+                                }.tint(.primary).fontWeight(.bold)
+                                    .confirmationDialog("Are you sure you want to add \(getEvent(eventID: addEvent).title) to your calendar?", isPresented: $addMe, titleVisibility: .visible) {
+                                        Button("Add Event") {
+                                            addCalendar(eventCal: getEvent(eventID: addEvent))
+                                        }
+                                    }
+                            }.frame(maxWidth: 360).padding(.top)
+                        }
                     }
                 }
+            }
+        }.toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("Done") {
+                    searchFocus = false
+                }.tint(.blue)
             }
         }
     }
@@ -102,6 +113,16 @@ struct EventFeed: View {
                 print("failed to save event with error : \(String(describing: error)) or access not granted")
             }
         }
+    }
+    
+    func getEvent(eventID:String) -> Event {
+        for event in eventManager.events {
+            if event.id == eventID {
+                return event
+            }
+        }
+        
+        return Event(id: "ql0WXSB04YSsrD8bBIM3", title: "Football Game", location: "AT&T Stadium", date: Date(), end: Date().addingTimeInterval(1000))
     }
 }
 

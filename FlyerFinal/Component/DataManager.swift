@@ -91,6 +91,7 @@ class EventsManager: ObservableObject {
                 }
                 
             }
+            self.events.sort { $0.date < $1.date }
         }
     }
 }

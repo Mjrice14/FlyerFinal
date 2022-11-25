@@ -12,7 +12,8 @@ struct UserFeed: View {
     @StateObject var usersManager = UsersManager()
     @State private var clicked = ""
     
-    @State var search = ""
+    @State private var search = ""
+    @State private var bar = false
     
     @FocusState private var searchFocus: Bool
     var body: some View {
@@ -32,8 +33,22 @@ struct UserFeed: View {
                 HStack {
                     Text("User Serach").font(.title2.weight(.medium)).padding(.leading)
                     Spacer()
+                    Button {
+                        bar.toggle()
+                    } label: {
+                        if !bar {
+                            Image(systemName: "magnifyingglass")
+                                .font(.title3)
+                        }
+                        else {
+                            Text("Close")
+                                .font(.title3)
+                        }
+                    }.tint(.primary)
+                }.padding([.top,.trailing])
+                if bar {
                     HStack {
-                        Image(systemName: "magnifyingglass").padding(.leading,7)
+                        Image(systemName: "magnifyingglass").padding(.trailing,4)
                         TextField("Serach", text: $search)
                             .focused($searchFocus)
                             .foregroundColor(.primary)
@@ -44,11 +59,11 @@ struct UserFeed: View {
                             }
                             .autocorrectionDisabled(true)
                             .textInputAutocapitalization(.never)
-                    }.frame(maxWidth: 120)
-                        .padding(.trailing).padding(.vertical,6).background(.secondary)
+                    }.padding(5).background(.secondary)
                         .cornerRadius(20)
                         .font(.title3)
-                }.padding([.top,.trailing])
+                        .frame(maxWidth: 400)
+                }
                 
                 Divider()
                 
