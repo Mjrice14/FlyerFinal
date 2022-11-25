@@ -17,7 +17,7 @@ struct NewView: View {
                 NewFlyerView(newFlyer: $newFlyer, viewType: $newType)
             }
             else {
-                NewEventView()
+                NewEventView(newFlyer: $newFlyer, viewType: $newType)
             }
         }
     }

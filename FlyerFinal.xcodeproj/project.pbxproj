@@ -172,10 +172,10 @@
 				22245404291219AF001CE96E /* FlyerFeed.swift */,
 				22245406291222F6001CE96E /* UserFeed.swift */,
 				220D049729131E4000B3878E /* NewFlyerView.swift */,
+				E46764D12930B6D3007F08E0 /* NewEventView.swift */,
 				E463DCE2292EC56D0074B584 /* UserAccount.swift */,
 				E4324689292F2EF300C25F23 /* EventFeed.swift */,
 				E46764CD2930ADA8007F08E0 /* NewView.swift */,
-				E46764D12930B6D3007F08E0 /* NewEventView.swift */,
 			);
 			path = MainSection;
 			sourceTree = "<group>";
