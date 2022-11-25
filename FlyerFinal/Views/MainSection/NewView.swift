@@ -16,6 +16,9 @@ struct NewView: View {
             if newType == "flyer" {
                 NewFlyerView(newFlyer: $newFlyer, viewType: $newType)
             }
+            else {
+                NewEventView()
+            }
         }
     }
 }
