@@ -24,18 +24,18 @@ struct EventFeed: View {
                 HStack {
                     Text("Upcoming Events").font(.title2.weight(.medium)).padding(.leading)
                     Spacer()
-                    Button {
-                        bar.toggle()
-                    } label: {
-                        if !bar {
-                            Image(systemName: "magnifyingglass")
-                                .font(.title3)
-                        }
-                        else {
-                            Text("Close")
-                                .font(.title3)
-                        }
-                    }.tint(.primary)
+//                    Button {
+//                        bar.toggle()
+//                    } label: {
+//                        if !bar {
+//                            Image(systemName: "magnifyingglass")
+//                                .font(.title3)
+//                        }
+//                        else {
+//                            Text("Close")
+//                                .font(.title3)
+//                        }
+//                    }.tint(.primary)
                 }.padding([.top,.trailing])
                 if bar {
                     HStack {
