@@ -17,26 +17,27 @@ struct FlyerBubble: View {
     @State private var show = false
     @State private var newUserID = Auth.auth().currentUser?.uid
     
+    @State private var postImage = UIImage(named: "placeholder2")
+    
     var body: some View {
         VStack {
+            VStack {
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text(flyer.name)
+                            .bold()
+                        Text("\(flyer.date.formatted())")
+                    }
+                    Spacer()
+                }.frame(maxWidth: 350)
+            }
+            
+            if postImage != nil {
+                Image(uiImage: postImage!).resizable().aspectRatio(contentMode: .fit).frame(width: 350, height: 350)
+            }
+            
             HStack {
                 VStack(alignment: .leading) {
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(flyer.name)
-                                .bold()
-                            Text("\(flyer.date.formatted())")
-                        }
-                    }
-                    
-                    Text(flyer.title)
-                        .font(.system(size: 30, weight: .bold, design: .rounded))
-                        .padding(.bottom, 5.0)
-                        
-                    
-                    Text(flyer.description)
-                        .fontWeight(.medium)
-                    
                     HStack(spacing: 20) {
                         Button {
                             if !display {
@@ -54,11 +55,19 @@ struct FlyerBubble: View {
                         }.foregroundColor(.primary)
                         Spacer()
                     }
-                    .padding(.top)
+                    
+                    Text(flyer.title)
+                        .font(.system(size: 30, weight: .bold, design: .rounded))
+                        .padding(.bottom, 5.0)
+                        
+                    
+                    Text(flyer.description)
+                        .fontWeight(.medium)
                 }
-            }.padding().frame(maxWidth: 400).background(getGradient(a: flyer.color))
-                .cornerRadius(30)
+            }.frame(maxWidth: 350)
         }
+        .padding().frame(maxWidth: 400).background(getGradient(a: flyer.color))
+            .cornerRadius(30)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     func addLike() {
