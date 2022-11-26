@@ -10,7 +10,8 @@ import SwiftUI
 struct UserFeed: View {
     @StateObject var flyerManager = FlyerManager()
     @StateObject var usersManager = UsersManager()
-    @State private var clicked = ""
+    @Binding var clicked: String
+    @Binding var newFlyer: Bool
     
     @State private var search = ""
     @State private var bar = false
@@ -27,7 +28,7 @@ struct UserFeed: View {
     
     var content: some View {
         ZStack {
-            Color("main").ignoresSafeArea()
+            Color("background").ignoresSafeArea()
             
             VStack {
                 HStack {
@@ -87,11 +88,13 @@ struct UserFeed: View {
                 }
             }
         }.toolbar {
-            ToolbarItemGroup(placement: .keyboard) {
-                Spacer()
-                Button("Done") {
-                    searchFocus = false
-                }.tint(.blue)
+            if !newFlyer {
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    Button("Done") {
+                        searchFocus = false
+                    }.tint(.blue)
+                }
             }
         }
         
@@ -108,6 +111,6 @@ struct UserFeed: View {
 
 struct UserFeed_Previews: PreviewProvider {
     static var previews: some View {
-        UserFeed()
+        UserFeed(clicked: .constant(""), newFlyer: .constant(true))
     }
 }

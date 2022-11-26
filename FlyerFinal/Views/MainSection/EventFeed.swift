@@ -19,7 +19,7 @@ struct EventFeed: View {
     @StateObject var eventManager = EventsManager()
     var body: some View {
         ZStack {
-            Color("main").ignoresSafeArea()
+            Color("background").ignoresSafeArea()
             VStack {
                 HStack {
                     Text("Upcoming Events").font(.title2.weight(.medium)).padding(.leading)

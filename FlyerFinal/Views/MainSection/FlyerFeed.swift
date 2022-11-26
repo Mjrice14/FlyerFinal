@@ -12,6 +12,7 @@ import FirebaseFirestore
 struct FlyerFeed: View {    
     @Binding var flyerHub: Bool
     @Binding var displayFlyer: String
+    @Binding var newFlyer: Bool
     
     @StateObject var flyerManager = FlyerManager()
     @StateObject var usersManager = UsersManager()
@@ -27,7 +28,7 @@ struct FlyerFeed: View {
     
     var body: some View {
         ZStack {
-            Color("main").ignoresSafeArea()
+            Color("background").ignoresSafeArea()
             
             let userNow = getUser(login: newUserID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62")
             
@@ -131,7 +132,7 @@ struct FlyerFeed: View {
                 FlyerView(flyer: getFlyer(flyerId: displayFlyer), flyerID: $displayFlyer)
             }
        }.toolbar {
-           if flyerHub {
+           if flyerHub && !newFlyer {
                ToolbarItemGroup(placement: .keyboard) {
                    Spacer()
                    Button("Done") {
@@ -163,6 +164,6 @@ struct FlyerFeed: View {
 
 struct FlyerFeed_Previews: PreviewProvider {
     static var previews: some View {
-        FlyerFeed(flyerHub: .constant(true),displayFlyer: .constant(""))
+        FlyerFeed(flyerHub: .constant(true),displayFlyer: .constant(""), newFlyer: .constant(true))
     }
 }

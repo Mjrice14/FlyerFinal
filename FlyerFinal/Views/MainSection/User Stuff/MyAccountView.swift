@@ -18,6 +18,7 @@ struct MyAccountView: View {
     @StateObject var usersManager = UsersManager()
     
     @State private var currentID = Auth.auth().currentUser?.uid
+    @State private var displayFlyer = ""
     
     @State private var userImage = UIImage(named: "placeholder")
     
@@ -26,7 +27,7 @@ struct MyAccountView: View {
     
     var body: some View {
         ZStack {
-            Color("main").ignoresSafeArea()
+            Color("background").ignoresSafeArea()
             
             VStack {
                 
@@ -75,6 +76,10 @@ struct MyAccountView: View {
                         Text(user.fullname).font(.title2.weight(.medium)).padding(.leading,30)
                         Spacer()
                     }
+                    HStack {
+                        Text(user.major).font(.title3).padding(.leading,30)
+                        Spacer()
+                    }
                     Button {
                         showEdit = true
                     } label: {
@@ -83,7 +88,9 @@ struct MyAccountView: View {
                     }.tint(.primary)
                     ForEach(flyerManager.flyers,id: \.id) {flyer in
                         if flyer.userID == user.id {
-                            FlyerBubble(flyer: flyer, display: false)
+                            FlyerBubble(flyer: flyer, display: false).onTapGesture{
+                                displayFlyer = flyer.id
+                            }
                         }
                     }
                 }
@@ -91,6 +98,9 @@ struct MyAccountView: View {
             if showEdit {
                 UserEditView(showEdit: $showEdit, user: user)
                     .transition(.move(edge: .bottom))
+            }
+            if !displayFlyer.isEmpty {
+                FlyerView(flyer: getFlyer(flyerId: displayFlyer), flyerID: $displayFlyer)
             }
         }.animation(.easeIn, value: showEdit).onAppear {
             retrieveProfilePhoto(login: currentID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62")
@@ -141,6 +151,15 @@ struct MyAccountView: View {
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
         }
+    }
+    
+    func getFlyer(flyerId:String) -> Flyer {
+        for flyer in flyerManager.flyers {
+            if flyer.id == flyerId {
+                return flyer
+            }
+        }
+        return Flyer(id: "AfsNWyjGwwPq8kYoaGOr", title: "Testing", description: "This is a test to see if this will be a practical method to create flyer posts.", date: Date(), imageName: "image.yuj", likes: ["fRIWBPjsqlbFxVjb5ylH5PMVun62"], name: "Matthew Rice", userID: "fRIWBPjsqlbFxVjb5ylH5PMVun62", color: 3, tags: ["Student"])
     }
 }
 

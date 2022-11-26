@@ -19,7 +19,7 @@ struct UserEditView: View {
     
     var body: some View {
         ZStack {
-            Color("main").ignoresSafeArea()
+            Color("background").ignoresSafeArea()
             VStack {
                 HStack {
                     Button {
@@ -54,6 +54,11 @@ struct UserEditView: View {
                             } label: {
                                 Image("placeholder").resizable().aspectRatio(contentMode: .fit).cornerRadius(50).frame(width: 100, height: 100)
                             }
+                        }
+                        Button {
+                            pictureMethod = true
+                        } label: {
+                            Text("Edit Photo").font(.title3)
                         }
                     }.confirmationDialog("How would you like to choose your photo?", isPresented: $pictureMethod, titleVisibility: .visible) {
                         Button("Take a Photo") {

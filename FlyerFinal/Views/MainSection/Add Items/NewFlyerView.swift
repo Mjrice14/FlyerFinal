@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseAuth
 import FirebaseFirestore
+import FirebaseStorage
 
 struct NewFlyerView: View {
     @Binding var newFlyer: Bool
@@ -15,11 +16,16 @@ struct NewFlyerView: View {
     
     @StateObject var usersManager = UsersManager()
     
+    @State private var flyerImage = UIImage(named: "placeholder2")
     @State private var newUserID = Auth.auth().currentUser?.uid
     @State private var color = "4"
     @State private var title = ""
     @State private var description = ""
     @State private var tags = ["Public"]
+    
+    @State private var camera = false
+    @State private var pictureMethod = false
+    @State private var picturePicker = false
     
     @FocusState private var tiltleFocus: Bool
     @FocusState private var descFocus: Bool
@@ -28,31 +34,21 @@ struct NewFlyerView: View {
         ZStack {
             let userNow = getUser(login: newUserID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62")
             
-            Color("main").ignoresSafeArea()
-            
-//            Button {
-//                withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
-//                    newFlyer = false
-//                }
-//            } label: {
-//                Image(systemName: "xmark")
-//                    .font(.body.weight(.bold))
-//                    .foregroundColor(.secondary)
-//                    .padding(8)
-//                    .background(.ultraThinMaterial, in: Circle())
-//            }
-//            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-//            .padding(20)
-//            .padding(.top, 25)
-//            .ignoresSafeArea()
+            Color("background").ignoresSafeArea()
             
             VStack {
                 
                 HStack {
                     Text("New Flyer")
-                        .foregroundColor(.primary).font(.title2).padding([.leading,.top])
+                        .foregroundColor(.primary).font(.title2).padding(.leading)
                     Spacer()
-                }
+                    Button {
+                        newFlyer = false
+                    } label: {
+                        Text("Cancel")
+                            .font(.title2).padding(.trailing)
+                    }
+                }.padding(.top)
                 if userNow.type == "admin" || userNow.type == "staff" {
                     Picker(selection: $viewType, label: Text("New Type")) {
                         Text("Flyer").tag("flyer")
@@ -63,36 +59,68 @@ struct NewFlyerView: View {
                 Divider()
                 
                 ScrollView {
-                    VStack(spacing: 15) {
-                        FlyerBubble(flyer: Flyer(id: "", title: "Example Post", description: "This is an example of how your post would look.", date: Date(), imageName: "", likes: [], name: userNow.fullname, userID: userNow.id, color: Int(color)!, tags: ["Public"]),display: true)
-                            .padding(.bottom,20)
+                    VStack(spacing: 20) {
+                        
+                        if flyerImage != nil {
+                            Button {
+                                pictureMethod = true
+                            } label: {
+                                Image(uiImage: flyerImage!).resizable().aspectRatio(contentMode: .fit).frame(width: 200)
+                            }
+                        }
+                        else {
+                            Button {
+                                pictureMethod = true
+                            } label: {
+                                Image("placeholder2").resizable().aspectRatio(contentMode: .fit).frame(maxWidth: 200)
+                            }
+                        }
+                        
+                        Button {
+                            pictureMethod = true
+                        } label: {
+                            Text("Select Photo").font(.title3.weight(.medium))
+                        }.confirmationDialog("How would you like to choose your photo?", isPresented: $pictureMethod, titleVisibility: .visible) {
+                            Button("Take a Photo") {
+                                camera = true
+                                picturePicker = true
+                            }
+                            Button("Choose a Photo") {
+                                camera = false
+                                picturePicker = true
+                            }
+                        }.sheet(isPresented: $picturePicker, onDismiss: nil) {
+                            ImagePicker(selectedImage: $flyerImage, isPickerShowing: $picturePicker, camera: camera)
+                        }
                         
                         TextField("Title", text: $title)
                             .focused($tiltleFocus)
-                            .foregroundColor(.white)
+                            .foregroundColor(.primary)
                             .textFieldStyle(.plain)
                             .placeholder(when: title.isEmpty) {
                                 Text("Title")
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.primary)
                             }
                             .frame(width: 350)
                             .padding(5.0)
                             .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                .fill(Color(red: 0.22, green: 0.22, blue: 0.22)))
+                                .fill(Color("main")))
                         
                         
                         TextField("Description", text: $description, axis: .vertical)
                             .focused($descFocus)
-                            .foregroundColor(.white)
+                            .foregroundColor(.primary)
                             .textFieldStyle(.plain)
                             .placeholder(when: description.isEmpty) {
                                 Text("Description")
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.primary)
                             }
                             .frame(width: 350)
                             .padding(5.0)
                             .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                .fill(Color(red: 0.22, green: 0.22, blue: 0.22)))
+                                .fill(Color("main")))
+                        
+                        Text("").frame(width: 75, height: 75).background(getGradient(a: Int(color)!))
                         
                         Picker(selection: $color) {
                             Text("Blue").tag("1")
@@ -103,9 +131,9 @@ struct NewFlyerView: View {
                             Text("Color Picker")
                         }.pickerStyle(MenuPickerStyle())
                             .padding([.leading,.trailing,])
-                            .tint(.white)
+                            .tint(.primary)
                             .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                .fill(Color(red: 0.22, green: 0.22, blue: 0.22)))
+                                .fill(Color("main")))
                         
                         Menu {
                             Button {
@@ -152,23 +180,26 @@ struct NewFlyerView: View {
                             
                         }.padding([.leading,.trailing],35.0).padding([.top,.bottom])
                             .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                .fill(Color(red: 0.22, green: 0.22, blue: 0.22))).foregroundColor(.white)
+                                .fill(Color("main"))).foregroundColor(.primary)
                             .frame(height: 25)
                             .frame(maxHeight: 25)
                             .padding(.vertical)
+                        
+                        Button {
+                            if validateFields() {
+                                newFlyerCreate()
+                                newFlyer = false
+                            }
+                        } label: {
+                            Text("Submit").font(.title).foregroundColor(.primary).padding(.horizontal).frame(width: 150,height: 40)
+                                .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                    .fill(Color("main")))
+                        }
                     }
-                }
-                Button {
-                    newFlyerCreate()
-                    newFlyer = false
-                } label: {
-                    Text("Submit").font(.title).foregroundColor(.primary).padding(.horizontal).frame(width: 150,height: 40)
-                        .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
-                            .fill(Color("main")))
                 }
             }
         }.toolbar {
-            if newFlyer {
+            if newFlyer && viewType == "flyer" {
                 ToolbarItemGroup(placement: .keyboard) {
                     Spacer()
                     Button("Done") {
@@ -206,11 +237,26 @@ struct NewFlyerView: View {
                     print("Flyer data could not be uploaded!")
                 }
             }
+        uploadPhoto(login: docID)
     }
     
     func randomString(length: Int) -> String {
       let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
       return String((0..<length).map{ _ in letters.randomElement()! })
+    }
+    
+    func uploadPhoto(login:String) {
+        let storageRef = Storage.storage().reference()
+        let imageData = flyerImage!.jpegData(compressionQuality: 0.8)
+        
+        guard imageData != nil else {
+            return
+        }
+        
+        let path = "flyers/\(login).jpg"
+        let fileRef = storageRef.child(path)
+        
+        fileRef.putData(imageData!, metadata:nil)
     }
 }
 

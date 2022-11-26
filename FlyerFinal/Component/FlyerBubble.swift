@@ -54,6 +54,9 @@ struct FlyerBubble: View {
             if postImage != nil {
                 Image(uiImage: postImage!).resizable().aspectRatio(contentMode: .fit).frame(width: 350, height: 350)
             }
+            else {
+                Image("placeholder2").resizable().aspectRatio(contentMode: .fit).frame(width: 350, height: 350)
+            }
             
             HStack {
                 VStack(alignment: .leading) {
@@ -83,6 +86,9 @@ struct FlyerBubble: View {
         .padding().frame(maxWidth: 400).background(getGradient(a: flyer.color))
             .cornerRadius(30)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onAppear {
+            retrieveFlyerPhoto(login: flyer.id)
+        }
     }
     func addLike() {
         var flyerlikes = flyer.likes
@@ -102,6 +108,23 @@ struct FlyerBubble: View {
             return true
         } else {
             return false
+        }
+    }
+    
+    func retrieveFlyerPhoto(login:String) {
+        let path = "flyers/\(login).jpg"
+        let storageRef = Storage.storage().reference()
+        
+        let fileRef = storageRef.child(path)
+        
+        fileRef.getData(maxSize: Int64(5 * 1024 * 1024)) { data, error in
+            if error == nil && data != nil {
+                if let image = UIImage(data: data!) {
+                    DispatchQueue.main.async {
+                        postImage = image
+                    }
+                }
+            }
         }
     }
 }

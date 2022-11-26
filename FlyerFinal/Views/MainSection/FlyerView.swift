@@ -18,6 +18,8 @@ struct FlyerView: View {
     
     @State private var userNowID = Auth.auth().currentUser?.uid
     @State private var userImage = UIImage(named: "placeholder")
+    @State private var flyerImage = UIImage(named: "placeholder2")
+    @State private var screenImage = UIImage(named: "placeholder2")
     
     var body: some View {
         ZStack {
@@ -58,20 +60,25 @@ struct FlyerView: View {
                 Text(flyer.title).font(.title.weight(.medium)).foregroundColor(.black)
                 
                 ScrollView {
-                    Image("placeholder2").resizable().aspectRatio(contentMode: .fit).frame(width: 400, height: 400)
+                    if flyerImage != nil {
+                        Image(uiImage: flyerImage!)
+                            .resizable().aspectRatio(contentMode: .fit).frame(width: 400, height: 400)
+                    }
+                    else {
+                        Image("placeholder2")
+                            .resizable().aspectRatio(contentMode: .fit).frame(width: 400, height: 400)
+                    }
                     HStack {
                         Button {
                             addLike()
                         } label: {
                             if flyer.likes.contains(userNowID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62") {
                                 (Text(Image(systemName: "heart.fill")).foregroundColor(.red)+Text(" ")+Text(String(flyer.likes.count)))
-                                    .font(.system(size: 20))
                             }
                             else {
                                 (Text(Image(systemName: "heart"))+Text(" ")+Text(String(flyer.likes.count)))
-                                    .font(.system(size: 20))
                             }
-                        }.foregroundColor(.black)
+                        }.font(.title2).foregroundColor(.black)
                         Spacer()
                     }.frame(maxWidth: 400)
                     VStack {
@@ -110,6 +117,7 @@ struct FlyerView: View {
             }
         }.onAppear {
             retrieveProfilePhoto(login: flyer.userID)
+            retrieveFlyerPhoto(login: flyer.id)
         }
     }
     func isSameDay(date1:Date) -> Bool {
@@ -158,14 +166,21 @@ struct FlyerView: View {
             }
         }
     }
-}
-
-extension UIView {
     
-    func asImage() -> UIImage {
-        let renderer = UIGraphicsImageRenderer(bounds: bounds)
-        return renderer.image { rendererContext in
-            layer.render(in: rendererContext.cgContext)
+    func retrieveFlyerPhoto(login:String) {
+        let path = "flyers/\(login).jpg"
+        let storageRef = Storage.storage().reference()
+        
+        let fileRef = storageRef.child(path)
+        
+        fileRef.getData(maxSize: Int64(5 * 1024 * 1024)) { data, error in
+            if error == nil && data != nil {
+                if let image = UIImage(data: data!) {
+                    DispatchQueue.main.async {
+                        flyerImage = image
+                    }
+                }
+            }
         }
     }
 }

@@ -21,6 +21,8 @@ struct MainView: View {
     @State private var myHub = false
     
     @State private var displayFlyer = ""
+    @State private var clicked = ""
+    
     
     @State private var userImage = UIImage(named: "placeholder")
     
@@ -29,10 +31,10 @@ struct MainView: View {
     var body: some View {
         
         ZStack {
-            FlyerFeed(flyerHub: $flyerHub, displayFlyer: $displayFlyer)
+            FlyerFeed(flyerHub: $flyerHub, displayFlyer: $displayFlyer, newFlyer: $newFlyer)
             VStack {
                 if userHub {
-                    UserFeed()
+                    UserFeed(clicked: $clicked,newFlyer: $newFlyer)
                 }
             }
             VStack {
@@ -53,48 +55,9 @@ struct MainView: View {
             }
         }
         .safeAreaInset(edge: .bottom) {
-            if !myHub && displayFlyer.isEmpty {
+            if !myHub && displayFlyer.isEmpty && clicked.isEmpty && !newFlyer{
                 HStack(spacing: 20) {
-                    if newFlyer {
-                        Button {
-                            flyerHub = true
-                            newFlyer = false
-                            userHub = false
-                            eventHub = false
-                            myHub = false
-                        } label: {
-                            Image(systemName: "newspaper.circle")
-                                .foregroundColor(.primary)
-                        }
-                        Button {
-                            flyerHub = false
-                            userHub = false
-                            eventHub = true
-                            newFlyer = false
-                            myHub = false
-                        } label: {
-                            Image(systemName: "calendar.circle")
-                                .foregroundColor(.primary)
-                        }
-                        Image(systemName: "plus.square.fill")
-                            .foregroundColor(.primary)
-                        Button {
-                            flyerHub = false
-                            newFlyer = false
-                            userHub = true
-                            eventHub = false
-                            myHub = false
-                        } label: {
-                            Image(systemName: "magnifyingglass.circle")
-                                .foregroundColor(.primary)
-                        }
-                        Button {
-                            myHub = true
-                        } label: {
-                            Image(uiImage: userImage!).resizable().aspectRatio(contentMode: .fit).frame(width: 40, height: 40).cornerRadius(25)
-                        }
-                    }
-                    else if userHub {
+                    if userHub {
                         Button {
                             flyerHub = true
                             userHub = false
@@ -116,7 +79,6 @@ struct MainView: View {
                                 .foregroundColor(.primary)
                         }
                         Button {
-                            flyerHub = false
                             newFlyer = true
                         } label: {
                             Image(systemName: "plus.square")
@@ -144,7 +106,6 @@ struct MainView: View {
                         Image(systemName: "calendar.circle.fill")
                             .foregroundColor(.primary)
                         Button {
-                            flyerHub = false
                             newFlyer = true
                         } label: {
                             Image(systemName: "plus.square")
@@ -180,7 +141,6 @@ struct MainView: View {
                                 .foregroundColor(.primary)
                         }
                         Button {
-                            flyerHub = false
                             newFlyer = true
                         } label: {
                             Image(systemName: "plus.square")

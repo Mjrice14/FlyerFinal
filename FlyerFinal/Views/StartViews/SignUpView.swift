@@ -16,6 +16,8 @@ struct SignUpView: View {
     
     var majors = ["Accounting","Advertising","Agricultural","Animal Science","Anthropolgy","Architecture","Art","Biochemistry","Biology","Cell and Molecular Biology","Chemical Engineering","Chemistryy","Civil Engineering","Computer Engineering","Computer Science","Conservation Law Enforcement","Construction Engineering","Dance","Digital Media","Early Child Care","Early Childhood Education","Economics"]
     
+    @State private var userImage = UIImage(named: "placeholder")
+    
     @State private var email = ""
     @State private var password = ""
     @State private var fullname = ""
@@ -209,10 +211,24 @@ struct SignUpView: View {
                         }
                     }
                 }
-                //uploadPhoto(login: result!.user.uid)
+                uploadPhoto(login: result!.user.uid)
                 loggedIn = true
             }
         }
+    }
+    
+    func uploadPhoto(login:String) {
+        let storageRef = Storage.storage().reference()
+        let imageData = userImage!.jpegData(compressionQuality: 0.8)
+        
+        guard imageData != nil else {
+            return
+        }
+        
+        let path = "users/\(login).jpg"
+        let fileRef = storageRef.child(path)
+        
+        fileRef.putData(imageData!, metadata:nil)
     }
 }
 
