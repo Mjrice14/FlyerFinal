@@ -13,8 +13,6 @@ struct EventBubble: View {
     
     let myMonth = Date.FormatStyle()
         .month()
-//        .hour(.defaultDigits(amPM: .abbreviated))
-//        .minute(.twoDigits)
         .locale(Locale(identifier: "en_US"))
     
     let myDay = Date.FormatStyle()

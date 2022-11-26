@@ -37,6 +37,7 @@
 		E46764D22930B6D3007F08E0 /* NewEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46764D12930B6D3007F08E0 /* NewEventView.swift */; };
 		E4C6609A2931987800465EF5 /* MyAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C660992931987800465EF5 /* MyAccountView.swift */; };
 		E4C6609C2931BB0D00465EF5 /* UserEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C6609B2931BB0D00465EF5 /* UserEditView.swift */; };
+		E4C6609E2932066D00465EF5 /* FlyerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C6609D2932066D00465EF5 /* FlyerView.swift */; };
 		E4E2131429248EED00DD36EA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E4E2131329248EED00DD36EA /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -69,6 +70,7 @@
 		E46764D12930B6D3007F08E0 /* NewEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEventView.swift; sourceTree = "<group>"; };
 		E4C660992931987800465EF5 /* MyAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountView.swift; sourceTree = "<group>"; };
 		E4C6609B2931BB0D00465EF5 /* UserEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEditView.swift; sourceTree = "<group>"; };
+		E4C6609D2932066D00465EF5 /* FlyerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlyerView.swift; sourceTree = "<group>"; };
 		E4E2131329248EED00DD36EA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -179,6 +181,7 @@
 				22245406291222F6001CE96E /* UserFeed.swift */,
 				E4324689292F2EF300C25F23 /* EventFeed.swift */,
 				E46764CD2930ADA8007F08E0 /* NewView.swift */,
+				E4C6609D2932066D00465EF5 /* FlyerView.swift */,
 			);
 			path = MainSection;
 			sourceTree = "<group>";
@@ -296,6 +299,7 @@
 				E4657A0E292D9D8800DD8885 /* UserBubble.swift in Sources */,
 				222453FC29121601001CE96E /* Flyer.swift in Sources */,
 				E463DCE3292EC56D0074B584 /* UserAccount.swift in Sources */,
+				E4C6609E2932066D00465EF5 /* FlyerView.swift in Sources */,
 				223A2F8B291204F6009C75AE /* ImagePicker.swift in Sources */,
 				220D049829131E4000B3878E /* NewFlyerView.swift in Sources */,
 				22245400291216B2001CE96E /* FlyerBubble.swift in Sources */,

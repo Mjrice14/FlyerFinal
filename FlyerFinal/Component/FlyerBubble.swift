@@ -21,12 +21,31 @@ struct FlyerBubble: View {
     
     var body: some View {
         VStack {
+            let regularPost = Date.FormatStyle()
+                .month()
+                .day()
+                .year()
+                .locale(Locale(identifier: "en_US"))
+            
+            let samePostDay = Date.FormatStyle()
+                .month()
+                .day()
+                .year()
+                .hour(.defaultDigits(amPM: .abbreviated))
+                .minute(.twoDigits)
+                .locale(Locale(identifier: "en_US"))
+            
             VStack {
                 HStack {
                     VStack(alignment: .leading) {
                         Text(flyer.name)
                             .bold()
-                        Text("\(flyer.date.formatted())")
+                        if isSameDay(date1: flyer.date) {
+                            Text("\(flyer.date.formatted(samePostDay))")
+                        }
+                        else {
+                            Text("\(flyer.date.formatted(regularPost))")
+                        }
                     }
                     Spacer()
                 }.frame(maxWidth: 350)
@@ -58,11 +77,6 @@ struct FlyerBubble: View {
                     
                     Text(flyer.title)
                         .font(.system(size: 30, weight: .bold, design: .rounded))
-                        .padding(.bottom, 5.0)
-                        
-                    
-                    Text(flyer.description)
-                        .fontWeight(.medium)
                 }
             }.frame(maxWidth: 350)
         }
@@ -80,6 +94,15 @@ struct FlyerBubble: View {
         }
         let db = Firestore.firestore()
         db.collection("flyers").document(flyer.id).setData(["likes":flyerlikes], merge: true)
+    }
+    
+    func isSameDay(date1:Date) -> Bool {
+        let diff = Calendar.current.dateComponents([.day], from: date1, to: Date())
+        if diff.day == 0 {
+            return true
+        } else {
+            return false
+        }
     }
 }
 
