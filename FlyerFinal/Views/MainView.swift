@@ -12,6 +12,8 @@ import FirebaseStorage
 struct MainView: View {
     @Binding var signingOutNow: Bool
     
+    @StateObject var usersManager = UsersManager()
+    
     @State private var userHub = false
     @State private var newFlyer = false
     @State private var eventHub = false
@@ -23,6 +25,7 @@ struct MainView: View {
     @State private var currentID = Auth.auth().currentUser?.uid
     
     var body: some View {
+        
         ZStack {
             FlyerFeed(flyerHub: $flyerHub)
             VStack {
@@ -43,7 +46,7 @@ struct MainView: View {
             }
             VStack {
                 if myHub {
-                    MyAccountView(myHub: $myHub, signingOutNow: $signingOutNow)
+                    MyAccountView(myHub: $myHub, signingOutNow: $signingOutNow, user: getUser(login: currentID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62"))
                 }
             }
         }
@@ -206,7 +209,6 @@ struct MainView: View {
         }.animation(.easeIn, value: newFlyer)
             .onAppear {
                 retrieveProfilePhoto(login: currentID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62")
-                signingOutNow = false
             }
     }
     
@@ -225,6 +227,15 @@ struct MainView: View {
                 }
             }
         }
+    }
+    
+    func getUser(login:String) -> User {
+        for user in usersManager.users {
+            if user.id == login {
+                return user
+            }
+        }
+        return User(id: "fRIWBPjsqlbFxVjb5ylH5PMVun62", fullname: "Elon Musk", username: "mistercoder", major: "Rich", tags: ["Millionare"], type: "admin")
     }
 }
 
