@@ -134,25 +134,6 @@ struct MyAccountView: View {
         }
     }
     
-    func liveUpdate(login:String) -> UIImage {
-        let path = "users/\(login).jpg"
-        let storageRef = Storage.storage().reference()
-        
-        let fileRef = storageRef.child(path)
-        
-        fileRef.getData(maxSize: Int64(5 * 1024 * 1024)) { data, error in
-            if error == nil && data != nil {
-                if let image = UIImage(data: data!) {
-                    DispatchQueue.main.async {
-                        userImage = image
-                    }
-                }
-            }
-        }
-        
-        return userImage ?? UIImage(named: "placeholder")!
-    }
-    
     func signOutUser() {
         let firebaseAuth = Auth.auth()
         do {
@@ -165,6 +146,6 @@ struct MyAccountView: View {
 
 struct MyAccountView_Previews: PreviewProvider {
     static var previews: some View {
-        MyAccountView(myHub: .constant(true), signingOutNow: .constant(false), user: User(id: "fRIWBPjsqlbFxVjb5ylH5PMVun62", fullname: "Elon Musk", username: "mistercoder", major: "Rich", tags: ["Millionare"], type: "admin"))
+        MyAccountView(myHub: .constant(true), signingOutNow: .constant(false), user: User(id: "fRIWBPjsqlbFxVjb5ylH5PMVun62", fullname: "Matthew Rice", username: "mistercoder", major: "Rich", tags: ["Millionare"], type: "admin"))
     }
 }

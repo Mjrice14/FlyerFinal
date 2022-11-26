@@ -11,7 +11,8 @@ import FirebaseStorage
 import FirebaseFirestore
 
 struct FlyerView: View {
-    var flyer:Flyer
+    var flyer: Flyer
+    @Binding var flyerID: String
     
     @StateObject var usersManager = UsersManager()
     
@@ -22,7 +23,7 @@ struct FlyerView: View {
         ZStack {
             getGradient(a: flyer.color).ignoresSafeArea()
             
-            let userNow = getUser(login: userNowID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62")
+//            let userNow = getUser(login: userNowID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62")
             let userCreate = getUser(login: flyer.userID)
             
             let regularPost = Date.FormatStyle()
@@ -40,7 +41,21 @@ struct FlyerView: View {
                 .locale(Locale(identifier: "en_US"))
             
             VStack {
-                Text(flyer.title).font(.title.weight(.medium))
+                HStack {
+                    Button {
+                        flyerID = ""
+                    } label: {
+                        Image(systemName: "chevron.left")
+                    }
+                    Spacer()
+                    Button {
+                        
+                    } label: {
+                        Image(systemName: "square.and.arrow.down")
+                    }
+                }.frame(maxWidth: 400).font(.title2.weight(.medium)).foregroundColor(.black)
+                
+                Text(flyer.title).font(.title.weight(.medium)).foregroundColor(.black)
                 
                 ScrollView {
                     Image("placeholder2").resizable().aspectRatio(contentMode: .fit).frame(width: 400, height: 400)
@@ -56,44 +71,46 @@ struct FlyerView: View {
                                 (Text(Image(systemName: "heart"))+Text(" ")+Text(String(flyer.likes.count)))
                                     .font(.system(size: 20))
                             }
-                        }.foregroundColor(.primary)
+                        }.foregroundColor(.black)
                         Spacer()
-                        Button {
-                            
-                        } label: {
-                            Image(systemName: "square.and.arrow.down").font(.system(size: 20)).foregroundColor(.primary)
-                        }
                     }.frame(maxWidth: 400)
-                    HStack {
+                    VStack {
                         HStack {
-                            if userImage != nil {
-                                Image(uiImage: userImage!).resizable().aspectRatio(contentMode: .fit).cornerRadius(50).frame(width: 50, height: 50)
+                            HStack {
+                                if userImage != nil {
+                                    Image(uiImage: userImage!).resizable().aspectRatio(contentMode: .fit).cornerRadius(50).frame(width: 50, height: 50)
+                                }
+                                else {
+                                    Image("placeholder").resizable().aspectRatio(contentMode: .fit).cornerRadius(50).frame(width: 50, height: 50)
+                                }
+                                VStack(alignment: .leading) {
+                                    Text(flyer.name).font(.title2.weight(.medium))
+                                    Text(userCreate.username)
+                                }.foregroundColor(.black)
                             }
-                            else {
-                                Image("placeholder").resizable().aspectRatio(contentMode: .fit).cornerRadius(50).frame(width: 50, height: 50)
-                            }
-                            VStack(alignment: .leading) {
-                                Text(flyer.name).font(.title2.weight(.medium))
-                                Text(userCreate.username)
-                            }
-                        }
-                        Spacer()
-                    }.frame(maxWidth: 400)
-                    Text(flyer.description).frame(maxWidth: 400)
-                    HStack {
-                        VStack {
-                            if isSameDay(date1: flyer.date) {
-                                Text(flyer.date.formatted(samePostDay))
-                            }
-                            else {
-                                Text(flyer.date.formatted(regularPost))
-                            }
-                        }.foregroundColor(.secondary).fontWeight(.medium)
-                        Spacer()
-                    }.frame(maxWidth: 395)
+                            Spacer()
+                        }.frame(maxWidth: 400)
+                        HStack {
+                            Text(flyer.description).foregroundColor(.black)
+                            Spacer()
+                        }.frame(maxWidth: 400)
+                        HStack {
+                            VStack {
+                                if isSameDay(date1: flyer.date) {
+                                    Text(flyer.date.formatted(samePostDay))
+                                }
+                                else {
+                                    Text(flyer.date.formatted(regularPost))
+                                }
+                            }.foregroundColor(Color(red: 0.41, green: 0.41, blue: 0.41)).fontWeight(.medium)
+                            Spacer()
+                        }.frame(maxWidth: 400)
+                    }
                 }
             }
-        }.preferredColorScheme(.light)
+        }.onAppear {
+            retrieveProfilePhoto(login: flyer.userID)
+        }
     }
     func isSameDay(date1:Date) -> Bool {
         let diff = Calendar.current.dateComponents([.day], from: date1, to: Date())
@@ -124,6 +141,23 @@ struct FlyerView: View {
         let db = Firestore.firestore()
         db.collection("flyers").document(flyer.id).setData(["likes":flyerlikes], merge: true)
     }
+    
+    func retrieveProfilePhoto(login:String) {
+        let path = "users/\(login).jpg"
+        let storageRef = Storage.storage().reference()
+        
+        let fileRef = storageRef.child(path)
+        
+        fileRef.getData(maxSize: Int64(5 * 1024 * 1024)) { data, error in
+            if error == nil && data != nil {
+                if let image = UIImage(data: data!) {
+                    DispatchQueue.main.async {
+                        userImage = image
+                    }
+                }
+            }
+        }
+    }
 }
 
 extension UIView {
@@ -138,7 +172,7 @@ extension UIView {
 
 struct FlyerView_Previews: PreviewProvider {
     static var previews: some View {
-        FlyerView(flyer: Flyer(id: "1", title: "Testing", description: "This is a test to see if this will be a practical method to create flyer posts.", date: Date(), imageName: "image.yuj", likes: ["AeVZPBqiPmPCXYxW4hlyDwnViWY2"], name: "Matthew Rice", userID: "AeVZPBqiPmPCXYxW4hlyDwnViWY2", color: 3, tags: ["Student"]))
+        FlyerView(flyer: Flyer(id: "AfsNWyjGwwPq8kYoaGOr", title: "Testing", description: "This is a test to see if this will be a practical method to create flyer posts.", date: Date(), imageName: "image.yuj", likes: ["fRIWBPjsqlbFxVjb5ylH5PMVun62"], name: "Matthew Rice", userID: "fRIWBPjsqlbFxVjb5ylH5PMVun62", color: 3, tags: ["Student"]),flyerID: .constant(""))
     }
 }
 

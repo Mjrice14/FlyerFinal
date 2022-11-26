@@ -20,6 +20,8 @@ struct MainView: View {
     @State private var flyerHub = true
     @State private var myHub = false
     
+    @State private var displayFlyer = ""
+    
     @State private var userImage = UIImage(named: "placeholder")
     
     @State private var currentID = Auth.auth().currentUser?.uid
@@ -27,7 +29,7 @@ struct MainView: View {
     var body: some View {
         
         ZStack {
-            FlyerFeed(flyerHub: $flyerHub)
+            FlyerFeed(flyerHub: $flyerHub, displayFlyer: $displayFlyer)
             VStack {
                 if userHub {
                     UserFeed()
@@ -51,7 +53,7 @@ struct MainView: View {
             }
         }
         .safeAreaInset(edge: .bottom) {
-            if !myHub {
+            if !myHub && displayFlyer.isEmpty {
                 HStack(spacing: 20) {
                     if newFlyer {
                         Button {
@@ -89,7 +91,7 @@ struct MainView: View {
                         Button {
                             myHub = true
                         } label: {
-                            Image(uiImage: userImage!).resizable().aspectRatio(contentMode: .fit).frame(width: 45, height: 45).cornerRadius(25)
+                            Image(uiImage: userImage!).resizable().aspectRatio(contentMode: .fit).frame(width: 40, height: 40).cornerRadius(25)
                         }
                     }
                     else if userHub {
@@ -125,7 +127,7 @@ struct MainView: View {
                         Button {
                             myHub = true
                         } label: {
-                            Image(uiImage: userImage!).resizable().aspectRatio(contentMode: .fit).frame(width: 45, height: 45).cornerRadius(25)
+                            Image(uiImage: userImage!).resizable().aspectRatio(contentMode: .fit).frame(width: 40, height: 40).cornerRadius(25)
                         }
                     }
                     else if eventHub {
@@ -161,7 +163,7 @@ struct MainView: View {
                         Button {
                             myHub = true
                         } label: {
-                            Image(uiImage: userImage!).resizable().aspectRatio(contentMode: .fit).frame(width: 45, height: 45).cornerRadius(25)
+                            Image(uiImage: userImage!).resizable().aspectRatio(contentMode: .fit).frame(width: 40, height: 40).cornerRadius(25)
                         }
                     }
                     else if flyerHub {
@@ -197,7 +199,7 @@ struct MainView: View {
                         Button {
                             myHub = true
                         } label: {
-                            Image(uiImage: userImage!).resizable().aspectRatio(contentMode: .fit).frame(width: 45, height: 45).cornerRadius(25)
+                            Image(uiImage: userImage!).resizable().aspectRatio(contentMode: .fit).frame(width: 40, height: 40).cornerRadius(25)
                         }
                     }
                 }.font(.system(size: 40))

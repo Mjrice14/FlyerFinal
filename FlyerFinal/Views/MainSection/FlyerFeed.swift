@@ -11,12 +11,14 @@ import FirebaseFirestore
 
 struct FlyerFeed: View {    
     @Binding var flyerHub: Bool
+    @Binding var displayFlyer: String
     
     @StateObject var flyerManager = FlyerManager()
     @StateObject var usersManager = UsersManager()
     
     @State private var newUserID = Auth.auth().currentUser?.uid
     @State private var filter = "Public"
+    
     
     @State private var search = ""
     @State private var bar = false
@@ -107,17 +109,26 @@ struct FlyerFeed: View {
                     ForEach(flyerManager.flyers,id: \.id) {flyer in
                         if flyer.tags.contains(filter) {
                             if search.isEmpty {
-                                FlyerBubble(flyer: flyer, display: false)
+                                FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                    displayFlyer = flyer.id
+                                }
                             }
                             else if flyer.title.lowercased().contains(search.lowercased()) {
-                                FlyerBubble(flyer: flyer, display: false)
+                                FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                    displayFlyer = flyer.id
+                                }
                             }
                             else if flyer.name.lowercased().contains(search.lowercased()) {
-                                FlyerBubble(flyer: flyer, display: false)
+                                FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                    displayFlyer = flyer.id
+                                }
                             }
                         }
                     }
                 }
+            }
+            if !displayFlyer.isEmpty {
+                FlyerView(flyer: getFlyer(flyerId: displayFlyer), flyerID: $displayFlyer)
             }
        }.toolbar {
            if flyerHub {
@@ -139,10 +150,19 @@ struct FlyerFeed: View {
         }
         return User(id: "fRIWBPjsqlbFxVjb5ylH5PMVun62", fullname: "Elon Musk", username: "misterkiller", major: "Rich", tags: ["Millionare"], type: "admin")
     }
+    
+    func getFlyer(flyerId:String) -> Flyer {
+        for flyer in flyerManager.flyers {
+            if flyer.id == flyerId {
+                return flyer
+            }
+        }
+        return Flyer(id: "AfsNWyjGwwPq8kYoaGOr", title: "Testing", description: "This is a test to see if this will be a practical method to create flyer posts.", date: Date(), imageName: "image.yuj", likes: ["fRIWBPjsqlbFxVjb5ylH5PMVun62"], name: "Matthew Rice", userID: "fRIWBPjsqlbFxVjb5ylH5PMVun62", color: 3, tags: ["Student"])
+    }
 }
 
 struct FlyerFeed_Previews: PreviewProvider {
     static var previews: some View {
-        FlyerFeed(flyerHub: .constant(true))
+        FlyerFeed(flyerHub: .constant(true),displayFlyer: .constant(""))
     }
 }
