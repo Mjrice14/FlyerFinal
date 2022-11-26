@@ -53,12 +53,12 @@ struct NewFlyerView: View {
                         .foregroundColor(.primary).font(.title2).padding([.leading,.top])
                     Spacer()
                 }
-                //if userNow.tags.contains("Staff") {
+                if userNow.type == "admin" || userNow.type == "staff" {
                     Picker(selection: $viewType, label: Text("New Type")) {
                         Text("Flyer").tag("flyer")
                         Text("Event").tag("event")
                     }.pickerStyle(SegmentedPickerStyle()).frame(maxWidth: 400).padding(.bottom,5)
-                //}
+                }
                 
                 Divider()
                 

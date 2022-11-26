@@ -12,21 +12,23 @@ struct ContentView: View {
     @State private var authentic = false
     @State private var loggedIn = false
     
+    @State private var signingOutNow = false
+    
     var body: some View {
         ZStack {
-            if Auth.auth().currentUser != nil {
-                if Auth.auth().currentUser!.isEmailVerified {
-                    MainView()
-                }
-                else {
-                    StartPageView(authentic: $authentic, loggedIn: .constant(true))
-                }
-            }
-            else if !authentic {
-                StartPageView(authentic: $authentic, loggedIn: $loggedIn)
+//            if Auth.auth().currentUser != nil && !signingOutNow {
+//                if Auth.auth().currentUser!.isEmailVerified {
+//                    MainView(signingOutNow: $signingOutNow)
+//                }
+//                else {
+//                    StartPageView(authentic: $authentic, loggedIn: .constant(true))
+//                }
+//            }
+            if !authentic || signingOutNow {
+                StartPageView(authentic: $authentic, loggedIn: $loggedIn, signingOutNow: $signingOutNow)
             }
             else {
-                MainView()
+                MainView(signingOutNow: $signingOutNow)
             }
         }
     }

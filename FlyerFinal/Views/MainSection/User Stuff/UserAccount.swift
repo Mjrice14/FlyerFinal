@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseAuth
+import FirebaseStorage
 
 struct UserAccount: View {
     var user: User
@@ -14,6 +15,8 @@ struct UserAccount: View {
     
     @StateObject var flyerManager = FlyerManager()
     @StateObject var usersManager = UsersManager()
+    
+    @State private var userImage = UIImage(named: "placeholder")
     
     @State private var newUserID = Auth.auth().currentUser?.uid
     var body: some View {
@@ -39,7 +42,12 @@ struct UserAccount: View {
                 }.padding(.top)
                 ScrollView {
                     HStack {
-                        Image("placeholder").resizable().aspectRatio(contentMode: .fit).cornerRadius(50).frame(width: 100, height: 100).padding(.leading,30)
+                        if userImage != nil {
+                            Image(uiImage: userImage!).resizable().aspectRatio(contentMode: .fit).cornerRadius(50).frame(width: 100, height: 100).padding(.leading,30)
+                        }
+                        else {
+                            Image("placeholder").resizable().aspectRatio(contentMode: .fit).cornerRadius(50).frame(width: 100, height: 100).padding(.leading,30)
+                        }
                         Spacer()
                         HStack {
                             VStack {
@@ -67,6 +75,9 @@ struct UserAccount: View {
                 }
             }
         }
+        .onAppear {
+            retrieveProfilePhoto(login: user.id)
+        }
     }
     func getUser(login:String) -> User {
         for user in usersManager.users {
@@ -74,7 +85,7 @@ struct UserAccount: View {
                 return user
             }
         }
-        return User(id: "fRIWBPjsqlbFxVjb5ylH5PMVun62", fullname: "Elon Musk", username: "misterkiller", major: "Rich", tags: ["Millionare"], type: "admin")
+        return User(id: "fRIWBPjsqlbFxVjb5ylH5PMVun62", fullname: "Elon Musk", username: "mistercoder", major: "Rich", tags: ["Millionare"], type: "admin")
     }
     
     func getLikes(login:String) -> Int {
@@ -104,6 +115,23 @@ struct UserAccount: View {
             }
         }
         return false
+    }
+    
+    func retrieveProfilePhoto(login:String) {
+        let path = "users/\(login).jpg"
+        let storageRef = Storage.storage().reference()
+        
+        let fileRef = storageRef.child(path)
+        
+        fileRef.getData(maxSize: Int64(5 * 1024 * 1024)) { data, error in
+            if error == nil && data != nil {
+                if let image = UIImage(data: data!) {
+                    DispatchQueue.main.async {
+                        userImage = image
+                    }
+                }
+            }
+        }
     }
 }
 

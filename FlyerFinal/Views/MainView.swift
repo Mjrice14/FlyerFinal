@@ -6,13 +6,21 @@
 //
 
 import SwiftUI
+import FirebaseAuth
+import FirebaseStorage
 
 struct MainView: View {
+    @Binding var signingOutNow: Bool
+    
     @State private var userHub = false
     @State private var newFlyer = false
     @State private var eventHub = false
-    
     @State private var flyerHub = true
+    @State private var myHub = false
+    
+    @State private var userImage = UIImage(named: "placeholder")
+    
+    @State private var currentID = Auth.auth().currentUser?.uid
     
     var body: some View {
         ZStack {
@@ -33,137 +41,195 @@ struct MainView: View {
                         .transition(.move(edge: .trailing))
                 }
             }
-        }.safeAreaInset(edge: .bottom) {
-            HStack(spacing: 20) {
-                if newFlyer {
-                    Button {
-                        flyerHub = true
-                        newFlyer = false
-                        userHub = false
-                        eventHub = false
-                    } label: {
-                        Image(systemName: "newspaper.circle")
-                            .foregroundColor(.primary)
-                    }
-                    Button {
-                        flyerHub = false
-                        userHub = false
-                        eventHub = true
-                        newFlyer = false
-                    } label: {
-                        Image(systemName: "calendar.circle")
-                            .foregroundColor(.primary)
-                    }
-                    Image(systemName: "plus.square.fill")
-                        .foregroundColor(.primary)
-                    Button {
-                        flyerHub = false
-                        newFlyer = false
-                        userHub = true
-                        eventHub = false
-                    } label: {
-                        Image(systemName: "magnifyingglass.circle")
-                            .foregroundColor(.primary)
-                    }
+            VStack {
+                if myHub {
+                    MyAccountView(myHub: $myHub, signingOutNow: $signingOutNow)
                 }
-                else if userHub {
-                    Button {
-                        flyerHub = true
-                        userHub = false
-                        eventHub = false
-                        newFlyer = false
-                    } label: {
-                        Image(systemName: "newspaper.circle")
+            }
+        }
+        .safeAreaInset(edge: .bottom) {
+            if !myHub {
+                HStack(spacing: 20) {
+                    if newFlyer {
+                        Button {
+                            flyerHub = true
+                            newFlyer = false
+                            userHub = false
+                            eventHub = false
+                            myHub = false
+                        } label: {
+                            Image(systemName: "newspaper.circle")
+                                .foregroundColor(.primary)
+                        }
+                        Button {
+                            flyerHub = false
+                            userHub = false
+                            eventHub = true
+                            newFlyer = false
+                            myHub = false
+                        } label: {
+                            Image(systemName: "calendar.circle")
+                                .foregroundColor(.primary)
+                        }
+                        Image(systemName: "plus.square.fill")
                             .foregroundColor(.primary)
+                        Button {
+                            flyerHub = false
+                            newFlyer = false
+                            userHub = true
+                            eventHub = false
+                            myHub = false
+                        } label: {
+                            Image(systemName: "magnifyingglass.circle")
+                                .foregroundColor(.primary)
+                        }
+                        Button {
+                            myHub = true
+                        } label: {
+                            Image(uiImage: userImage!).resizable().aspectRatio(contentMode: .fit).frame(width: 45, height: 45).cornerRadius(25)
+                        }
                     }
-                    Button {
-                        flyerHub = false
-                        userHub = false
-                        eventHub = true
-                        newFlyer = false
-                    } label: {
-                        Image(systemName: "calendar.circle")
+                    else if userHub {
+                        Button {
+                            flyerHub = true
+                            userHub = false
+                            eventHub = false
+                            newFlyer = false
+                            myHub = false
+                        } label: {
+                            Image(systemName: "newspaper.circle")
+                                .foregroundColor(.primary)
+                        }
+                        Button {
+                            flyerHub = false
+                            userHub = false
+                            eventHub = true
+                            newFlyer = false
+                            myHub = false
+                        } label: {
+                            Image(systemName: "calendar.circle")
+                                .foregroundColor(.primary)
+                        }
+                        Button {
+                            flyerHub = false
+                            newFlyer = true
+                        } label: {
+                            Image(systemName: "plus.square")
+                                .foregroundColor(.primary)
+                        }
+                        Image(systemName: "magnifyingglass.circle.fill")
                             .foregroundColor(.primary)
+                        Button {
+                            myHub = true
+                        } label: {
+                            Image(uiImage: userImage!).resizable().aspectRatio(contentMode: .fit).frame(width: 45, height: 45).cornerRadius(25)
+                        }
                     }
-                    Button {
-                        flyerHub = false
-                        newFlyer = true
-                    } label: {
-                        Image(systemName: "plus.square")
+                    else if eventHub {
+                        Button {
+                            flyerHub = true
+                            userHub = false
+                            eventHub = false
+                            newFlyer = false
+                            myHub = false
+                        } label: {
+                            Image(systemName: "newspaper.circle")
+                                .foregroundColor(.primary)
+                        }
+                        Image(systemName: "calendar.circle.fill")
                             .foregroundColor(.primary)
+                        Button {
+                            flyerHub = false
+                            newFlyer = true
+                        } label: {
+                            Image(systemName: "plus.square")
+                                .foregroundColor(.primary)
+                        }
+                        Button {
+                            flyerHub = false
+                            userHub = true
+                            eventHub = false
+                            newFlyer = false
+                            myHub = false
+                        } label: {
+                            Image(systemName: "magnifyingglass.circle")
+                                .foregroundColor(.primary)
+                        }
+                        Button {
+                            myHub = true
+                        } label: {
+                            Image(uiImage: userImage!).resizable().aspectRatio(contentMode: .fit).frame(width: 45, height: 45).cornerRadius(25)
+                        }
                     }
-                    Image(systemName: "magnifyingglass.circle.fill")
-                        .foregroundColor(.primary)
-                }
-                else if eventHub {
-                    Button {
-                        flyerHub = true
-                        userHub = false
-                        eventHub = false
-                        newFlyer = false
-                    } label: {
-                        Image(systemName: "newspaper.circle")
+                    else if flyerHub {
+                        Image(systemName: "newspaper.circle.fill")
                             .foregroundColor(.primary)
+                        Button {
+                            flyerHub = false
+                            newFlyer = false
+                            userHub = false
+                            eventHub = true
+                            myHub = false
+                        } label: {
+                            Image(systemName: "calendar.circle")
+                                .foregroundColor(.primary)
+                        }
+                        Button {
+                            flyerHub = false
+                            newFlyer = true
+                        } label: {
+                            Image(systemName: "plus.square")
+                                .foregroundColor(.primary)
+                        }
+                        Button {
+                            flyerHub = false
+                            userHub = true
+                            newFlyer = false
+                            eventHub = false
+                            myHub = false
+                        } label: {
+                            Image(systemName: "magnifyingglass.circle")
+                                .foregroundColor(.primary)
+                        }
+                        Button {
+                            myHub = true
+                        } label: {
+                            Image(uiImage: userImage!).resizable().aspectRatio(contentMode: .fit).frame(width: 45, height: 45).cornerRadius(25)
+                        }
                     }
-                    Image(systemName: "calendar.circle.fill")
-                        .foregroundColor(.primary)
-                    Button {
-                        flyerHub = false
-                        newFlyer = true
-                    } label: {
-                        Image(systemName: "plus.square")
-                            .foregroundColor(.primary)
-                    }
-                    Button {
-                        flyerHub = false
-                        userHub = true
-                        eventHub = false
-                        newFlyer = false
-                    } label: {
-                        Image(systemName: "magnifyingglass.circle")
-                            .foregroundColor(.primary)
-                    }
-                }
-                else {
-                    Image(systemName: "newspaper.circle.fill")
-                        .foregroundColor(.primary)
-                    Button {
-                        flyerHub = false
-                        newFlyer = false
-                        userHub = false
-                        eventHub = true
-                    } label: {
-                        Image(systemName: "calendar.circle")
-                            .foregroundColor(.primary)
-                    }
-                    Button {
-                        flyerHub = false
-                        newFlyer = true
-                    } label: {
-                        Image(systemName: "plus.square")
-                            .foregroundColor(.primary)
-                    }
-                    Button {
-                        flyerHub = false
-                        userHub = true
-                        newFlyer = false
-                        eventHub = false
-                    } label: {
-                        Image(systemName: "magnifyingglass.circle")
-                            .foregroundColor(.primary)
-                    }
-                }
-            }.font(.system(size: 40))
-                .padding(.horizontal,8)
-                .padding(.vertical,5)
-                .background(.ultraThickMaterial)
-                .cornerRadius(20)
+                }.font(.system(size: 40))
+                    .padding(.horizontal,8)
+                    .padding(.vertical,5)
+                    .background(.ultraThickMaterial)
+                    .cornerRadius(20)
+            }
         }.animation(.easeIn, value: newFlyer)
+            .onAppear {
+                retrieveProfilePhoto(login: currentID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62")
+                signingOutNow = false
+            }
+    }
+    
+    func retrieveProfilePhoto(login:String) {
+        let path = "users/\(login).jpg"
+        let storageRef = Storage.storage().reference()
+        
+        let fileRef = storageRef.child(path)
+        
+        fileRef.getData(maxSize: Int64(5 * 1024 * 1024)) { data, error in
+            if error == nil && data != nil {
+                if let image = UIImage(data: data!) {
+                    DispatchQueue.main.async {
+                        userImage = image
+                    }
+                }
+            }
+        }
     }
 }
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView()
+        MainView(signingOutNow: .constant(false))
     }
 }
