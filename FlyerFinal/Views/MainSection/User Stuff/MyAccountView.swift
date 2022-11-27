@@ -70,7 +70,12 @@ struct MyAccountView: View {
                                 Text(String(getLikes(login: user.id))).fontWeight(.bold)
                                 Text("Likes")
                             }
-                        }.frame(maxWidth: 100).padding(.trailing,40)
+                            Spacer()
+                            VStack {
+                                Text("\(user.followers.count)").fontWeight(.bold)
+                                Text("Followers")
+                            }
+                        }.frame(maxWidth: 190).padding(.trailing,40)
                     }
                     HStack{
                         Text(user.fullname).font(.title2.weight(.medium)).padding(.leading,30)
@@ -84,7 +89,7 @@ struct MyAccountView: View {
                         showEdit = true
                     } label: {
                         Text("Edit Profile").foregroundColor(.primary)
-                            .padding(.vertical,6).frame(maxWidth: 400).background(.tertiary).cornerRadius(10).padding(.bottom,8)
+                            .padding(.vertical,6).frame(maxWidth: 400).background(Color("main")).cornerRadius(10).padding(.bottom,8)
                     }.tint(.primary)
                     ForEach(flyerManager.flyers,id: \.id) {flyer in
                         if flyer.userID == user.id {
@@ -159,12 +164,12 @@ struct MyAccountView: View {
                 return flyer
             }
         }
-        return Flyer(id: "AfsNWyjGwwPq8kYoaGOr", title: "Testing", description: "This is a test to see if this will be a practical method to create flyer posts.", date: Date(), imageName: "image.yuj", likes: ["fRIWBPjsqlbFxVjb5ylH5PMVun62"], name: "Matthew Rice", userID: "fRIWBPjsqlbFxVjb5ylH5PMVun62", color: 3, tags: ["Student"])
+        return Flyer(id: "AfsNWyjGwwPq8kYoaGOr", title: "Testing", description: "This is a test to see if this will be a practical method to create flyer posts.", date: Date(), imageName: "image.yuj", likes: ["fRIWBPjsqlbFxVjb5ylH5PMVun62"], name: "Matthew Rice", userID: "fRIWBPjsqlbFxVjb5ylH5PMVun62", color: 3, tags: ["Student"], saves:[])
     }
 }
 
 struct MyAccountView_Previews: PreviewProvider {
     static var previews: some View {
-        MyAccountView(myHub: .constant(true), signingOutNow: .constant(false), user: User(id: "fRIWBPjsqlbFxVjb5ylH5PMVun62", fullname: "Matthew Rice", username: "mistercoder", major: "Rich", tags: ["Millionare"], type: "admin"))
+        MyAccountView(myHub: .constant(true), signingOutNow: .constant(false), user: User(id: "fRIWBPjsqlbFxVjb5ylH5PMVun62", fullname: "Matthew Rice", username: "mistercoder", major: "Rich", tags: ["Millionare"], type: "admin", followers: []))
     }
 }

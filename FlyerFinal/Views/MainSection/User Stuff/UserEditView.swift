@@ -113,6 +113,6 @@ struct UserEditView: View {
 
 struct UserEditView_Previews: PreviewProvider {
     static var previews: some View {
-        UserEditView(showEdit: .constant(true), user: User(id: "fRIWBPjsqlbFxVjb5ylH5PMVun62", fullname: "Elon Musk", username: "mistercoder", major: "Rich", tags: ["Millionare"], type: "admin"))
+        UserEditView(showEdit: .constant(true), user: User(id: "fRIWBPjsqlbFxVjb5ylH5PMVun62", fullname: "Elon Musk", username: "mistercoder", major: "Rich", tags: ["Millionare"], type: "admin", followers: []))
     }
 }

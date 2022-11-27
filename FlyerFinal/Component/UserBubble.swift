@@ -59,6 +59,6 @@ struct UserBubble: View {
 
 struct UserBubble_Previews: PreviewProvider {
     static var previews: some View {
-        UserBubble(user: User(id: "fRIWBPjsqlbFxVjb5ylH5PMVun62", fullname: "Matthew Rice", username: "mistercoder", major: "Computer Science", tags: ["Student","Computer Science"], type: "admin"), clicked: .constant(""))
+        UserBubble(user: User(id: "fRIWBPjsqlbFxVjb5ylH5PMVun62", fullname: "Matthew Rice", username: "mistercoder", major: "Computer Science", tags: ["Student","Computer Science"], type: "admin", followers: []), clicked: .constant(""))
     }
 }

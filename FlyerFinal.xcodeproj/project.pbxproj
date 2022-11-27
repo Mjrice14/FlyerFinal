@@ -28,6 +28,7 @@
 		22245407291222F6001CE96E /* UserFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22245406291222F6001CE96E /* UserFeed.swift */; };
 		223A2F8B291204F6009C75AE /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223A2F8A291204F6009C75AE /* ImagePicker.swift */; };
 		2249F4982911B77700B5C506 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2249F4972911B77700B5C506 /* AuthenticationView.swift */; };
+		E419E8052932EDA8003EB163 /* FlyerEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E419E8042932EDA8003EB163 /* FlyerEdit.swift */; };
 		E432468A292F2EF300C25F23 /* EventFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4324689292F2EF300C25F23 /* EventFeed.swift */; };
 		E432468C292F406700C25F23 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = E432468B292F406700C25F23 /* Event.swift */; };
 		E432468E292F45F300C25F23 /* EventBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = E432468D292F45F300C25F23 /* EventBubble.swift */; };
@@ -61,6 +62,7 @@
 		22245406291222F6001CE96E /* UserFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFeed.swift; sourceTree = "<group>"; };
 		223A2F8A291204F6009C75AE /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		2249F4972911B77700B5C506 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
+		E419E8042932EDA8003EB163 /* FlyerEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlyerEdit.swift; sourceTree = "<group>"; };
 		E4324689292F2EF300C25F23 /* EventFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventFeed.swift; sourceTree = "<group>"; };
 		E432468B292F406700C25F23 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		E432468D292F45F300C25F23 /* EventBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventBubble.swift; sourceTree = "<group>"; };
@@ -172,16 +174,25 @@
 			path = Component;
 			sourceTree = "<group>";
 		};
+		E419E8032932ED84003EB163 /* Flyer Stuff */ = {
+			isa = PBXGroup;
+			children = (
+				E4C6609D2932066D00465EF5 /* FlyerView.swift */,
+				E419E8042932EDA8003EB163 /* FlyerEdit.swift */,
+			);
+			path = "Flyer Stuff";
+			sourceTree = "<group>";
+		};
 		E4657A0F292E1EF000DD8885 /* MainSection */ = {
 			isa = PBXGroup;
 			children = (
+				E419E8032932ED84003EB163 /* Flyer Stuff */,
 				E4C660982931960700465EF5 /* User Stuff */,
 				E4C660972931950200465EF5 /* Add Items */,
 				22245404291219AF001CE96E /* FlyerFeed.swift */,
 				22245406291222F6001CE96E /* UserFeed.swift */,
 				E4324689292F2EF300C25F23 /* EventFeed.swift */,
 				E46764CD2930ADA8007F08E0 /* NewView.swift */,
-				E4C6609D2932066D00465EF5 /* FlyerView.swift */,
 			);
 			path = MainSection;
 			sourceTree = "<group>";
@@ -303,6 +314,7 @@
 				223A2F8B291204F6009C75AE /* ImagePicker.swift in Sources */,
 				220D049829131E4000B3878E /* NewFlyerView.swift in Sources */,
 				22245400291216B2001CE96E /* FlyerBubble.swift in Sources */,
+				E419E8052932EDA8003EB163 /* FlyerEdit.swift in Sources */,
 				222453F729121229001CE96E /* StartPageView.swift in Sources */,
 				E46764D22930B6D3007F08E0 /* NewEventView.swift in Sources */,
 				22160A702910790000CF5C7D /* FlyerFinalApp.swift in Sources */,

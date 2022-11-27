@@ -14,4 +14,5 @@ struct User: Identifiable, Codable {
     var major: String
     var tags: [String]
     var type: String
+    var followers: [String]
 }

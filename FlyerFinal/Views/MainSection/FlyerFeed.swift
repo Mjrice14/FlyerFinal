@@ -19,6 +19,7 @@ struct FlyerFeed: View {
     
     @State private var newUserID = Auth.auth().currentUser?.uid
     @State private var filter = "Public"
+    @State private var bookmark = false
     
     
     @State private var search = ""
@@ -47,6 +48,19 @@ struct FlyerFeed: View {
                         }
                         else {
                             Text("Close")
+                                .font(.title3)
+                        }
+                    }.tint(.primary)
+                    
+                    Button {
+                        bookmark.toggle()
+                    } label: {
+                        if !bookmark {
+                            Image(systemName: "bookmark")
+                                .font(.title3)
+                        }
+                        else {
+                            Image(systemName: "bookmark.fill").foregroundColor(.orange)
                                 .font(.title3)
                         }
                     }.tint(.primary)
@@ -109,19 +123,40 @@ struct FlyerFeed: View {
                 ScrollView {
                     ForEach(flyerManager.flyers,id: \.id) {flyer in
                         if flyer.tags.contains(filter) {
-                            if search.isEmpty {
-                                FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
-                                    displayFlyer = flyer.id
+                            if bookmark {
+                                if flyer.saves.contains(newUserID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62") {
+                                    if search.isEmpty {
+                                        FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                            displayFlyer = flyer.id
+                                        }
+                                    }
+                                    else if flyer.title.lowercased().contains(search.lowercased()) {
+                                        FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                            displayFlyer = flyer.id
+                                        }
+                                    }
+                                    else if flyer.name.lowercased().contains(search.lowercased()) {
+                                        FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                            displayFlyer = flyer.id
+                                        }
+                                    }
                                 }
                             }
-                            else if flyer.title.lowercased().contains(search.lowercased()) {
-                                FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
-                                    displayFlyer = flyer.id
+                            else {
+                                if search.isEmpty {
+                                    FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                        displayFlyer = flyer.id
+                                    }
                                 }
-                            }
-                            else if flyer.name.lowercased().contains(search.lowercased()) {
-                                FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
-                                    displayFlyer = flyer.id
+                                else if flyer.title.lowercased().contains(search.lowercased()) {
+                                    FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                        displayFlyer = flyer.id
+                                    }
+                                }
+                                else if flyer.name.lowercased().contains(search.lowercased()) {
+                                    FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                        displayFlyer = flyer.id
+                                    }
                                 }
                             }
                         }
@@ -149,7 +184,7 @@ struct FlyerFeed: View {
                 return user
             }
         }
-        return User(id: "fRIWBPjsqlbFxVjb5ylH5PMVun62", fullname: "Elon Musk", username: "misterkiller", major: "Rich", tags: ["Millionare"], type: "admin")
+        return User(id: "fRIWBPjsqlbFxVjb5ylH5PMVun62", fullname: "Elon Musk", username: "misterkiller", major: "Rich", tags: ["Millionare"], type: "admin", followers: [])
     }
     
     func getFlyer(flyerId:String) -> Flyer {
@@ -158,7 +193,7 @@ struct FlyerFeed: View {
                 return flyer
             }
         }
-        return Flyer(id: "AfsNWyjGwwPq8kYoaGOr", title: "Testing", description: "This is a test to see if this will be a practical method to create flyer posts.", date: Date(), imageName: "image.yuj", likes: ["fRIWBPjsqlbFxVjb5ylH5PMVun62"], name: "Matthew Rice", userID: "fRIWBPjsqlbFxVjb5ylH5PMVun62", color: 3, tags: ["Student"])
+        return Flyer(id: "AfsNWyjGwwPq8kYoaGOr", title: "Testing", description: "This is a test to see if this will be a practical method to create flyer posts.", date: Date(), imageName: "image.yuj", likes: ["fRIWBPjsqlbFxVjb5ylH5PMVun62"], name: "Matthew Rice", userID: "fRIWBPjsqlbFxVjb5ylH5PMVun62", color: 3, tags: ["Student"], saves:[])
     }
 }
 

@@ -18,4 +18,5 @@ struct Flyer: Identifiable, Codable {
     var userID: String
     var color: Int
     var tags: [String]
+    var saves: [String]
 }

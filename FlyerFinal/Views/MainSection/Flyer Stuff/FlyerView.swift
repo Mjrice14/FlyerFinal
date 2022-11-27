@@ -20,6 +20,7 @@ struct FlyerView: View {
     @State private var userImage = UIImage(named: "placeholder")
     @State private var flyerImage = UIImage(named: "placeholder2")
     @State private var screenImage = UIImage(named: "placeholder2")
+    @State private var editing = false
     
     var body: some View {
         ZStack {
@@ -78,9 +79,32 @@ struct FlyerView: View {
                             else {
                                 (Text(Image(systemName: "heart"))+Text(" ")+Text(String(flyer.likes.count)))
                             }
-                        }.font(.title2).foregroundColor(.black)
+                        }
                         Spacer()
-                    }.frame(maxWidth: 400)
+                        
+                        if flyer.userID == userNowID {
+                            Button {
+                                editing = true
+                            } label: {
+                                Text("Edit")
+                            }.padding(.trailing).foregroundColor(.blue)
+                        }
+                        
+                        
+                        Button {
+                            addSave()
+                        } label: {
+                            if flyer.saves.contains(userNowID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62") {
+                                (Text(Image(systemName: "bookmark.fill")).foregroundColor(.orange))
+                            }
+                            else {
+                                (Text(Image(systemName: "bookmark")))
+                            }
+                        }
+                    }.frame(maxWidth: 400).font(.title2).foregroundColor(.black)
+                        .sheet(isPresented: $editing) {
+                            FlyerEdit(id: flyer.id, color: String(flyer.color), description: flyer.description, title: flyer.title, flyerID: $flyerID)
+                        }
                     VStack {
                         HStack {
                             HStack {
@@ -135,7 +159,7 @@ struct FlyerView: View {
                 return user
             }
         }
-        return User(id: "fRIWBPjsqlbFxVjb5ylH5PMVun62", fullname: "Elon Musk", username: "mistercoder", major: "Rich", tags: ["Millionare"], type: "admin")
+        return User(id: "fRIWBPjsqlbFxVjb5ylH5PMVun62", fullname: "Elon Musk", username: "mistercoder", major: "Rich", tags: ["Millionare"], type: "admin", followers: [])
     }
     
     func addLike() {
@@ -148,6 +172,18 @@ struct FlyerView: View {
         }
         let db = Firestore.firestore()
         db.collection("flyers").document(flyer.id).setData(["likes":flyerlikes], merge: true)
+    }
+    
+    func addSave() {
+        var flyersaves = flyer.saves
+        if flyersaves.contains(userNowID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62") {
+            flyersaves.remove(at: flyersaves.firstIndex(of: userNowID!)!)
+        }
+        else {
+            flyersaves.append(userNowID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62")
+        }
+        let db = Firestore.firestore()
+        db.collection("flyers").document(flyer.id).setData(["saves":flyersaves], merge: true)
     }
     
     func retrieveProfilePhoto(login:String) {
@@ -187,7 +223,7 @@ struct FlyerView: View {
 
 struct FlyerView_Previews: PreviewProvider {
     static var previews: some View {
-        FlyerView(flyer: Flyer(id: "AfsNWyjGwwPq8kYoaGOr", title: "Testing", description: "This is a test to see if this will be a practical method to create flyer posts.", date: Date(), imageName: "image.yuj", likes: ["fRIWBPjsqlbFxVjb5ylH5PMVun62"], name: "Matthew Rice", userID: "fRIWBPjsqlbFxVjb5ylH5PMVun62", color: 3, tags: ["Student"]),flyerID: .constant(""))
+        FlyerView(flyer: Flyer(id: "AfsNWyjGwwPq8kYoaGOr", title: "Testing", description: "This is a test to see if this will be a practical method to create flyer posts.", date: Date(), imageName: "image.yuj", likes: ["fRIWBPjsqlbFxVjb5ylH5PMVun62"], name: "Matthew Rice", userID: "fRIWBPjsqlbFxVjb5ylH5PMVun62", color: 3, tags: ["Student"], saves:[]),flyerID: .constant(""))
     }
 }
 

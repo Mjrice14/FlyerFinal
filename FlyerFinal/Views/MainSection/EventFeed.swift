@@ -58,7 +58,7 @@ struct EventFeed: View {
                 Divider()
                 ScrollView {
                     ForEach(eventManager.events,id: \.id) {event in
-                        if event.date > Date() {
+                        if event.end > Date() {
                             HStack {
                                 EventBubble(event: event)
                                 Spacer()

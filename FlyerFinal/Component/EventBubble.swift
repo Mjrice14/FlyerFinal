@@ -36,7 +36,7 @@ struct EventBubble: View {
                         .font(.title.weight(.black))
                     Text(event.date.formatted(myMonth))
                         .font(.title2.weight(.medium))
-                }
+                }.foregroundColor(Color(red: 1.0, green: 0.0, blue: 0.0))
                 VStack(alignment: .leading) {
                     Text(event.title)
                         .font(.title2.weight(.bold))

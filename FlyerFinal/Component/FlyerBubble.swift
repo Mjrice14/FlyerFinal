@@ -46,7 +46,7 @@ struct FlyerBubble: View {
                         else {
                             Text("\(flyer.date.formatted(regularPost))")
                         }
-                    }
+                    }.foregroundColor(.black)
                     Spacer()
                 }.frame(maxWidth: 350)
             }
@@ -68,18 +68,28 @@ struct FlyerBubble: View {
                         } label: {
                             if flyer.likes.contains(newUserID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62") {
                                 (Text(Image(systemName: "heart.fill")).foregroundColor(.red)+Text(" ")+Text(String(flyer.likes.count)))
-                                    .font(.system(size: 20))
                             }
                             else {
                                 (Text(Image(systemName: "heart"))+Text(" ")+Text(String(flyer.likes.count)))
-                                    .font(.system(size: 20))
                             }
-                        }.foregroundColor(.primary)
+                        }
                         Spacer()
-                    }
+                        Button {
+                            if !display {
+                                addSave()
+                            }
+                        } label: {
+                            if flyer.saves.contains(newUserID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62") {
+                                (Text(Image(systemName: "bookmark.fill")).foregroundColor(.orange))
+                            }
+                            else {
+                                (Text(Image(systemName: "bookmark")))
+                            }
+                        }
+                    }.font(.title2).foregroundColor(.black)
                     
                     Text(flyer.title)
-                        .font(.system(size: 30, weight: .bold, design: .rounded))
+                        .font(.system(size: 30, weight: .bold, design: .rounded)).foregroundColor(.black)
                 }
             }.frame(maxWidth: 350)
         }
@@ -100,6 +110,18 @@ struct FlyerBubble: View {
         }
         let db = Firestore.firestore()
         db.collection("flyers").document(flyer.id).setData(["likes":flyerlikes], merge: true)
+    }
+    
+    func addSave() {
+        var flyersaves = flyer.saves
+        if flyersaves.contains(newUserID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62") {
+            flyersaves.remove(at: flyersaves.firstIndex(of: newUserID!)!)
+        }
+        else {
+            flyersaves.append(newUserID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62")
+        }
+        let db = Firestore.firestore()
+        db.collection("flyers").document(flyer.id).setData(["saves":flyersaves], merge: true)
     }
     
     func isSameDay(date1:Date) -> Bool {
@@ -131,7 +153,7 @@ struct FlyerBubble: View {
 
 struct FlyerBubble_Previews: PreviewProvider {
     static var previews: some View {
-        FlyerBubble(flyer: Flyer(id: "1", title: "Testing", description: "This is a test to see if this will be a practical method to create flyer posts.", date: Date(), imageName: "image.yuj", likes: ["AeVZPBqiPmPCXYxW4hlyDwnViWY2"], name: "Matthew Rice", userID: "AeVZPBqiPmPCXYxW4hlyDwnViWY2", color: 3, tags: ["Student"]), display: true)
+        FlyerBubble(flyer: Flyer(id: "1", title: "Testing", description: "This is a test to see if this will be a practical method to create flyer posts.", date: Date(), imageName: "image.yuj", likes: ["AeVZPBqiPmPCXYxW4hlyDwnViWY2"], name: "Matthew Rice", userID: "AeVZPBqiPmPCXYxW4hlyDwnViWY2", color: 3, tags: ["Student"], saves:[]), display: true)
     }
 }
 

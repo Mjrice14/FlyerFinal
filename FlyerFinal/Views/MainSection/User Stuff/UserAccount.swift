@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseAuth
 import FirebaseStorage
+import FirebaseFirestore
 
 struct UserAccount: View {
     var user: User
@@ -59,7 +60,12 @@ struct UserAccount: View {
                                 Text(String(getLikes(login: user.id))).fontWeight(.bold)
                                 Text("Likes")
                             }
-                        }.frame(maxWidth: 100).padding(.trailing,40)
+                            Spacer()
+                            VStack {
+                                Text("\(user.followers.count)").fontWeight(.bold)
+                                Text("Followers")
+                            }
+                        }.frame(maxWidth: 190).padding(.trailing,40)
                     }
                     HStack{
                         Text(user.fullname).font(.title2.weight(.medium)).padding(.leading,30)
@@ -69,6 +75,18 @@ struct UserAccount: View {
                         Text(user.major).font(.title3).padding(.leading,30)
                         Spacer()
                     }
+                    Button {
+                        addFollower()
+                    } label: {
+                        if user.followers.contains(newUserID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62") {
+                            Text("Following User").foregroundColor(.primary)
+                                .padding(.vertical,6).frame(maxWidth: 400).background(Color("main")).cornerRadius(10).padding(.bottom,8)
+                        }
+                        else {
+                            Text("Follow User").foregroundColor(.primary)
+                                .padding(.vertical,6).frame(maxWidth: 400).background(Color("main")).cornerRadius(10).padding(.bottom,8)
+                        }
+                    }.tint(.primary)
                     ForEach(flyerManager.flyers,id: \.id) {flyer in
                         if flyer.userID == user.id {
                             if canView(user: userNow, flyer: flyer) {
@@ -94,7 +112,19 @@ struct UserAccount: View {
                 return user
             }
         }
-        return User(id: "fRIWBPjsqlbFxVjb5ylH5PMVun62", fullname: "Elon Musk", username: "mistercoder", major: "Rich", tags: ["Millionare"], type: "admin")
+        return User(id: "fRIWBPjsqlbFxVjb5ylH5PMVun62", fullname: "Elon Musk", username: "mistercoder", major: "Rich", tags: ["Millionare"], type: "admin", followers: [])
+    }
+    
+    func addFollower() {
+        var userfollowers = user.followers
+        if userfollowers.contains(newUserID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62") {
+            userfollowers.remove(at: userfollowers.firstIndex(of: newUserID!)!)
+        }
+        else {
+            userfollowers.append(newUserID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62")
+        }
+        let db = Firestore.firestore()
+        db.collection("users").document(user.id).setData(["followers":userfollowers], merge: true)
     }
     
     func getLikes(login:String) -> Int {
@@ -149,12 +179,12 @@ struct UserAccount: View {
                 return flyer
             }
         }
-        return Flyer(id: "AfsNWyjGwwPq8kYoaGOr", title: "Testing", description: "This is a test to see if this will be a practical method to create flyer posts.", date: Date(), imageName: "image.yuj", likes: ["fRIWBPjsqlbFxVjb5ylH5PMVun62"], name: "Matthew Rice", userID: "fRIWBPjsqlbFxVjb5ylH5PMVun62", color: 3, tags: ["Student"])
+        return Flyer(id: "AfsNWyjGwwPq8kYoaGOr", title: "Testing", description: "This is a test to see if this will be a practical method to create flyer posts.", date: Date(), imageName: "image.yuj", likes: ["fRIWBPjsqlbFxVjb5ylH5PMVun62"], name: "Matthew Rice", userID: "fRIWBPjsqlbFxVjb5ylH5PMVun62", color: 3, tags: ["Student"], saves:[])
     }
 }
 
 struct UserAccount_Previews: PreviewProvider {
     static var previews: some View {
-        UserAccount(user: User(id: "fRIWBPjsqlbFxVjb5ylH5PMVun62", fullname: "Matthew Rice", username: "misterkiller", major: "Computer Science", tags: ["Student","Computer Science"], type: "admin"), clicked: .constant(""))
+        UserAccount(user: User(id: "fRIWBPjsqlbFxVjb5ylH5PMVun62", fullname: "Matthew Rice", username: "misterkiller", major: "Computer Science", tags: ["Student","Computer Science"], type: "admin", followers: []), clicked: .constant(""))
     }
 }
