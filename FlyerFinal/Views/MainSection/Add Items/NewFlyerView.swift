@@ -232,7 +232,7 @@ struct NewFlyerView: View {
         let docID = randomString(length: 20)
 
         let docref = db.collection("flyers").document(docID)
-            docref.setData(["color":Int(color) ?? 1, "date":Date(), "description":description, "imageName":"none","likes":[] ,"name":userNow.fullname, "title":title, "id":(docID) ,"userID":newUserID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62","tags":tags]) { error in
+            docref.setData(["color":Int(color) ?? 1, "date":Date(), "description":description,"likes":[] ,"name":userNow.fullname, "title":title, "id":(docID) ,"userID":newUserID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62","tags":tags]) { error in
                 if error != nil {
                     print("Flyer data could not be uploaded!")
                 }

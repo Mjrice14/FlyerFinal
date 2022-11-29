@@ -14,6 +14,7 @@ struct FlyerBubble: View {
     var flyer: Flyer
     var display: Bool
     
+    
     @State private var show = false
     @State private var newUserID = Auth.auth().currentUser?.uid
     
@@ -153,7 +154,7 @@ struct FlyerBubble: View {
 
 struct FlyerBubble_Previews: PreviewProvider {
     static var previews: some View {
-        FlyerBubble(flyer: Flyer(id: "1", title: "Testing", description: "This is a test to see if this will be a practical method to create flyer posts.", date: Date(), imageName: "image.yuj", likes: ["AeVZPBqiPmPCXYxW4hlyDwnViWY2"], name: "Matthew Rice", userID: "AeVZPBqiPmPCXYxW4hlyDwnViWY2", color: 3, tags: ["Student"], saves:[]), display: true)
+        FlyerBubble(flyer: Flyer(id: "1", title: "Testing", description: "This is a test to see if this will be a practical method to create flyer posts.", date: Date(), likes: ["AeVZPBqiPmPCXYxW4hlyDwnViWY2"], name: "Matthew Rice", userID: "AeVZPBqiPmPCXYxW4hlyDwnViWY2", color: 3, tags: ["Student"], saves:[]), display: true)
     }
 }
 

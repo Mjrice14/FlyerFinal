@@ -239,7 +239,7 @@ struct FlyerView: View {
 
 struct FlyerView_Previews: PreviewProvider {
     static var previews: some View {
-        FlyerView(flyer: Flyer(id: "AfsNWyjGwwPq8kYoaGOr", title: "Testing", description: "This is a test to see if this will be a practical method to create flyer posts.", date: Date(), imageName: "image.yuj", likes: ["fRIWBPjsqlbFxVjb5ylH5PMVun62"], name: "Matthew Rice", userID: "fRIWBPjsqlbFxVjb5ylH5PMVun62", color: 3, tags: ["Student"], saves:[]),flyerID: .constant(""), editing: .constant(false))
+        FlyerView(flyer: Flyer(id: "AfsNWyjGwwPq8kYoaGOr", title: "Testing", description: "This is a test to see if this will be a practical method to create flyer posts.", date: Date(), likes: ["fRIWBPjsqlbFxVjb5ylH5PMVun62"], name: "Matthew Rice", userID: "fRIWBPjsqlbFxVjb5ylH5PMVun62", color: 3, tags: ["Student"], saves:[]),flyerID: .constant(""), editing: .constant(false))
     }
 }
 

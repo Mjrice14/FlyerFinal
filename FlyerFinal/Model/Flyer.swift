@@ -12,7 +12,6 @@ struct Flyer: Identifiable, Codable {
     var title: String
     var description: String
     var date: Date
-    var imageName: String
     var likes: [String]
     var name: String
     var userID: String

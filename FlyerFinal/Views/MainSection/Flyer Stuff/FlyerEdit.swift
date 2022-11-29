@@ -123,8 +123,13 @@ struct FlyerEdit: View {
                                         .resizable().aspectRatio(contentMode: .fit).frame(width: 200, height: 200)
                                 }
                             }
+                            Button {
+                                pictureMethod = true
+                            } label: {
+                                Text("Change Photo").font(.title3)
+                            }
                         }
-                            .confirmationDialog("How would you like to choose your photo?", isPresented: $pictureMethod, titleVisibility: .visible) {
+                        .confirmationDialog("How would you like to choose your photo?", isPresented: $pictureMethod, titleVisibility: .visible) {
                             Button("Take a Photo") {
                                 camera = true
                                 picturePicker = true
