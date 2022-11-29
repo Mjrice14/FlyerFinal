@@ -78,13 +78,6 @@ struct EventFeed: View {
                     }
                 }
             }
-        }.toolbar {
-            ToolbarItemGroup(placement: .keyboard) {
-                Spacer()
-                Button("Done") {
-                    searchFocus = false
-                }.tint(.blue)
-            }
         }
     }
     func addCalendar(eventCal:Event) {
