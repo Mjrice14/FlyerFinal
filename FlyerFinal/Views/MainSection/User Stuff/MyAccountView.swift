@@ -24,6 +24,7 @@ struct MyAccountView: View {
     
     @State private var signingOut = false
     @State private var showEdit = false
+    @State private var editingPost = false
     
     var body: some View {
         ZStack {
@@ -105,7 +106,7 @@ struct MyAccountView: View {
                     .transition(.move(edge: .bottom))
             }
             if !displayFlyer.isEmpty {
-                FlyerView(flyer: getFlyer(flyerId: displayFlyer), flyerID: $displayFlyer)
+                FlyerView(flyer: getFlyer(flyerId: displayFlyer), flyerID: $displayFlyer, editing: $editingPost)
             }
         }.animation(.easeIn, value: showEdit).onAppear {
             retrieveProfilePhoto(login: currentID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62")

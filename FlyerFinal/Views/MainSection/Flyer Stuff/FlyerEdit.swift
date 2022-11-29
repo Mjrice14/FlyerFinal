@@ -14,12 +14,13 @@ struct FlyerEdit: View {
     @State var color: String
     @State var description: String
     @State var title: String
+    @Binding var editing: Bool
     @Binding var flyerID: String
     
     @State private var deleting = false
     
-    @FocusState private var titleFocus: Bool
-    @FocusState private var descFocus: Bool
+    @FocusState var titleFocus: Bool
+    @FocusState var descFocus: Bool
     
     var body: some View {
         ZStack {
@@ -30,6 +31,7 @@ struct FlyerEdit: View {
                     Button {
                         if validateFields() {
                             updateInfo()
+                            editing = false
                         }
                     } label: {
                         Text("Update").font(.title2)
@@ -44,6 +46,8 @@ struct FlyerEdit: View {
                     }.confirmationDialog("Are you sure you want to delete this flyer?", isPresented: $deleting, titleVisibility: .visible) {
                         Button("Delete") {
                             delete()
+                            flyerID = ""
+                            editing = false
                         }
                     }
                 }.padding(.vertical).frame(maxWidth: 400)
@@ -98,16 +102,6 @@ struct FlyerEdit: View {
                     }
                 }
             }
-        }.toolbar {
-            if flyerID == id {
-                ToolbarItemGroup(placement: .keyboard) {
-                    Spacer()
-                    Button("Done") {
-                        titleFocus = false
-                        descFocus = false
-                    }.tint(.blue)
-                }
-            }
         }
     }
     func validateFields() -> Bool {
@@ -135,6 +129,6 @@ struct FlyerEdit: View {
 struct FlyerEdit_Previews: PreviewProvider {
     static var previews: some View {
         FlyerEdit(id: "AfsNWyjGwwPq8kYoaGOr", color: "4", description:
-                    "This is to make sure that the last problem was fixed, so far all other features in it function correctly.", title: "Second Post Add", flyerID: .constant(""))
+                    "This is to make sure that the last problem was fixed, so far all other features in it function correctly.", title: "Second Post Add", editing: .constant(false), flyerID: .constant(""))
     }
 }

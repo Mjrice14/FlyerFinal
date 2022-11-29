@@ -19,6 +19,7 @@ struct UserAccount: View {
     
     @State private var userImage = UIImage(named: "placeholder")
     @State private var displayFlyer = ""
+    @State private var editingPost = false
     
     @State private var newUserID = Auth.auth().currentUser?.uid
     var body: some View {
@@ -99,7 +100,7 @@ struct UserAccount: View {
                 }
             }
             if !displayFlyer.isEmpty {
-                FlyerView(flyer: getFlyer(flyerId: displayFlyer), flyerID: $displayFlyer)
+                FlyerView(flyer: getFlyer(flyerId: displayFlyer), flyerID: $displayFlyer, editing: $editingPost)
             }
         }
         .onAppear {

@@ -20,6 +20,7 @@ struct FlyerFeed: View {
     @State private var newUserID = Auth.auth().currentUser?.uid
     @State private var filter = "Public"
     @State private var bookmark = false
+    @State private var editingPost = false
     
     
     @State private var search = ""
@@ -164,10 +165,10 @@ struct FlyerFeed: View {
                 }
             }
             if !displayFlyer.isEmpty {
-                FlyerView(flyer: getFlyer(flyerId: displayFlyer), flyerID: $displayFlyer)
+                FlyerView(flyer: getFlyer(flyerId: displayFlyer), flyerID: $displayFlyer, editing: $editingPost)
             }
        }.toolbar {
-           if flyerHub && !newFlyer {
+           if flyerHub && !newFlyer && !editingPost {
                ToolbarItemGroup(placement: .keyboard) {
                    Spacer()
                    Button("Done") {

@@ -13,6 +13,7 @@ import FirebaseFirestore
 struct FlyerView: View {
     var flyer: Flyer
     @Binding var flyerID: String
+    @Binding var editing: Bool
     
     @StateObject var usersManager = UsersManager()
     
@@ -20,7 +21,9 @@ struct FlyerView: View {
     @State private var userImage = UIImage(named: "placeholder")
     @State private var flyerImage = UIImage(named: "placeholder2")
     @State private var screenImage = UIImage(named: "placeholder2")
-    @State private var editing = false
+    
+    @FocusState private var titleFocus: Bool
+    @FocusState private var descFocus: Bool
     
     var body: some View {
         ZStack {
@@ -103,7 +106,7 @@ struct FlyerView: View {
                         }
                     }.frame(maxWidth: 400).font(.title2).foregroundColor(.black)
                         .sheet(isPresented: $editing) {
-                            FlyerEdit(id: flyer.id, color: String(flyer.color), description: flyer.description, title: flyer.title, flyerID: $flyerID)
+                            FlyerEdit(id: flyer.id, color: String(flyer.color), description: flyer.description, title: flyer.title, editing: $editing, flyerID: $flyerID, titleFocus: _titleFocus, descFocus: _descFocus)
                         }
                     VStack {
                         HStack {
@@ -142,7 +145,17 @@ struct FlyerView: View {
         }.onAppear {
             retrieveProfilePhoto(login: flyer.userID)
             retrieveFlyerPhoto(login: flyer.id)
-        }
+        }.toolbar {
+            if editing {
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    Button("Done") {
+                        titleFocus = false
+                        descFocus = false
+                    }.tint(.blue)
+                }
+            }
+         }
     }
     func isSameDay(date1:Date) -> Bool {
         let diff = Calendar.current.dateComponents([.day], from: date1, to: Date())
@@ -223,7 +236,7 @@ struct FlyerView: View {
 
 struct FlyerView_Previews: PreviewProvider {
     static var previews: some View {
-        FlyerView(flyer: Flyer(id: "AfsNWyjGwwPq8kYoaGOr", title: "Testing", description: "This is a test to see if this will be a practical method to create flyer posts.", date: Date(), imageName: "image.yuj", likes: ["fRIWBPjsqlbFxVjb5ylH5PMVun62"], name: "Matthew Rice", userID: "fRIWBPjsqlbFxVjb5ylH5PMVun62", color: 3, tags: ["Student"], saves:[]),flyerID: .constant(""))
+        FlyerView(flyer: Flyer(id: "AfsNWyjGwwPq8kYoaGOr", title: "Testing", description: "This is a test to see if this will be a practical method to create flyer posts.", date: Date(), imageName: "image.yuj", likes: ["fRIWBPjsqlbFxVjb5ylH5PMVun62"], name: "Matthew Rice", userID: "fRIWBPjsqlbFxVjb5ylH5PMVun62", color: 3, tags: ["Student"], saves:[]),flyerID: .constant(""), editing: .constant(false))
     }
 }
 
