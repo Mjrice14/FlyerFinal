@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseFirestore
 import FirebaseAuth
+import FirebaseStorage
 
 struct FlyerEdit: View {
     @State var id: String
@@ -16,8 +17,13 @@ struct FlyerEdit: View {
     @State var title: String
     @Binding var editing: Bool
     @Binding var flyerID: String
+    @Binding var flyerImage: UIImage?
+    @State var tempImage: UIImage?
     
     @State private var deleting = false
+    @State private var camera = false
+    @State private var pictureMethod = false
+    @State private var picturePicker = false
     
     @FocusState var titleFocus: Bool
     @FocusState var descFocus: Bool
@@ -31,6 +37,7 @@ struct FlyerEdit: View {
                     Button {
                         if validateFields() {
                             updateInfo()
+                            uploadPhoto(login: id)
                             editing = false
                         }
                     } label: {
@@ -99,6 +106,36 @@ struct FlyerEdit: View {
                             .tint(.primary)
                             .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
                                 .fill(Color("main")))
+                        VStack {
+                            if tempImage != nil {
+                                Button {
+                                    pictureMethod = true
+                                } label: {
+                                    Image(uiImage: tempImage!)
+                                        .resizable().aspectRatio(contentMode: .fit).frame(width: 200, height: 200)
+                                }
+                            }
+                            else {
+                                Button {
+                                    pictureMethod = true
+                                } label: {
+                                    Image("placeholder2")
+                                        .resizable().aspectRatio(contentMode: .fit).frame(width: 200, height: 200)
+                                }
+                            }
+                        }
+                            .confirmationDialog("How would you like to choose your photo?", isPresented: $pictureMethod, titleVisibility: .visible) {
+                            Button("Take a Photo") {
+                                camera = true
+                                picturePicker = true
+                            }
+                            Button("Choose a Photo") {
+                                camera = false
+                                picturePicker = true
+                            }
+                        }.sheet(isPresented: $picturePicker, onDismiss: nil) {
+                            ImagePicker(selectedImage: $tempImage, isPickerShowing: $picturePicker, camera: camera)
+                        }
                     }
                 }
             }
@@ -114,6 +151,7 @@ struct FlyerEdit: View {
     func updateInfo() {
         let db = Firestore.firestore()
         db.collection("flyers").document(id).setData(["title":title, "description":description, "color":Int(color) ?? 1], merge: true)
+        flyerImage = tempImage
     }
     
     func delete() {
@@ -124,11 +162,25 @@ struct FlyerEdit: View {
             }
         }
     }
+    
+    func uploadPhoto(login:String) {
+        let storageRef = Storage.storage().reference()
+        let imageData = tempImage!.jpegData(compressionQuality: 0.8)
+        
+        guard imageData != nil else {
+            return
+        }
+        
+        let path = "flyers/\(login).jpg"
+        let fileRef = storageRef.child(path)
+        
+        fileRef.putData(imageData!, metadata:nil)
+    }
 }
 
 struct FlyerEdit_Previews: PreviewProvider {
     static var previews: some View {
         FlyerEdit(id: "AfsNWyjGwwPq8kYoaGOr", color: "4", description:
-                    "This is to make sure that the last problem was fixed, so far all other features in it function correctly.", title: "Second Post Add", editing: .constant(false), flyerID: .constant(""))
+                    "This is to make sure that the last problem was fixed, so far all other features in it function correctly.", title: "Second Post Add", editing: .constant(false), flyerID: .constant(""),flyerImage: .constant(UIImage(named: "placeholder2")!),tempImage: UIImage(named: "placeholder2"))
     }
 }

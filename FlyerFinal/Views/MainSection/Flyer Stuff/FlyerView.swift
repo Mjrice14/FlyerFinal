@@ -106,7 +106,7 @@ struct FlyerView: View {
                         }
                     }.frame(maxWidth: 400).font(.title2).foregroundColor(.black)
                         .sheet(isPresented: $editing) {
-                            FlyerEdit(id: flyer.id, color: String(flyer.color), description: flyer.description, title: flyer.title, editing: $editing, flyerID: $flyerID, titleFocus: _titleFocus, descFocus: _descFocus)
+                            FlyerEdit(id: flyer.id, color: String(flyer.color), description: flyer.description, title: flyer.title, editing: $editing, flyerID: $flyerID, flyerImage: $flyerImage, tempImage: flyerImage, titleFocus: _titleFocus, descFocus: _descFocus)
                         }
                     VStack {
                         HStack {
@@ -143,6 +143,9 @@ struct FlyerView: View {
                 }
             }
         }.onAppear {
+            retrieveProfilePhoto(login: flyer.userID)
+            retrieveFlyerPhoto(login: flyer.id)
+        }.refreshable {
             retrieveProfilePhoto(login: flyer.userID)
             retrieveFlyerPhoto(login: flyer.id)
         }.toolbar {
