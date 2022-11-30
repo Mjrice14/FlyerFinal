@@ -74,6 +74,8 @@ struct LoginView: View {
                 }.padding(.top,30).padding(.bottom)
                 
                 Button {
+                    emailFocus = false
+                    passwordFocus = false
                     signUp = true
                 } label: {
                     Text("Need an account? Sign Up").foregroundColor(.primary)

@@ -43,6 +43,12 @@ struct SignUpView: View {
             VStack {
                 HStack {
                     Button {
+                        emailFocus = false
+                        passwordFocus = false
+                        fullnameFocus = false
+                        usernameFocus = false
+                        searchBar = false
+                        majorSearch = false
                         signUp = false
                     } label: {
                         Image(systemName: "chevron.left")
