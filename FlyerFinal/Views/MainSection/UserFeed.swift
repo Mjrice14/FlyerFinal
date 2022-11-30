@@ -76,7 +76,7 @@ struct UserFeed: View {
                     HStack {
                         HStack {
                             Image(systemName: "magnifyingglass").padding(.trailing,4)
-                            TextField("Serach", text: $search)
+                            TextField("Search", text: $search)
                                 .focused($searchFocus)
                                 .foregroundColor(.primary)
                                 .textFieldStyle(.plain)

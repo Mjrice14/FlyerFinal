@@ -364,12 +364,12 @@ struct SignUpView: View {
                 let db = Firestore.firestore()
                 let tag = ["Student",major]
                 
-//                let ref = db.collection("users").document(result!.user.uid)
-//                ref.setData(["fullname":fullname, "username":username, "tags":tag, "major":major, "id":result!.user.uid,"followers":[],"type":"student"]) { error in
-//                    if error != nil {
-//                        print("User data couldn't be saved.")
-//                    }
-//                }
+                let ref = db.collection("users").document(result!.user.uid)
+                ref.setData(["fullname":fullname, "username":username, "tags":tag, "major":major, "id":result!.user.uid,"followers":[],"type":"student"]) { error in
+                    if error != nil {
+                        print("User data couldn't be saved.")
+                    }
+                }
                 if Auth.auth().currentUser != nil {
                     Auth.auth().currentUser?.sendEmailVerification { error in
                         if error != nil {
