@@ -15,11 +15,13 @@ struct FlyerEdit: View {
     @State var color: String
     @State var description: String
     @State var title: String
+    @State var tags: [String]
     @Binding var editing: Bool
     @Binding var flyerID: String
     @Binding var flyerImage: UIImage?
     @State var tempImage: UIImage?
     
+    @State private var userNowID = Auth.auth().currentUser?.uid
     @State private var deleting = false
     @State private var camera = false
     @State private var pictureMethod = false
@@ -28,9 +30,13 @@ struct FlyerEdit: View {
     @FocusState var titleFocus: Bool
     @FocusState var descFocus: Bool
     
+    @StateObject var usersManager = UsersManager()
+    
     var body: some View {
         ZStack {
             Color("background").ignoresSafeArea()
+            
+            let userNow = getUser(login: userNowID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62")
             
             VStack {
                 HStack {
@@ -53,6 +59,7 @@ struct FlyerEdit: View {
                     }.confirmationDialog("Are you sure you want to delete this flyer?", isPresented: $deleting, titleVisibility: .visible) {
                         Button("Delete") {
                             delete()
+                            deleteImage()
                             flyerID = ""
                             editing = false
                         }
@@ -128,8 +135,7 @@ struct FlyerEdit: View {
                             } label: {
                                 Text("Change Photo").font(.title3)
                             }
-                        }
-                        .confirmationDialog("How would you like to choose your photo?", isPresented: $pictureMethod, titleVisibility: .visible) {
+                        }.confirmationDialog("How would you like to choose your photo?", isPresented: $pictureMethod, titleVisibility: .visible) {
                             Button("Take a Photo") {
                                 camera = true
                                 picturePicker = true
@@ -141,13 +147,63 @@ struct FlyerEdit: View {
                         }.sheet(isPresented: $picturePicker, onDismiss: nil) {
                             ImagePicker(selectedImage: $tempImage, isPickerShowing: $picturePicker, camera: camera)
                         }
+                        
+                        Menu {
+                            Button {
+                                if tags.contains("Public") {
+                                    tags.remove(at: (tags.firstIndex(of: "Public")!))
+                                }
+                                else {
+                                    tags.append("Public")
+                                }
+                            } label: {
+                                if tags.contains("Public") {
+                                    HStack {
+                                        Text("Public")
+                                        Image(systemName: "checkmark")
+                                    }
+                                }
+                                else {
+                                    Text("Public")
+                                }
+                            }
+                            ForEach(userNow.tags, id: \.self) { tag in
+                                Button {
+                                    if tags.contains(tag) {
+                                        tags.remove(at: (tags.firstIndex(of: tag)!))
+                                    }
+                                    else {
+                                        tags.append(tag)
+                                    }
+                                } label: {
+                                    if tags.contains(tag) {
+                                        HStack {
+                                            Text(tag)
+                                            Image(systemName: "checkmark")
+                                        }
+                                    }
+                                    else {
+                                        Text(tag)
+                                    }
+                                }
+                            }
+                        } label: {
+                            Text("TAGS")
+                                .font(.system(size: 30))
+                            
+                        }.padding([.leading,.trailing],35.0).padding([.top,.bottom])
+                            .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                .fill(Color("main"))).foregroundColor(.primary)
+                            .frame(height: 25)
+                            .frame(maxHeight: 25)
+                            .padding(.vertical)
                     }
                 }
             }
         }
     }
     func validateFields() -> Bool {
-        if title.isEmpty || description.isEmpty {
+        if title.isEmpty || description.isEmpty || tags.isEmpty {
             return false
         }
         return true
@@ -155,7 +211,7 @@ struct FlyerEdit: View {
     
     func updateInfo() {
         let db = Firestore.firestore()
-        db.collection("flyers").document(id).setData(["title":title, "description":description, "color":Int(color) ?? 1], merge: true)
+        db.collection("flyers").document(id).setData(["title":title, "description":description, "color":Int(color) ?? 1, "tags":tags], merge: true)
         flyerImage = tempImage
     }
     
@@ -164,6 +220,17 @@ struct FlyerEdit: View {
         db.collection("flyers").document(id).delete() { err in
             if let err = err {
                 print("Error removing document: \(err)")
+            }
+        }
+    }
+    
+    func deleteImage() {
+        let storageRef = Storage.storage().reference()
+        let photoRef = storageRef.child("flyers/\(id).jpg")
+        
+        photoRef.delete { error in
+            if let error = error {
+               print(error)
             }
         }
     }
@@ -181,11 +248,20 @@ struct FlyerEdit: View {
         
         fileRef.putData(imageData!, metadata:nil)
     }
+    
+    func getUser(login:String) -> User {
+        for user in usersManager.users {
+            if user.id == login {
+                return user
+            }
+        }
+        return User(id: "fRIWBPjsqlbFxVjb5ylH5PMVun62", fullname: "Elon Musk", username: "mistercoder", major: "Rich", tags: ["Millionare"], type: "admin", followers: [])
+    }
 }
 
 struct FlyerEdit_Previews: PreviewProvider {
     static var previews: some View {
         FlyerEdit(id: "AfsNWyjGwwPq8kYoaGOr", color: "4", description:
-                    "This is to make sure that the last problem was fixed, so far all other features in it function correctly.", title: "Second Post Add", editing: .constant(false), flyerID: .constant(""),flyerImage: .constant(UIImage(named: "placeholder2")!),tempImage: UIImage(named: "placeholder2"))
+                    "This is to make sure that the last problem was fixed, so far all other features in it function correctly.", title: "Second Post Add", tags: ["Student"], editing: .constant(false), flyerID: .constant(""),flyerImage: .constant(UIImage(named: "placeholder2")!),tempImage: UIImage(named: "placeholder2"))
     }
 }

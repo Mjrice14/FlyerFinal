@@ -12,6 +12,7 @@ struct UserFeed: View {
     @StateObject var usersManager = UsersManager()
     @Binding var clicked: String
     @Binding var newFlyer: Bool
+    @Binding var searching: Bool
     
     @State private var search = ""
     @State private var bar = false
@@ -36,6 +37,8 @@ struct UserFeed: View {
                     Spacer()
                     Button {
                         bar.toggle()
+                        searching.toggle()
+                        searchFocus.toggle()
                     } label: {
                         if !bar {
                             Image(systemName: "magnifyingglass")
@@ -47,24 +50,6 @@ struct UserFeed: View {
                         }
                     }.tint(.primary)
                 }.padding([.top,.trailing])
-                if bar {
-                    HStack {
-                        Image(systemName: "magnifyingglass").padding(.trailing,4)
-                        TextField("Serach", text: $search)
-                            .focused($searchFocus)
-                            .foregroundColor(.primary)
-                            .textFieldStyle(.plain)
-                            .placeholder(when: search.isEmpty) {
-                                Text("Search")
-                                    .foregroundColor(.primary)
-                            }
-                            .autocorrectionDisabled(true)
-                            .textInputAutocapitalization(.never)
-                    }.padding(5).background(.secondary)
-                        .cornerRadius(20)
-                        .font(.title3)
-                        .frame(maxWidth: 400)
-                }
                 
                 Divider()
                 
@@ -86,18 +71,45 @@ struct UserFeed: View {
                         }
                     }
                 }
-            }
-        }.toolbar {
-            if !newFlyer {
-                ToolbarItemGroup(placement: .keyboard) {
-                    Spacer()
-                    Button("Done") {
-                        searchFocus = false
-                    }.tint(.blue)
+                
+                if bar {
+                    HStack {
+                        HStack {
+                            Image(systemName: "magnifyingglass").padding(.trailing,4)
+                            TextField("Serach", text: $search)
+                                .focused($searchFocus)
+                                .foregroundColor(.primary)
+                                .textFieldStyle(.plain)
+                                .placeholder(when: search.isEmpty) {
+                                    Text("Search")
+                                        .foregroundColor(.primary)
+                                }
+                                .autocorrectionDisabled(true)
+                                .textInputAutocapitalization(.never)
+                            if !search.isEmpty {
+                                Button {
+                                    search = ""
+                                } label: {
+                                    Image(systemName: "xmark")
+                                        .padding(3).background(.ultraThinMaterial).cornerRadius(20)
+                                }.tint(.primary)
+                            }
+                        }.padding(5).background(.secondary)
+                            .cornerRadius(20)
+                            .font(.title3)
+                            .frame(maxWidth: 350)
+                        Spacer()
+                        Button {
+                            searchFocus = false
+                            searching = false
+                            bar = false
+                        } label: {
+                            Text("Done")
+                        }
+                    }.frame(width: 400).font(.title3).padding(.bottom,8)
                 }
             }
         }
-        
     }
     func getUser(login:String) -> User {
         for user in usersManager.users {
@@ -111,6 +123,6 @@ struct UserFeed: View {
 
 struct UserFeed_Previews: PreviewProvider {
     static var previews: some View {
-        UserFeed(clicked: .constant(""), newFlyer: .constant(true))
+        UserFeed(clicked: .constant(""), newFlyer: .constant(true), searching: .constant(false))
     }
 }

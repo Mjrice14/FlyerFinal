@@ -19,6 +19,7 @@ struct MainView: View {
     @State private var eventHub = false
     @State private var flyerHub = true
     @State private var myHub = false
+    @State private var searching = false
     
     @State private var displayFlyer = ""
     @State private var clicked = ""
@@ -31,10 +32,10 @@ struct MainView: View {
     var body: some View {
         
         ZStack {
-            FlyerFeed(flyerHub: $flyerHub, displayFlyer: $displayFlyer, newFlyer: $newFlyer)
+            FlyerFeed(flyerHub: $flyerHub, displayFlyer: $displayFlyer, newFlyer: $newFlyer, searching: $searching)
             VStack {
                 if userHub {
-                    UserFeed(clicked: $clicked,newFlyer: $newFlyer)
+                    UserFeed(clicked: $clicked,newFlyer: $newFlyer, searching: $searching)
                 }
             }
             VStack {
@@ -55,7 +56,7 @@ struct MainView: View {
             }
         }
         .safeAreaInset(edge: .bottom) {
-            if !myHub && displayFlyer.isEmpty && clicked.isEmpty && !newFlyer{
+            if !myHub && displayFlyer.isEmpty && clicked.isEmpty && !newFlyer && !searching {
                 HStack(spacing: 20) {
                     if userHub {
                         Button {

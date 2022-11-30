@@ -8,11 +8,13 @@
 import SwiftUI
 import FirebaseAuth
 import FirebaseFirestore
+import FirebaseStorage
 
 struct FlyerFeed: View {    
     @Binding var flyerHub: Bool
     @Binding var displayFlyer: String
     @Binding var newFlyer: Bool
+    @Binding var searching: Bool
     
     @StateObject var flyerManager = FlyerManager()
     @StateObject var usersManager = UsersManager()
@@ -23,7 +25,7 @@ struct FlyerFeed: View {
     @State private var editingPost = false
     @State private var refresh = false
     
-    @State private var currentImage = UIImage(named: "placeholder2")
+    @State private var flyerImage = UIImage(named: "placeholder2")
     
     @State private var search = ""
     @State private var bar = false
@@ -44,6 +46,8 @@ struct FlyerFeed: View {
                     
                     Button {
                         bar.toggle()
+                        searchFocus.toggle()
+                        searching.toggle()
                     } label: {
                         if !bar {
                             Image(systemName: "magnifyingglass")
@@ -101,25 +105,6 @@ struct FlyerFeed: View {
                         Image(systemName: "line.3.horizontal.decrease.circle")
                     }.font(.title2.weight(.medium)).foregroundColor(.primary)
                 }.padding([.top,.trailing])
-                
-                if bar {
-                    HStack {
-                        Image(systemName: "magnifyingglass").padding(.trailing,4)
-                        TextField("Serach", text: $search)
-                            .focused($searchFocus)
-                            .foregroundColor(.primary)
-                            .textFieldStyle(.plain)
-                            .placeholder(when: search.isEmpty) {
-                                Text("Search")
-                                    .foregroundColor(.primary)
-                            }
-                            .autocorrectionDisabled(true)
-                            .textInputAutocapitalization(.never)
-                    }.padding(5).background(.secondary)
-                        .cornerRadius(20)
-                        .font(.title3)
-                        .frame(maxWidth: 400)
-                }
                 
                 Divider()
                 
@@ -205,22 +190,51 @@ struct FlyerFeed: View {
                         }
                     }
                 }
+                
+                if bar {
+                    HStack {
+                        HStack {
+                            Image(systemName: "magnifyingglass").padding(.trailing,4)
+                            TextField("Serach", text: $search)
+                                .focused($searchFocus)
+                                .foregroundColor(.primary)
+                                .textFieldStyle(.plain)
+                                .placeholder(when: search.isEmpty) {
+                                    Text("Search")
+                                        .foregroundColor(.primary)
+                                }
+                                .autocorrectionDisabled(true)
+                                .textInputAutocapitalization(.never)
+                            if !search.isEmpty {
+                                Button {
+                                    search = ""
+                                } label: {
+                                    Image(systemName: "xmark")
+                                        .padding(3).background(.ultraThinMaterial).cornerRadius(20)
+                                }.tint(.primary)
+                            }
+                        }.padding(5).background(.secondary)
+                            .cornerRadius(20)
+                            .font(.title3)
+                            .frame(maxWidth: 350)
+                        Spacer()
+                        Button {
+                            searchFocus = false
+                            searching = false
+                            bar = false
+                        } label: {
+                            Text("Done")
+                        }
+                    }.frame(width: 400).font(.title3).padding(.bottom,8)
+                }
+                
             }.refreshable {
                 refresh.toggle()
             }
             if !displayFlyer.isEmpty {
                 FlyerView(flyer: getFlyer(flyerId: displayFlyer), flyerID: $displayFlyer, editing: $editingPost)
             }
-       }.toolbar {
-           if flyerHub && !newFlyer && !editingPost {
-               ToolbarItemGroup(placement: .keyboard) {
-                   Spacer()
-                   Button("Done") {
-                       searchFocus = false
-                   }.tint(.blue)
-               }
-           }
-        }
+       }
     }
     
     var posts: some View {
@@ -235,7 +249,7 @@ struct FlyerFeed: View {
                 return user
             }
         }
-        return User(id: "fRIWBPjsqlbFxVjb5ylH5PMVun62", fullname: "Elon Musk", username: "misterkiller", major: "Rich", tags: ["Millionare"], type: "admin", followers: [])
+        return User(id: "fRIWBPjsqlbFxVjb5ylH5PMVun62", fullname: "Elon Musk", username: "mistercoder", major: "Rich", tags: ["Millionare"], type: "admin", followers: [])
     }
     
     func getFlyer(flyerId:String) -> Flyer {
@@ -250,6 +264,6 @@ struct FlyerFeed: View {
 
 struct FlyerFeed_Previews: PreviewProvider {
     static var previews: some View {
-        FlyerFeed(flyerHub: .constant(true),displayFlyer: .constant(""), newFlyer: .constant(true))
+        FlyerFeed(flyerHub: .constant(true),displayFlyer: .constant(""), newFlyer: .constant(true), searching: .constant(false))
     }
 }
