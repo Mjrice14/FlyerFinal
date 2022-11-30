@@ -17,18 +17,24 @@ struct SignUpView: View {
     var majors = ["Accounting","Advertising","Agricultural","Animal Science","Anthropolgy","Architecture","Art","Biochemistry","Biology","Cell and Molecular Biology","Chemical Engineering","Chemistryy","Civil Engineering","Computer Engineering","Computer Science","Conservation Law Enforcement","Construction Engineering","Dance","Digital Media","Early Child Care","Early Childhood Education","Economics"]
     
     @State private var userImage = UIImage(named: "placeholder")
+    @State private var camera = false
+    @State private var pictureMethod = false
+    @State private var picturePicker = false
     
     @State private var email = ""
     @State private var password = ""
     @State private var fullname = ""
     @State private var username = ""
-    @State private var major = "Accounting"
+    @State private var major = ""
+    @State private var search = ""
+    
+    @State private var majorSearch = false
     
     @FocusState private var emailFocus: Bool
     @FocusState private var passwordFocus: Bool
     @FocusState private var fullnameFocus: Bool
-    @FocusState private var majorFocus: Bool
     @FocusState private var usernameFocus: Bool
+    @FocusState private var searchBar: Bool
     
     var body: some View {
         ZStack {
@@ -46,7 +52,31 @@ struct SignUpView: View {
                 }
                 Text("Sign Up").font(.system(size: 50,weight: .bold)).foregroundColor(.yellow)
                 
-                Spacer()
+                ZStack {
+                    Button {
+                        pictureMethod = true
+                    } label: {
+                        Image(uiImage: userImage!).resizable().aspectRatio(contentMode: .fit).frame(width: 150).cornerRadius(75).padding(.bottom)
+                    }.confirmationDialog("How would you like to choose your photo?", isPresented: $pictureMethod, titleVisibility: .visible) {
+                        Button("Take a Photo") {
+                            camera = true
+                            picturePicker = true
+                        }
+                        Button("Choose a Photo") {
+                            camera = false
+                            picturePicker = true
+                        }
+                    }.sheet(isPresented: $picturePicker, onDismiss: nil) {
+                        ImagePicker(selectedImage: $userImage, isPickerShowing: $picturePicker, camera: camera)
+                    }
+                    Button {
+                        pictureMethod = true
+                    } label: {
+                        Image(systemName: "plus")
+                            .font(.system(size: 40, weight: .black)).padding(4).background(Color("background")).cornerRadius(50).offset(x:50,y:50)
+                    }
+                }
+                
                 
                 HStack {
                     Image(systemName: "person.fill")
@@ -87,27 +117,27 @@ struct SignUpView: View {
                         .fill(Color("main")))
                 
                 VStack {
-                    /*TextField("Major", text: $major)
-                        .focused($majorFocus)
-                        .foregroundColor(.white)
-                        .textFieldStyle(.plain)
-                        .placeholder(when: major.isEmpty) {
-                            Text("Major")
-                                .foregroundColor(.white)
-                        }*/
-                    Text("Select your Major")
-                        .foregroundColor(.primary)
-                    Picker("Please choose a major", selection: $major) {
-                        ForEach(majors, id: \.self) {
-                            Text($0).font(.title).foregroundColor(.primary)
+                    Button {
+                        majorSearch = true
+                        searchBar = true
+                    } label: {
+                        HStack {
+                            Image(systemName: "graduationcap.fill")
+                                .foregroundColor(.primary)
+                                .frame(width: 38)
+                            if major.isEmpty {
+                                Text("Select your Major")
+                            }
+                            else {
+                                Text(major)
+                            }
+                            Spacer()
                         }
-                    }.pickerStyle(.wheel).navigationTitle("Select your Major")
+                    }.font(.system(size:28, weight: .medium, design: .rounded)).foregroundColor(.primary).frame(width:350).padding(5.0)
+                        .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
+                            .fill(Color("main")))
                     
-                }.frame(width: 350)
-                    .font(.system(size:28, weight: .medium, design: .rounded))
-                    .padding(5.0)
-                    .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .fill(Color("main")))
+                }
                 
                 HStack {
                     Image(systemName: "envelope.fill")
@@ -161,8 +191,98 @@ struct SignUpView: View {
                 
                 Spacer()
             }
+            if majorSearch {
+                ZStack {
+                    Color("background").ignoresSafeArea().opacity(0.9)
+                    VStack {
+                        HStack {
+                            HStack {
+                                Image(systemName: "magnifyingglass").padding(.trailing,4)
+                                TextField("Serach", text: $search)
+                                    .focused($searchBar)
+                                    .foregroundColor(.primary)
+                                    .textFieldStyle(.plain)
+                                    .placeholder(when: search.isEmpty) {
+                                        Text("Search")
+                                            .foregroundColor(.primary)
+                                    }
+                                    .autocorrectionDisabled(true)
+                                    .textInputAutocapitalization(.never)
+                                if !search.isEmpty {
+                                    Button {
+                                        search = ""
+                                    } label: {
+                                        Image(systemName: "xmark")
+                                            .padding(3).background(.ultraThinMaterial).cornerRadius(20)
+                                    }.tint(.primary)
+                                }
+                            }.padding(5).background(.secondary)
+                                .cornerRadius(20)
+                                .font(.title3)
+                                .frame(maxWidth: 350)
+                            Spacer()
+                            Button {
+                                searchBar = false
+                                majorSearch = false
+                            } label: {
+                                Text("Done")
+                            }
+                        }.frame(width: 400).font(.title3).padding(.bottom,8)
+                        
+                        ScrollView {
+                            if search.isEmpty {
+                                ForEach(majors, id: \.self) { maj in
+                                    Button {
+                                        major = maj
+                                        searchBar = false
+                                        majorSearch = false
+                                    } label: {
+                                        if major.isEmpty {
+                                            HStack {
+                                                Text(maj).font(.title2).foregroundColor(.primary)
+                                                Spacer()
+                                            }.frame(width: 400).padding(.bottom,5)
+                                        }
+                                        else {
+                                            HStack {
+                                                if major == maj {
+                                                    Text(maj).font(.title2).foregroundColor(.primary)
+                                                    Spacer()
+                                                    Image(systemName: "checkmark")
+                                                }
+                                                else {
+                                                    Text(maj).font(.title2).foregroundColor(.primary)
+                                                    Spacer()
+                                                }
+                                            }.frame(width: 400).padding(.bottom,5)
+                                        }
+                                    }
+                                    Divider()
+                                }
+                            }
+                            else {
+                                ForEach(majors, id: \.self) { maj in
+                                    if maj.lowercased().contains(search.lowercased()) {
+                                        Button {
+                                            major = maj
+                                            searchBar = false
+                                            majorSearch = false
+                                        } label: {
+                                            HStack {
+                                                Text(maj).font(.title2).foregroundColor(.primary)
+                                                Spacer()
+                                            }.frame(width: 400).padding(.bottom,5)
+                                        }
+                                        Divider()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }.toolbar {
-            if signUp {
+            if signUp && !searchBar {
                 ToolbarItemGroup(placement: .keyboard) {
                     Spacer()
                     Button("Done") {
@@ -170,7 +290,6 @@ struct SignUpView: View {
                         passwordFocus = false
                         fullnameFocus = false
                         usernameFocus = false
-                        majorFocus = false
                     }.tint(.blue)
                 }
             }
@@ -199,7 +318,7 @@ struct SignUpView: View {
                 let tag = ["Student",major]
                 
                 let ref = db.collection("users").document(result!.user.uid)
-                ref.setData(["fullname":fullname, "username":username, "tags":tag, "major":major, "id":result!.user.uid]) { error in
+                ref.setData(["fullname":fullname, "username":username, "tags":tag, "major":major, "id":result!.user.uid,"followers":[],"type":"student"]) { error in
                     if error != nil {
                         print("User data couldn't be saved.")
                     }
