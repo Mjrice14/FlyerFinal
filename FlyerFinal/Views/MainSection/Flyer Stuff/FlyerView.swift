@@ -20,7 +20,8 @@ struct FlyerView: View {
     @State private var userNowID = Auth.auth().currentUser?.uid
     @State private var userImage = UIImage(named: "placeholder")
     @State private var flyerImage = UIImage(named: "placeholder2")
-    @State private var screenImage = UIImage(named: "placeholder2")
+    @State private var screenshot = false
+    @State private var show = true
     
     @FocusState private var titleFocus: Bool
     @FocusState private var descFocus: Bool
@@ -28,6 +29,8 @@ struct FlyerView: View {
     var body: some View {
         ZStack {
             getGradient(a: flyer.color).ignoresSafeArea()
+            
+            
             
 //            let userNow = getUser(login: userNowID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62")
             let userCreate = getUser(login: flyer.userID)
@@ -47,19 +50,31 @@ struct FlyerView: View {
                 .locale(Locale(identifier: "en_US"))
             
             VStack {
-                HStack {
-                    Button {
-                        flyerID = ""
-                    } label: {
-                        Image(systemName: "chevron.left")
-                    }
-                    Spacer()
-                    Button {
-                        
-                    } label: {
-                        Image(systemName: "square.and.arrow.down")
+                VStack {
+                    if show {
+                        HStack {
+                            Button {
+                                flyerID = ""
+                            } label: {
+                                Image(systemName: "chevron.left")
+                            }
+                            Spacer()
+                            Button {
+                                screenshot = true
+                            } label: {
+                                Image(systemName: "square.and.arrow.down")
+                            }
+                        }
                     }
                 }.frame(maxWidth: 400).font(.title2.weight(.medium)).foregroundColor(.black)
+                    .confirmationDialog("This will show a view to screenshot this flyer, you will have 10 seconds to take the screenshot.", isPresented: $screenshot, titleVisibility: .visible) {
+                        Button("Continue") {
+                            show.toggle()
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+                                show.toggle()
+                            }
+                        }
+                    }
                 
                 Text(flyer.title).font(.title.weight(.medium)).foregroundColor(.black)
                 
@@ -160,6 +175,8 @@ struct FlyerView: View {
             }
          }
     }
+    
+    
     func isSameDay(date1:Date) -> Bool {
         let diff = Calendar.current.dateComponents([.day], from: date1, to: Date())
         if diff.day == 0 {
