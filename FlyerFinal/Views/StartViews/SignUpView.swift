@@ -198,94 +198,7 @@ struct SignUpView: View {
                 Spacer()
             }
             if majorSearch {
-                ZStack {
-                    Color("background").ignoresSafeArea().opacity(0.9)
-                    VStack {
-                        HStack {
-                            HStack {
-                                Image(systemName: "magnifyingglass").padding(.trailing,4)
-                                TextField("Serach", text: $search)
-                                    .focused($searchBar)
-                                    .foregroundColor(.primary)
-                                    .textFieldStyle(.plain)
-                                    .placeholder(when: search.isEmpty) {
-                                        Text("Search")
-                                            .foregroundColor(.primary)
-                                    }
-                                    .autocorrectionDisabled(true)
-                                    .textInputAutocapitalization(.never)
-                                if !search.isEmpty {
-                                    Button {
-                                        search = ""
-                                    } label: {
-                                        Image(systemName: "xmark")
-                                            .padding(3).background(.ultraThinMaterial).cornerRadius(20)
-                                    }.tint(.primary)
-                                }
-                            }.padding(5).background(.secondary)
-                                .cornerRadius(20)
-                                .font(.title3)
-                                .frame(maxWidth: 350)
-                            Spacer()
-                            Button {
-                                searchBar = false
-                                majorSearch = false
-                            } label: {
-                                Text("Done")
-                            }
-                        }.frame(width: 400).font(.title3).padding(.bottom,8)
-                        
-                        ScrollView {
-                            if search.isEmpty {
-                                ForEach(majors, id: \.self) { maj in
-                                    Button {
-                                        major = maj
-                                        searchBar = false
-                                        majorSearch = false
-                                    } label: {
-                                        if major.isEmpty {
-                                            HStack {
-                                                Text(maj).font(.title2).foregroundColor(.primary)
-                                                Spacer()
-                                            }.frame(width: 400).padding(.bottom,5)
-                                        }
-                                        else {
-                                            HStack {
-                                                if major == maj {
-                                                    Text(maj).font(.title2).foregroundColor(.primary)
-                                                    Spacer()
-                                                    Image(systemName: "checkmark")
-                                                }
-                                                else {
-                                                    Text(maj).font(.title2).foregroundColor(.primary)
-                                                    Spacer()
-                                                }
-                                            }.frame(width: 400).padding(.bottom,5)
-                                        }
-                                    }
-                                    Divider()
-                                }
-                            }
-                            else {
-                                ForEach(majors, id: \.self) { maj in
-                                    if maj.lowercased().contains(search.lowercased()) {
-                                        Button {
-                                            major = maj
-                                            searchBar = false
-                                            majorSearch = false
-                                        } label: {
-                                            HStack {
-                                                Text(maj).font(.title2).foregroundColor(.primary)
-                                                Spacer()
-                                            }.frame(width: 400).padding(.bottom,5)
-                                        }
-                                        Divider()
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                majorBar
             }
         }.toolbar {
             if signUp && !searchBar {
@@ -301,6 +214,134 @@ struct SignUpView: View {
             }
         }
     }
+    var majorBar: some View {
+        ZStack {
+            Color("background").ignoresSafeArea().opacity(0.9)
+            VStack {
+                VStack {
+                    VStack {
+                        Text("")
+                    }
+                    ScrollView {
+                        if search.isEmpty {
+                            ForEach(majors, id: \.self) { maj in
+                                Button {
+                                    major = maj
+                                    searchBar = false
+                                    majorSearch = false
+                                } label: {
+                                    if major.isEmpty {
+                                        HStack {
+                                            Text(maj).font(.title2).foregroundColor(.primary)
+                                            Spacer()
+                                        }.frame(width: 400).padding(.bottom,5)
+                                    }
+                                    else {
+                                        HStack {
+                                            if major == maj {
+                                                Text(maj).font(.title2).foregroundColor(.primary)
+                                                Spacer()
+                                                Image(systemName: "checkmark")
+                                            }
+                                            else {
+                                                Text(maj).font(.title2).foregroundColor(.primary)
+                                                Spacer()
+                                            }
+                                        }.frame(width: 400).padding(.bottom,5)
+                                    }
+                                }
+                                Divider()
+                            }
+                        }
+                        else {
+                            ForEach(majors, id: \.self) { maj in
+                                if maj.lowercased().contains(search.lowercased()) {
+                                    Button {
+                                        major = maj
+                                        searchBar = false
+                                        majorSearch = false
+                                    } label: {
+                                        HStack {
+                                            Text(maj).font(.title2).foregroundColor(.primary)
+                                            Spacer()
+                                        }.frame(width: 400).padding(.bottom,5)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }.toolbar {
+                    ToolbarItemGroup(placement: .keyboard) {
+                        HStack {
+                            HStack {
+                                Image(systemName: "magnifyingglass").padding(.trailing,4)
+                                TextField("Search", text: $search)
+                                    .focused($searchBar)
+                                    .foregroundColor(.primary)
+                                    .textFieldStyle(.plain)
+                                    .placeholder(when: search.isEmpty) {
+                                        Text("Search")
+                                            .foregroundColor(.primary)
+                                    }
+                                    .autocorrectionDisabled(true)
+                                    .textInputAutocapitalization(.never)
+                                if !search.isEmpty {
+                                    Button {
+                                        search = ""
+                                    } label: {
+                                        Image(systemName: "xmark").background(.ultraThinMaterial).cornerRadius(20)
+                                    }.tint(.primary)
+                                }
+                            }.padding(5).background(.secondary)
+                                .cornerRadius(20)
+                                .font(.system(size: 18))
+                                .frame(maxWidth: 350)
+                            Spacer()
+                            Button("Done") {
+                                searchBar = false
+                            }.tint(.blue)
+                        }.frame(maxWidth: 400, maxHeight: 50)
+                    }
+                }
+                
+                HStack {
+                    HStack {
+                        Image(systemName: "magnifyingglass").padding(.trailing,4)
+                        TextField("Search", text: $search)
+                            .focused($searchBar)
+                            .foregroundColor(.primary)
+                            .textFieldStyle(.plain)
+                            .placeholder(when: search.isEmpty) {
+                                Text("Search")
+                                    .foregroundColor(.primary)
+                            }
+                            .autocorrectionDisabled(true)
+                            .textInputAutocapitalization(.never)
+                        if !search.isEmpty {
+                            Button {
+                                search = ""
+                            } label: {
+                                Image(systemName: "xmark")
+                                    .padding(3).background(.ultraThinMaterial).cornerRadius(20)
+                            }.tint(.primary)
+                        }
+                    }.padding(5).background(.secondary)
+                        .cornerRadius(20)
+                        .font(.title3)
+                        .frame(maxWidth: 350)
+                    Spacer()
+                    Button {
+                        searchBar = false
+                        majorSearch = false
+                    } label: {
+                        Text("Done")
+                    }
+                }.frame(width: 400).font(.title3).padding(.bottom,8)
+            }
+            
+        }
+    }
+    
     
     func validateFields() -> Bool {
         email = email.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -323,12 +364,12 @@ struct SignUpView: View {
                 let db = Firestore.firestore()
                 let tag = ["Student",major]
                 
-                let ref = db.collection("users").document(result!.user.uid)
-                ref.setData(["fullname":fullname, "username":username, "tags":tag, "major":major, "id":result!.user.uid,"followers":[],"type":"student"]) { error in
-                    if error != nil {
-                        print("User data couldn't be saved.")
-                    }
-                }
+//                let ref = db.collection("users").document(result!.user.uid)
+//                ref.setData(["fullname":fullname, "username":username, "tags":tag, "major":major, "id":result!.user.uid,"followers":[],"type":"student"]) { error in
+//                    if error != nil {
+//                        print("User data couldn't be saved.")
+//                    }
+//                }
                 if Auth.auth().currentUser != nil {
                     Auth.auth().currentUser?.sendEmailVerification { error in
                         if error != nil {
