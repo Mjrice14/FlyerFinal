@@ -12,6 +12,7 @@ struct LoginView: View {
     @Binding var signUp: Bool
     @Binding var loggedIn: Bool
     @Binding var authentic: Bool
+    @Binding var forgot: Bool
     
     @State private var password = ""
     @State private var email = ""
@@ -65,6 +66,15 @@ struct LoginView: View {
                     .padding(5.0)
                     .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
                         .fill(Color("main")))
+                
+                Button {
+                    emailFocus = false
+                    passwordFocus = false
+                    forgot = true
+                } label: {
+                    Text("Forgot password?").foregroundColor(.primary)
+                }
+                
                 Button {
                     login()
                 } label: {
@@ -82,7 +92,7 @@ struct LoginView: View {
                 }            
             }
         }.toolbar {
-            if !signUp {
+            if !signUp && !forgot {
                 ToolbarItemGroup(placement: .keyboard) {
                     Spacer()
                     Button("Done") {
@@ -121,7 +131,7 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(signUp: .constant(false), loggedIn: .constant(false), authentic: .constant(false))
+        LoginView(signUp: .constant(false), loggedIn: .constant(false), authentic: .constant(false), forgot: .constant(false))
     }
 }
 

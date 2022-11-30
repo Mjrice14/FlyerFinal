@@ -40,6 +40,7 @@
 		E4C6609C2931BB0D00465EF5 /* UserEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C6609B2931BB0D00465EF5 /* UserEditView.swift */; };
 		E4C6609E2932066D00465EF5 /* FlyerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C6609D2932066D00465EF5 /* FlyerView.swift */; };
 		E4E2131429248EED00DD36EA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E4E2131329248EED00DD36EA /* GoogleService-Info.plist */; };
+		E4F54E3429370C7C00C50A9D /* ForgotPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F54E3329370C7C00C50A9D /* ForgotPassword.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +75,7 @@
 		E4C6609B2931BB0D00465EF5 /* UserEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEditView.swift; sourceTree = "<group>"; };
 		E4C6609D2932066D00465EF5 /* FlyerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlyerView.swift; sourceTree = "<group>"; };
 		E4E2131329248EED00DD36EA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E4F54E3329370C7C00C50A9D /* ForgotPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPassword.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +160,7 @@
 				22160A7E2910793000CF5C7D /* LoginView.swift */,
 				220E38D829110816008EEC7D /* SignUpView.swift */,
 				2249F4972911B77700B5C506 /* AuthenticationView.swift */,
+				E4F54E3329370C7C00C50A9D /* ForgotPassword.swift */,
 			);
 			path = StartViews;
 			sourceTree = "<group>";
@@ -304,6 +307,7 @@
 				E4C6609C2931BB0D00465EF5 /* UserEditView.swift in Sources */,
 				22160A7F2910793000CF5C7D /* LoginView.swift in Sources */,
 				E432468E292F45F300C25F23 /* EventBubble.swift in Sources */,
+				E4F54E3429370C7C00C50A9D /* ForgotPassword.swift in Sources */,
 				E432468C292F406700C25F23 /* Event.swift in Sources */,
 				22160A722910790000CF5C7D /* ContentView.swift in Sources */,
 				E4C6609A2931987800465EF5 /* MyAccountView.swift in Sources */,

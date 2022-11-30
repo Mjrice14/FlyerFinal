@@ -14,15 +14,23 @@ struct StartPageView: View {
     @Binding var signingOutNow: Bool
     
     @State private var signUp = false
+    @State private var forgot = false
     
     var body: some View {
         ZStack {
             if !loggedIn {
-                LoginView(signUp: $signUp, loggedIn: $loggedIn, authentic: $authentic)
+                LoginView(signUp: $signUp, loggedIn: $loggedIn, authentic: $authentic, forgot: $forgot)
                 
                 VStack {
                     if signUp {
                         SignUpView(signUp: $signUp, loggedIn: $loggedIn)
+                            .transition(.move(edge: .trailing))
+                    }
+                }
+                
+                VStack {
+                    if forgot {
+                        ForgotPassword(forgot: $forgot)
                             .transition(.move(edge: .trailing))
                     }
                 }
@@ -32,7 +40,9 @@ struct StartPageView: View {
                     AuthenticationView(authentic: $authentic)
                 }
             }
-        }.animation(.easeIn, value: signUp).onAppear {
+        }.animation(.easeIn, value: signUp)
+            .animation(.easeIn, value: forgot)
+            .onAppear {
             if Auth.auth().currentUser != nil {
                 loggedIn = true
                 if Auth.auth().currentUser!.isEmailVerified {

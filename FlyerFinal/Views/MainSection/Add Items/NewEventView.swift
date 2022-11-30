@@ -119,7 +119,7 @@ struct NewEventView: View {
     }
     
     func validateFields() -> Bool {
-        if title.isEmpty || location.isEmpty {
+        if title.isEmpty || location.isEmpty || start > end {
             return false
         }
         return true
