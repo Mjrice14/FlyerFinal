@@ -220,7 +220,7 @@ struct NewFlyerView: View {
     }
     
     func validateFields() -> Bool {
-        if title.isEmpty || description.isEmpty {
+        if title.isEmpty || description.isEmpty || tags.isEmpty {
             return false
         }
         return true
