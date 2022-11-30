@@ -85,7 +85,7 @@ struct MainView: View {
                             Image(systemName: "plus.square")
                                 .foregroundColor(.primary)
                         }
-                        Image(systemName: "magnifyingglass.circle.fill")
+                        Image(systemName: "person.circle.fill")
                             .foregroundColor(.primary)
                         Button {
                             myHub = true
@@ -119,7 +119,7 @@ struct MainView: View {
                             newFlyer = false
                             myHub = false
                         } label: {
-                            Image(systemName: "magnifyingglass.circle")
+                            Image(systemName: "person.circle")
                                 .foregroundColor(.primary)
                         }
                         Button {
@@ -154,7 +154,7 @@ struct MainView: View {
                             eventHub = false
                             myHub = false
                         } label: {
-                            Image(systemName: "magnifyingglass.circle")
+                            Image(systemName: "person.circle")
                                 .foregroundColor(.primary)
                         }
                         Button {
