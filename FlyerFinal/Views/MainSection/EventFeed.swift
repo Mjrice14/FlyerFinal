@@ -81,10 +81,7 @@ struct EventFeed: View {
                                         addEvent = event.id
                                         deleting = true
                                     } label: {
-                                        Image(systemName: "xmark").font(.title2.weight(.medium)).overlay {
-                                            LinearGradient(colors: [.black, .green, .blue], startPoint: .leading, endPoint: .trailing)
-                                                .mask(Image(systemName: "xmark").font(.title2.weight(.medium)))
-                                        }.padding(5).background(.ultraThinMaterial).cornerRadius(30)
+                                        Image(systemName: "xmark").font(.title2.weight(.medium)).foregroundColor(.red)
                                     }.alert("Are you sure you want to delete this flyer?", isPresented: $deleting) {
                                         Button("Delete") {
                                             delete()
@@ -99,10 +96,13 @@ struct EventFeed: View {
                                     addMe = true
                                 } label: {
                                     Image(systemName: "plus")
-                                }.tint(.primary).fontWeight(.bold)
-                                    .confirmationDialog("Are you sure you want to add \(getEvent(eventID: addEvent).title) to your calendar?", isPresented: $addMe, titleVisibility: .visible) {
+                                }.font(.title2.weight(.medium)).tint(.primary)
+                                    .alert("Are you sure you want to add \(getEvent(eventID: addEvent).title) to your calendar?", isPresented: $addMe) {
                                         Button("Add Event") {
                                             addCalendar(eventCal: getEvent(eventID: addEvent))
+                                        }
+                                        Button("Cancel") {
+                                            addMe = false
                                         }
                                     }
                             }.frame(maxWidth: 360).padding(.top)

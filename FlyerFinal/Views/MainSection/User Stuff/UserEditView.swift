@@ -85,9 +85,12 @@ struct UserEditView: View {
                     deleting = true
                 } label: {
                     Text("Delete Account").font(.title.weight(.medium)).tint(.red)
-                }.confirmationDialog("Are you suere you want to delete your account?", isPresented: $deleting, titleVisibility: .visible) {
-                    Button("Yes I am Sure") {
+                }.alert("Are you suere you want to delete your account?", isPresented: $deleting) {
+                    Button("Delete") {
                         confirmation = true
+                    }
+                    Button("Cancel") {
+                        deleting = false
                     }
                 }.alert("This is your last chance, your account will be permenantly deleted.", isPresented: $confirmation) {
                     Button("Delete") {

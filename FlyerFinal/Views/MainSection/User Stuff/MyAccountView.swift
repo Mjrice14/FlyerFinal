@@ -46,10 +46,13 @@ struct MyAccountView: View {
                     } label: {
                         Text("Sign Out")
                             .font(.title2)
-                    }.frame(maxWidth: 300).confirmationDialog("Are you sure you would like to log out of your account?", isPresented: $signingOut, titleVisibility: .visible) {
+                    }.frame(maxWidth: 300).alert("Are you sure you would like to log out of your account?", isPresented: $signingOut) {
                         Button("Sign Out") {
                             signOutUser()
                             signingOutNow = true
+                        }
+                        Button("Cancel") {
+                            signingOut = false
                         }
                     }
                 }.padding(.top,5)
