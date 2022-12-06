@@ -94,7 +94,7 @@ struct MyAccountView: View {
                     }.tint(.primary)
                     ForEach(flyerManager.flyers,id: \.id) {flyer in
                         if flyer.userID == user.id {
-                            FlyerBubble(flyer: flyer, display: false).onTapGesture{
+                            FlyerBubble(flyer: flyer, display: false, admin: false).onTapGesture{
                                 displayFlyer = flyer.id
                             }
                         }

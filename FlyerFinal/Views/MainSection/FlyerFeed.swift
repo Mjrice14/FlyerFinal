@@ -139,17 +139,17 @@ struct FlyerFeed: View {
                                 if bookmark {
                                     if flyer.saves.contains(newUserID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62") {
                                         if search.isEmpty {
-                                            FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                            FlyerBubble(flyer: flyer, display: false, admin: admin).padding(.bottom,5).onTapGesture {
                                                 displayFlyer = flyer.id
                                             }
                                         }
                                         else if flyer.title.lowercased().contains(search.lowercased()) {
-                                            FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                            FlyerBubble(flyer: flyer, display: false, admin: admin).padding(.bottom,5).onTapGesture {
                                                 displayFlyer = flyer.id
                                             }
                                         }
                                         else if flyer.name.lowercased().contains(search.lowercased()) {
-                                            FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                            FlyerBubble(flyer: flyer, display: false, admin: admin).padding(.bottom,5).onTapGesture {
                                                 displayFlyer = flyer.id
                                             }
                                         }
@@ -157,17 +157,17 @@ struct FlyerFeed: View {
                                 }
                                 else {
                                     if search.isEmpty {
-                                        FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                        FlyerBubble(flyer: flyer, display: false, admin: admin).padding(.bottom,5).onTapGesture {
                                             displayFlyer = flyer.id
                                         }
                                     }
                                     else if flyer.title.lowercased().contains(search.lowercased()) {
-                                        FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                        FlyerBubble(flyer: flyer, display: false, admin: admin).padding(.bottom,5).onTapGesture {
                                             displayFlyer = flyer.id
                                         }
                                     }
                                     else if flyer.name.lowercased().contains(search.lowercased()) {
-                                        FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                        FlyerBubble(flyer: flyer, display: false, admin: admin).padding(.bottom,5).onTapGesture {
                                             displayFlyer = flyer.id
                                         }
                                     }
@@ -177,17 +177,17 @@ struct FlyerFeed: View {
                                 if bookmark {
                                     if flyer.saves.contains(newUserID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62") {
                                         if search.isEmpty {
-                                            FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                            FlyerBubble(flyer: flyer, display: false, admin: admin).padding(.bottom,5).onTapGesture {
                                                 displayFlyer = flyer.id
                                             }
                                         }
                                         else if flyer.title.lowercased().contains(search.lowercased()) {
-                                            FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                            FlyerBubble(flyer: flyer, display: false, admin: admin).padding(.bottom,5).onTapGesture {
                                                 displayFlyer = flyer.id
                                             }
                                         }
                                         else if flyer.name.lowercased().contains(search.lowercased()) {
-                                            FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                            FlyerBubble(flyer: flyer, display: false, admin: admin).padding(.bottom,5).onTapGesture {
                                                 displayFlyer = flyer.id
                                             }
                                         }
@@ -195,17 +195,17 @@ struct FlyerFeed: View {
                                 }
                                 else {
                                     if search.isEmpty {
-                                        FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                        FlyerBubble(flyer: flyer, display: false, admin: admin).padding(.bottom,5).onTapGesture {
                                             displayFlyer = flyer.id
                                         }
                                     }
                                     else if flyer.title.lowercased().contains(search.lowercased()) {
-                                        FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                        FlyerBubble(flyer: flyer, display: false, admin: admin).padding(.bottom,5).onTapGesture {
                                             displayFlyer = flyer.id
                                         }
                                     }
                                     else if flyer.name.lowercased().contains(search.lowercased()) {
-                                        FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                        FlyerBubble(flyer: flyer, display: false, admin: admin).padding(.bottom,5).onTapGesture {
                                             displayFlyer = flyer.id
                                         }
                                     }
@@ -217,17 +217,17 @@ struct FlyerFeed: View {
                                 if bookmark {
                                     if flyer.saves.contains(newUserID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62") {
                                         if search.isEmpty {
-                                            FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                            FlyerBubble(flyer: flyer, display: false, admin: admin).padding(.bottom,5).onTapGesture {
                                                 displayFlyer = flyer.id
                                             }
                                         }
                                         else if flyer.title.lowercased().contains(search.lowercased()) {
-                                            FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                            FlyerBubble(flyer: flyer, display: false, admin: admin).padding(.bottom,5).onTapGesture {
                                                 displayFlyer = flyer.id
                                             }
                                         }
                                         else if flyer.name.lowercased().contains(search.lowercased()) {
-                                            FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                            FlyerBubble(flyer: flyer, display: false, admin: admin).padding(.bottom,5).onTapGesture {
                                                 displayFlyer = flyer.id
                                             }
                                         }
@@ -235,17 +235,17 @@ struct FlyerFeed: View {
                                 }
                                 else {
                                     if search.isEmpty {
-                                        FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                        FlyerBubble(flyer: flyer, display: false, admin: admin).padding(.bottom,5).onTapGesture {
                                             displayFlyer = flyer.id
                                         }
                                     }
                                     else if flyer.title.lowercased().contains(search.lowercased()) {
-                                        FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                        FlyerBubble(flyer: flyer, display: false, admin: admin).padding(.bottom,5).onTapGesture {
                                             displayFlyer = flyer.id
                                         }
                                     }
                                     else if flyer.name.lowercased().contains(search.lowercased()) {
-                                        FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                        FlyerBubble(flyer: flyer, display: false, admin: admin).padding(.bottom,5).onTapGesture {
                                             displayFlyer = flyer.id
                                         }
                                     }
@@ -255,17 +255,17 @@ struct FlyerFeed: View {
                                 if bookmark {
                                     if flyer.saves.contains(newUserID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62") {
                                         if search.isEmpty {
-                                            FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                            FlyerBubble(flyer: flyer, display: false, admin: admin).padding(.bottom,5).onTapGesture {
                                                 displayFlyer = flyer.id
                                             }
                                         }
                                         else if flyer.title.lowercased().contains(search.lowercased()) {
-                                            FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                            FlyerBubble(flyer: flyer, display: false, admin: admin).padding(.bottom,5).onTapGesture {
                                                 displayFlyer = flyer.id
                                             }
                                         }
                                         else if flyer.name.lowercased().contains(search.lowercased()) {
-                                            FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                            FlyerBubble(flyer: flyer, display: false, admin: admin).padding(.bottom,5).onTapGesture {
                                                 displayFlyer = flyer.id
                                             }
                                         }
@@ -273,17 +273,17 @@ struct FlyerFeed: View {
                                 }
                                 else {
                                     if search.isEmpty {
-                                        FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                        FlyerBubble(flyer: flyer, display: false, admin: admin).padding(.bottom,5).onTapGesture {
                                             displayFlyer = flyer.id
                                         }
                                     }
                                     else if flyer.title.lowercased().contains(search.lowercased()) {
-                                        FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                        FlyerBubble(flyer: flyer, display: false, admin: admin).padding(.bottom,5).onTapGesture {
                                             displayFlyer = flyer.id
                                         }
                                     }
                                     else if flyer.name.lowercased().contains(search.lowercased()) {
-                                        FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                        FlyerBubble(flyer: flyer, display: false, admin: admin).padding(.bottom,5).onTapGesture {
                                             displayFlyer = flyer.id
                                         }
                                     }

@@ -13,10 +13,12 @@ import FirebaseAuth
 struct FlyerBubble: View {
     var flyer: Flyer
     var display: Bool
+    var admin: Bool
     
     
     @State private var show = false
     @State private var newUserID = Auth.auth().currentUser?.uid
+    @State private var deleting = false
     
     @State private var postImage = UIImage(named: "placeholder2")
     
@@ -49,6 +51,23 @@ struct FlyerBubble: View {
                         }
                     }.foregroundColor(.black)
                     Spacer()
+                    if admin {
+                        Button {
+                            deleting = true
+                        } label: {
+                            Text("Delete").font(.title2.weight(.medium)).overlay {
+                                LinearGradient(colors: [.black, .green, .blue], startPoint: .leading, endPoint: .trailing)
+                                    .mask(Text("Delete").font(.title2.weight(.medium)))
+                            }.padding(5).background(.ultraThinMaterial).cornerRadius(13)
+                        }.alert("Are you sure you want to delete this flyer?", isPresented: $deleting) {
+                            Button("Delete") {
+                                delete()
+                            }
+                            Button("Cancel") {
+                                deleting = false
+                            }
+                        }
+                    }
                 }.frame(maxWidth: 350)
             }
             
@@ -150,11 +169,29 @@ struct FlyerBubble: View {
             }
         }
     }
+    
+    func delete() {
+        let storageRef = Storage.storage().reference()
+        let photoRef = storageRef.child("flyers/\(flyer.id).jpg")
+        
+        photoRef.delete { error in
+            if let error = error {
+               print(error)
+            }
+        }
+        
+        let db = Firestore.firestore()
+        db.collection("flyers").document(flyer.id).delete() { err in
+            if let err = err {
+                print("Error removing document: \(err)")
+            }
+        }
+    }
 }
 
 struct FlyerBubble_Previews: PreviewProvider {
     static var previews: some View {
-        FlyerBubble(flyer: Flyer(id: "1", title: "Testing", description: "This is a test to see if this will be a practical method to create flyer posts.", date: Date(), likes: ["AeVZPBqiPmPCXYxW4hlyDwnViWY2"], name: "Matthew Rice", userID: "AeVZPBqiPmPCXYxW4hlyDwnViWY2", color: 3, tags: ["Student"], saves:[]), display: true)
+        FlyerBubble(flyer: Flyer(id: "1", title: "Testing", description: "This is a test to see if this will be a practical method to create flyer posts.", date: Date(), likes: ["AeVZPBqiPmPCXYxW4hlyDwnViWY2"], name: "Matthew Rice", userID: "AeVZPBqiPmPCXYxW4hlyDwnViWY2", color: 3, tags: ["Student"], saves:[]), display: true, admin: true)
     }
 }
 

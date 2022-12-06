@@ -91,7 +91,7 @@ struct UserAccount: View {
                     ForEach(flyerManager.flyers,id: \.id) {flyer in
                         if flyer.userID == user.id {
                             if canView(user: userNow, flyer: flyer) {
-                                FlyerBubble(flyer: flyer, display: false).onTapGesture {
+                                FlyerBubble(flyer: flyer, display: false, admin: false).onTapGesture {
                                     displayFlyer = flyer.id
                                 }
                             }
