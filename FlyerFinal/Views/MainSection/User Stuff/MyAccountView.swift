@@ -102,7 +102,7 @@ struct MyAccountView: View {
                 }
             }
             if showEdit {
-                UserEditView(showEdit: $showEdit, user: user)
+                UserEditView(showEdit: $showEdit, user: user, signingOutNow: $signingOutNow)
                     .transition(.move(edge: .bottom))
             }
             if !displayFlyer.isEmpty {
