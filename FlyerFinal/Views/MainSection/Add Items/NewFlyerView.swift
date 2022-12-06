@@ -49,7 +49,7 @@ struct NewFlyerView: View {
                             .font(.title2).padding(.trailing)
                     }
                 }.padding(.top)
-                if userNow.type == "admin" || userNow.type == "staff" {
+                if userNow.type.lowercased() == "admin" || userNow.type.lowercased() == "staff" {
                     Picker(selection: $viewType, label: Text("New Type")) {
                         Text("Flyer").tag("flyer")
                         Text("Event").tag("event")

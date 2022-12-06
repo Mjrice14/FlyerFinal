@@ -10,6 +10,8 @@ import FirebaseAuth
 import FirebaseStorage
 
 struct MainView: View {
+    @Environment(\.colorScheme) var colorScheme
+    
     @Binding var signingOutNow: Bool
     
     @StateObject var usersManager = UsersManager()
@@ -20,6 +22,8 @@ struct MainView: View {
     @State private var flyerHub = true
     @State private var myHub = false
     @State private var searching = false
+    @State private var darkMode = false
+    @State private var colorMode = ColorScheme.dark
     
     @State private var displayFlyer = ""
     @State private var clicked = ""
@@ -32,7 +36,7 @@ struct MainView: View {
     var body: some View {
         
         ZStack {
-            FlyerFeed(flyerHub: $flyerHub, displayFlyer: $displayFlyer, newFlyer: $newFlyer, searching: $searching)
+            FlyerFeed(flyerHub: $flyerHub, displayFlyer: $displayFlyer, newFlyer: $newFlyer, searching: $searching, darkMode: $darkMode)
             VStack {
                 if userHub {
                     UserFeed(clicked: $clicked,newFlyer: $newFlyer, searching: $searching)
@@ -172,7 +176,24 @@ struct MainView: View {
         }.animation(.easeIn, value: newFlyer)
             .onAppear {
                 retrieveProfilePhoto(login: currentID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62")
+                if colorScheme == .dark {
+                    darkMode = true
+                    colorMode = ColorScheme.dark
+                }
+                else {
+                    darkMode = false
+                    colorMode = ColorScheme.light
+                }
             }
+            .onChange(of: darkMode) { newState in
+                if newState {
+                    colorMode = .dark
+                }
+                else {
+                    colorMode = .light
+                }
+            }.preferredColorScheme(colorMode)
+            
     }
     
     func retrieveProfilePhoto(login:String) {

@@ -15,6 +15,7 @@ struct FlyerFeed: View {
     @Binding var displayFlyer: String
     @Binding var newFlyer: Bool
     @Binding var searching: Bool
+    @Binding var darkMode: Bool
     
     @StateObject var flyerManager = FlyerManager()
     @StateObject var usersManager = UsersManager()
@@ -29,6 +30,8 @@ struct FlyerFeed: View {
     
     @State private var search = ""
     @State private var bar = false
+    @State private var settings = false
+    @State private var admin = false
     
     @FocusState private var searchFocus: Bool
     
@@ -37,11 +40,17 @@ struct FlyerFeed: View {
             Color("background").ignoresSafeArea()
             
             let userNow = getUser(login: newUserID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62")
-            
             VStack {
                 HStack {
+                    Button {
+                        settings.toggle()
+                    } label: {
+                        Image(systemName: "gearshape.fill")
+                            .padding(.leading).font(.title2.weight(.medium))
+                            .foregroundColor(.primary)
+                    }
                     Text("Recent Flyer Feed").font(.title2.weight(.medium))
-                        .padding(.leading)
+                    
                     Spacer()
                     
                     Button {
@@ -73,6 +82,21 @@ struct FlyerFeed: View {
                     }.tint(.primary)
                     
                     Menu {
+                        if admin {
+                            Button {
+                                filter = "All"
+                            } label: {
+                                if filter == "All" {
+                                    HStack{
+                                        Text("All")
+                                        Image(systemName: "checkmark")
+                                    }
+                                }
+                                else {
+                                    Text("All")
+                                }
+                            }
+                        }
                         Button {
                             filter = "Public"
                         } label: {
@@ -110,6 +134,12 @@ struct FlyerFeed: View {
                 
                 ScrollView {
                     ForEach(flyerManager.flyers,id: \.id) {flyer in
+                        if filter == "All" {
+                            FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                displayFlyer = flyer.id
+                            }
+                        }
+                        
                         if flyer.tags.contains(filter) {
                             if refresh {
                                 if bookmark {
@@ -228,19 +258,27 @@ struct FlyerFeed: View {
                     }.frame(width: 400).font(.title3).padding(.bottom,8)
                 }
                 
-            }.refreshable {
+            }
+                .refreshable {
                 refresh.toggle()
             }
             if !displayFlyer.isEmpty {
                 FlyerView(flyer: getFlyer(flyerId: displayFlyer), flyerID: $displayFlyer, editing: $editingPost)
             }
-       }
-    }
-    
-    var posts: some View {
-        VStack {
-            
-        }
+            if settings {
+                SettingsMenu(settings: $settings, admin: $admin, darkMode: $darkMode)
+                    .transition(.move(edge: .leading))
+            }
+       }.animation(.easeIn, value: settings)
+            .onChange(of: admin) { newState in
+                if newState == false {
+                    filter = "Public"
+                }
+                else {
+                    filter = "All"
+                }
+                
+            }
     }
     
     func getUser(login:String) -> User {
@@ -264,6 +302,6 @@ struct FlyerFeed: View {
 
 struct FlyerFeed_Previews: PreviewProvider {
     static var previews: some View {
-        FlyerFeed(flyerHub: .constant(true),displayFlyer: .constant(""), newFlyer: .constant(true), searching: .constant(false))
+        FlyerFeed(flyerHub: .constant(true),displayFlyer: .constant(""), newFlyer: .constant(true), searching: .constant(false), darkMode: .constant(false))
     }
 }
