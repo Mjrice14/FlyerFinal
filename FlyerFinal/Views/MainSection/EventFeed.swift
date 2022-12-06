@@ -7,12 +7,19 @@
 
 import SwiftUI
 import EventKit
+import FirebaseFirestore
 
 struct EventFeed: View {
+    @Binding var darkMode: Bool
+    
     @State private var search = ""
     @State private var bar = false
     @State private var addMe = false
     @State private var addEvent = ""
+    
+    @State private var settings = false
+    @State private var admin = false
+    @State private var deleting = false
     
     @FocusState private var searchFocus: Bool
     
@@ -22,7 +29,14 @@ struct EventFeed: View {
             Color("background").ignoresSafeArea()
             VStack {
                 HStack {
-                    Text("Upcoming Events").font(.title2.weight(.medium)).padding(.leading)
+                    Button {
+                        settings.toggle()
+                    } label: {
+                        Image(systemName: "gearshape.fill")
+                            .padding(.leading).font(.title2.weight(.medium))
+                            .foregroundColor(.primary)
+                    }
+                    Text("Upcoming Events").font(.title2.weight(.medium))
                     Spacer()
 //                    Button {
 //                        bar.toggle()
@@ -62,6 +76,24 @@ struct EventFeed: View {
                             HStack {
                                 EventBubble(event: event)
                                 Spacer()
+                                if admin {
+                                    Button {
+                                        addEvent = event.id
+                                        deleting = true
+                                    } label: {
+                                        Image(systemName: "xmark").font(.title2.weight(.medium)).overlay {
+                                            LinearGradient(colors: [.black, .green, .blue], startPoint: .leading, endPoint: .trailing)
+                                                .mask(Image(systemName: "xmark").font(.title2.weight(.medium)))
+                                        }.padding(5).background(.ultraThinMaterial).cornerRadius(30)
+                                    }.alert("Are you sure you want to delete this flyer?", isPresented: $deleting) {
+                                        Button("Delete") {
+                                            delete()
+                                        }
+                                        Button("Cancel") {
+                                            deleting = false
+                                        }
+                                    }
+                                }
                                 Button {
                                     addEvent = event.id
                                     addMe = true
@@ -77,6 +109,10 @@ struct EventFeed: View {
                         }
                     }
                 }
+            }.animation(.easeIn, value: settings)
+            if settings {
+                SettingsMenu(settings: $settings, admin: $admin, darkMode: $darkMode)
+                    .transition(.move(edge: .leading))
             }
         }
     }
@@ -117,10 +153,19 @@ struct EventFeed: View {
         
         return Event(id: "ql0WXSB04YSsrD8bBIM3", title: "Football Game", location: "AT&T Stadium", date: Date(), end: Date().addingTimeInterval(1000))
     }
+    
+    func delete() {
+        let db = Firestore.firestore()
+        db.collection("events").document(addEvent).delete() { err in
+            if let err = err {
+                print("Error removing document: \(err)")
+            }
+        }
+    }
 }
 
 struct EventFeed_Previews: PreviewProvider {
     static var previews: some View {
-        EventFeed()
+        EventFeed(darkMode: .constant(false))
     }
 }

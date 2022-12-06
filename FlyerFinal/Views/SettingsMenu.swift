@@ -24,7 +24,7 @@ struct SettingsMenu: View {
             let userNow = getUser(login: newUserID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62")
             HStack {
                 VStack {
-                    Color("main").ignoresSafeArea().frame(width: screenWidth/1.5)
+                    Color("main").ignoresSafeArea().frame(width: screenWidth/1.25)
                 }
                 Spacer()
             }
@@ -44,15 +44,15 @@ struct SettingsMenu: View {
                         Toggle(isOn: $admin) {
                             Text("Admin Mode")
                         }.font(.title3.weight(.regular))
-                            .padding(.trailing).frame(width: (screenWidth/1.5)-30)
-                        Divider().frame(width: (screenWidth/1.5)-30)
+                            .padding(.trailing).frame(width: (screenWidth/1.25)-30)
+                        Divider().frame(width: (screenWidth/1.25)-30)
                     }
                     Toggle(isOn: $darkMode) {
                         Text("Dark Mode")
                     }.font(.title3.weight(.regular))
-                        .padding(.trailing).frame(width: (screenWidth/1.5)-30)
+                        .padding(.trailing).frame(width: (screenWidth/1.25)-30)
                     Spacer()
-                }.frame(width: screenWidth/1.5)
+                }.frame(width: screenWidth/1.25)
                 Spacer()
             }
             

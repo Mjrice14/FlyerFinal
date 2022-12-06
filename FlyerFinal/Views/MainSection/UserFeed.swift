@@ -13,9 +13,12 @@ struct UserFeed: View {
     @Binding var clicked: String
     @Binding var newFlyer: Bool
     @Binding var searching: Bool
+    @Binding var darkMode: Bool
     
     @State private var search = ""
     @State private var bar = false
+    @State private var settings = false
+    @State private var admin = false
     
     @FocusState private var searchFocus: Bool
     var body: some View {
@@ -33,7 +36,14 @@ struct UserFeed: View {
             
             VStack {
                 HStack {
-                    Text("User Serach").font(.title2.weight(.medium)).padding(.leading)
+                    Button {
+                        settings.toggle()
+                    } label: {
+                        Image(systemName: "gearshape.fill")
+                            .padding(.leading).font(.title2.weight(.medium))
+                            .foregroundColor(.primary)
+                    }
+                    Text("User Serach").font(.title2.weight(.medium))
                     Spacer()
                     Button {
                         bar.toggle()
@@ -108,8 +118,13 @@ struct UserFeed: View {
                         }
                     }.frame(width: 400).font(.title3).padding(.bottom,8)
                 }
+            }.animation(.easeIn, value: settings)
+            if settings {
+                SettingsMenu(settings: $settings, admin: $admin, darkMode: $darkMode)
+                    .transition(.move(edge: .leading))
             }
         }
+        
     }
     func getUser(login:String) -> User {
         for user in usersManager.users {
@@ -123,6 +138,6 @@ struct UserFeed: View {
 
 struct UserFeed_Previews: PreviewProvider {
     static var previews: some View {
-        UserFeed(clicked: .constant(""), newFlyer: .constant(true), searching: .constant(false))
+        UserFeed(clicked: .constant(""), newFlyer: .constant(true), searching: .constant(false), darkMode: .constant(false))
     }
 }

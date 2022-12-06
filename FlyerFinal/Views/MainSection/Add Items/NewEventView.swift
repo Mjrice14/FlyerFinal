@@ -18,7 +18,8 @@ struct NewEventView: View {
     @State private var title = ""
     @State private var location = ""
     @State private var start = Date()
-    @State private var end = Date()
+    @State private var interval = 30
+    //@State private var end = Date(timeIntervalSinceNow: 3600)
     
     @State private var newUserID = Auth.auth().currentUser?.uid
     
@@ -77,8 +78,20 @@ struct NewEventView: View {
                             .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
                                 .fill(Color("main")))
                         
-                        DatePicker(selection: $start, label: { Text("Start Date") }).frame(maxWidth: 375)
-                        DatePicker(selection: $end, label: { Text("End Date") }).frame(maxWidth: 375)
+                        DatePicker(selection: $start, label: { Text("Date:") }).frame(maxWidth: 375)
+                        HStack {
+                            Text("Length of Event:")
+                            Spacer()
+                            Picker(selection: $interval, label: Text("Date Interval")) {
+                                Text("30 min").tag(30)
+                                Text("45 min").tag(45)
+                                Text("1 hr").tag(60)
+                                Text("2 hr").tag(120)
+                            }.tint(.primary)
+                            .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                .fill(.ultraThickMaterial))
+                        }.frame(width: 375)
+                        //DatePicker(selection: $end, label: { Text("End Date") }).frame(maxWidth: 375)
                         
                         Button {
                             if validateFields() {
@@ -111,7 +124,7 @@ struct NewEventView: View {
         let docID = randomString(length: 20)
 
         let docref = db.collection("events").document(docID)
-        docref.setData(["date":start, "end":end, "id":docID, "location":location, "title":title]) { error in
+        docref.setData(["date":start, "end":start.addingTimeInterval(TimeInterval((interval*60))), "id":docID, "location":location, "title":title]) { error in
                 if error != nil {
                     print("Event data could not be uploaded!")
                 }
@@ -119,7 +132,7 @@ struct NewEventView: View {
     }
     
     func validateFields() -> Bool {
-        if title.isEmpty || location.isEmpty || start > end {
+        if title.isEmpty || location.isEmpty {
             return false
         }
         return true

@@ -39,12 +39,12 @@ struct MainView: View {
             FlyerFeed(flyerHub: $flyerHub, displayFlyer: $displayFlyer, newFlyer: $newFlyer, searching: $searching, darkMode: $darkMode)
             VStack {
                 if userHub {
-                    UserFeed(clicked: $clicked,newFlyer: $newFlyer, searching: $searching)
+                    UserFeed(clicked: $clicked,newFlyer: $newFlyer, searching: $searching, darkMode: $darkMode)
                 }
             }
             VStack {
                 if eventHub {
-                    EventFeed()
+                    EventFeed(darkMode: $darkMode)
                 }
             }
             VStack {
