@@ -135,11 +135,83 @@ struct FlyerFeed: View {
                 ScrollView {
                     ForEach(flyerManager.flyers,id: \.id) {flyer in
                         if filter == "All" {
-                            FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
-                                displayFlyer = flyer.id
+                            if refresh {
+                                if bookmark {
+                                    if flyer.saves.contains(newUserID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62") {
+                                        if search.isEmpty {
+                                            FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                                displayFlyer = flyer.id
+                                            }
+                                        }
+                                        else if flyer.title.lowercased().contains(search.lowercased()) {
+                                            FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                                displayFlyer = flyer.id
+                                            }
+                                        }
+                                        else if flyer.name.lowercased().contains(search.lowercased()) {
+                                            FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                                displayFlyer = flyer.id
+                                            }
+                                        }
+                                    }
+                                }
+                                else {
+                                    if search.isEmpty {
+                                        FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                            displayFlyer = flyer.id
+                                        }
+                                    }
+                                    else if flyer.title.lowercased().contains(search.lowercased()) {
+                                        FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                            displayFlyer = flyer.id
+                                        }
+                                    }
+                                    else if flyer.name.lowercased().contains(search.lowercased()) {
+                                        FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                            displayFlyer = flyer.id
+                                        }
+                                    }
+                                }
+                            }
+                            else {
+                                if bookmark {
+                                    if flyer.saves.contains(newUserID ?? "fRIWBPjsqlbFxVjb5ylH5PMVun62") {
+                                        if search.isEmpty {
+                                            FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                                displayFlyer = flyer.id
+                                            }
+                                        }
+                                        else if flyer.title.lowercased().contains(search.lowercased()) {
+                                            FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                                displayFlyer = flyer.id
+                                            }
+                                        }
+                                        else if flyer.name.lowercased().contains(search.lowercased()) {
+                                            FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                                displayFlyer = flyer.id
+                                            }
+                                        }
+                                    }
+                                }
+                                else {
+                                    if search.isEmpty {
+                                        FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                            displayFlyer = flyer.id
+                                        }
+                                    }
+                                    else if flyer.title.lowercased().contains(search.lowercased()) {
+                                        FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                            displayFlyer = flyer.id
+                                        }
+                                    }
+                                    else if flyer.name.lowercased().contains(search.lowercased()) {
+                                        FlyerBubble(flyer: flyer, display: false).padding(.bottom,5).onTapGesture {
+                                            displayFlyer = flyer.id
+                                        }
+                                    }
+                                }
                             }
                         }
-                        
                         if flyer.tags.contains(filter) {
                             if refresh {
                                 if bookmark {
