@@ -23,3 +23,7 @@ This list may be 3.5 hours long however it will teach you all the basics of how 
 
 ## Final Demo
 Here is a screen recording of the final demo for our project.
+
+
+https://user-images.githubusercontent.com/61557673/207512494-0dcbd9fe-9c90-4281-baa8-e6c80755aa72.mp4
+
